@@ -1,7 +1,6 @@
 import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.contrib.postgres.fields import ArrayField
 from Choices.models import PaymentMethod, TravelPreference, Language, Location
 
 
@@ -61,6 +60,7 @@ class Admin(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     user_id = models.ForeignKey(User, on_delete=models.CASCADE,  related_name='admin_profile')
+
        
     class Meta:
         ordering = ['-id']
