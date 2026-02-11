@@ -31,16 +31,6 @@ class Language(models.Model):
     def __str__(self):
         return self.name
 
-class Location(models.Model):
-    """Model representing a location.
-    """
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    
-    name = models.CharField(max_length=20, unique=True)
-
-    def __str__(self):
-        return self.name
-
 class PaymentStatus(models.Model):
     """Model representing a payment status.
     """

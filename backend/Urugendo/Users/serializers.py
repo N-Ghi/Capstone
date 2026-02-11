@@ -8,6 +8,7 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8, required=True)
     confirm_password = serializers.CharField(write_only=True, required=True)
+    role = serializers.ChoiceField(choices=['Tourist', 'Guide'])
 
     class Meta:
         model = User
@@ -46,6 +47,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         user = User.objects.create_user(**validated_data)
         user.set_password(password)
+        user.is_active = False  # Require email verification
         user.save()
         return user
 

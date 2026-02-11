@@ -1,6 +1,5 @@
 from django.core.management.base import BaseCommand
-from Choices.models import ( PaymentMethod, TravelPreference, Language, 
-    Location, PaymentStatus, BookingStatus, MobileProvider, PayoutStatus,
+from Choices.models import ( PaymentMethod, TravelPreference, Language, PaymentStatus, BookingStatus, MobileProvider, PayoutStatus,
 )
 
 class Command(BaseCommand):
@@ -29,14 +28,6 @@ class Command(BaseCommand):
             "Kinyarwanda",
         ]
 
-        locations = [
-            "Kigali",
-            "Musanze",
-            "Huye",
-            "Rubavu",
-            "Nyagatare",
-        ]
-
         payment_statuses = [
             "PENDING",
             "COMPLETED",
@@ -54,8 +45,6 @@ class Command(BaseCommand):
         mobile_providers = [
             "MTN Mobile Money",
             "Airtel Money",
-            "Visa",
-            "Mastercard",
         ]
 
         payout_statuses = [
@@ -73,9 +62,6 @@ class Command(BaseCommand):
 
         for name in languages:
             Language.objects.get_or_create(name=name)
-
-        for name in locations:
-            Location.objects.get_or_create(name=name)
 
         for code in payment_statuses:
             PaymentStatus.objects.get_or_create(code=code)
