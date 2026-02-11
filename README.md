@@ -20,3 +20,7 @@ MIT
 ## Figma
 
 - <https://www.figma.com/make/LeGLKBlq53YchNMJMscDuC/Tunisia-Tourism-Discovery-App--Community-?fullscreen=1&t=SnZyEH8oE1OzsNfT-1>
+
+## Deployment
+
+I plan to use terraform and ansible to deploy to Azure and the student subscription following the principles learned during the DevOps module.
