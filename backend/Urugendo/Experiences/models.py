@@ -2,7 +2,8 @@ import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
-from Choices.models import PaymentMethod, TravelPreference, Language, Location
+from Choices.models import PaymentMethod, TravelPreference, Language
+from Location.models import GeoLocation
 
 User = get_user_model()
 
@@ -21,12 +22,9 @@ class Experience(models.Model):
 
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
-    location = models.ManyToManyField(Location, blank=True)
-
-    map_link = models.URLField(
-        default='https://www.google.com/maps/place/Kigali,+Rwanda/@-1.9705796,30.0644358,11z'
+    location = models.OneToOneField( GeoLocation, on_delete=models.SET_NULL, null=True,
+        blank=True, related_name='experience_location'
     )
-
     photos = ArrayField(models.URLField(blank=True), blank=True, default=list)
 
     languages = models.ManyToManyField(Language, blank=True)

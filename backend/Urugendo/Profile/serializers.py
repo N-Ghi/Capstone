@@ -1,16 +1,15 @@
 from rest_framework import serializers
-from .models import Tourist, Guide, Admin
-from Choices.models import TravelPreference, PaymentMethod, Language
+
+from Location.models import GeoLocation
+from Location.serializers import GeoLocationSerializer
+from .models import Tourist, Guide
 
 
 class TouristSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tourist
-        fields = [
-            'id', 'user_id', 'travel_preferences', 'payment_methods',
-            'languages',
-        ]
-        read_only_fields = ['id']
+        fields = '__all__'
+        read_only_fields = ['id', 'user_id']
 
     # Field-level validation
     def validate_user_id(self, value):
@@ -70,3 +69,32 @@ class TouristSerializer(serializers.ModelSerializer):
             instance.languages.set(languages)
 
         return instance
+    
+class GuideSerializer(serializers.ModelSerializer):
+    location = GeoLocationSerializer(required=False)
+
+    class Meta:
+        model = Guide
+        fields = '__all__'
+        read_only_fields = ['id']
+
+    def create(self, validated_data):
+        location_data = validated_data.pop('location', None)
+        guide = Guide.objects.create(**validated_data)
+        if location_data:
+            location = GeoLocation.objects.create(**location_data)
+            guide.location = location
+            guide.save()
+        return guide
+
+    def update(self, instance, validated_data):
+        location_data = validated_data.pop('location', None)
+        if location_data:
+            if instance.location:
+                for attr, value in location_data.items():
+                    setattr(instance.location, attr, value)
+                instance.location.save()
+            else:
+                instance.location = GeoLocation.objects.create(**location_data)
+        return super().update(instance, validated_data)
+

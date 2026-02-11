@@ -9,7 +9,7 @@ urlpatterns = [
     path('auth/login/', login, name='login'),
     path("auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path('all/', user_list, name='user-list'),
-    path('<int:pk>/', user_detail, name='user-detail'),
-    path('update/<int:pk>/', user_update, name='user-update'),
-    path('delete/<int:pk>/', user_delete, name='user-delete'),
+    path('get/<uuid:user_id>/', user_detail, name='user-detail'),
+    path('update/<uuid:user_id>/', user_update, name='user-update'),
+    path('delete/<uuid:user_id>/', user_delete, name='user-delete'),
 ]

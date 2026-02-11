@@ -15,7 +15,7 @@ from Utils.email import send_verification_email
 User = get_user_model()
 
 
-# User registration endpoint
+# Tourist registration endpoint
 @api_view(['POST'])
 def register(request):
     serializer = UserSerializer(data=request.data)
@@ -56,10 +56,11 @@ def verify_email(request, uidb64, token):
         return Response({"error": "Verification link is invalid or expired."}, status=status.HTTP_400_BAD_REQUEST)
 
 
+
 # Login endpoint
 @api_view(['POST'])
 def login(request):
-    identifier = request.data.get('identifier')  # Identifier can be either username or email
+    identifier = request.data.get('identifier')  # username or email
     password = request.data.get('password')
 
     if not identifier or not password:
@@ -68,20 +69,19 @@ def login(request):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-    user = None
-
-    # Try email first
     try:
-        user = User.objects.get(email=identifier)
+        # Try email, then username
+        user = User.objects.filter(email=identifier).first() or \
+               User.objects.filter(username=identifier).first()
+
+        if not user:
+            raise User.DoesNotExist
+
     except User.DoesNotExist:
-        # Try username
-        try:
-            user = User.objects.get(username=identifier)
-        except User.DoesNotExist:
-            return Response(
-                {"error": "Invalid credentials."},
-                status=status.HTTP_401_UNAUTHORIZED
-            )
+        return Response(
+            {"error": "Invalid credentials."},
+            status=status.HTTP_401_UNAUTHORIZED
+        )
 
     if not user.check_password(password):
         return Response(
@@ -91,15 +91,21 @@ def login(request):
 
     if not user.is_active:
         return Response(
-            {"error": "Account is disabled."},
+            {"error": "Account is not verified."},
             status=status.HTTP_403_FORBIDDEN
         )
 
     tokens = get_tokens_for_user(user)
+
     return Response({
         "tokens": tokens,
-        "user": { "id": user.id, "username": user.username, "email": user.email,
-            "first_name": user.first_name, "last_name": user.last_name, 
-            "role": user.role, "profile_picture": user.profile_picture,
+        "user": {
+            "id": user.id,
+            "username": user.username,
+            "email": user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "role": user.role,
+            "profile_picture": user.profile_picture,
         }
     }, status=status.HTTP_200_OK)
