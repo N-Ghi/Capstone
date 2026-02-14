@@ -1,5 +1,6 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from Urugendo.permissions import IsAdmin, IsSuperAdmin
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
@@ -28,6 +29,18 @@ def create_profile(request):
         serializer.save(user_id=user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# Retrieve all profiles (admin only)
+@api_view(['GET'])
+@permission_classes([IsAuthenticated, IsAdmin | IsSuperAdmin])
+def get_profiles(request):
+    tourists = TouristSerializer(User.objects.filter(role='Tourist', tourist_profile__isnull=False), many=True)
+    guides = GuideSerializer(User.objects.filter(role='Guide', guide_profile__isnull=False), many=True)
+    return Response({
+        "tourists": tourists.data,
+        "guides": guides.data
+    })
+
 
 # Retrieve a profile
 @api_view(['GET'])
