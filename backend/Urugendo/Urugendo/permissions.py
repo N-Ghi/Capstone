@@ -3,19 +3,19 @@ from rest_framework.permissions import BasePermission
 
 class IsTourist(permissions.BasePermission):
     def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.role == 'tourist'
+        return request.user.is_authenticated and request.user.role == 'Tourist'
 
 class IsGuide(BasePermission):
     def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.role == 'guide'
+        return request.user.is_authenticated and request.user.role == 'Guide'
     
     
 class IsAdmin(permissions.BasePermission):
     def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.role == 'admin'
+        return request.user.is_authenticated and request.user.role == 'Admin'
 
 
 class IsSuperAdmin(BasePermission):
 
     def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.role == 'admin' and request.user.is_superuser
+        return request.user.is_authenticated and request.user.role == 'Admin' and request.user.is_superuser

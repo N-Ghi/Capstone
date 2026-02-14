@@ -19,7 +19,7 @@ def upload_profile_image(request):
 
         try:
             public_url = upload_image_to_supabase( image_file=image_file,
-                bucket_name='profile-images', user_id=user_id, delete_old=True
+                bucket_name='profile_pictures', user_id=user_id, delete_old=True
             )
             return Response({"url": public_url}, status=status.HTTP_201_CREATED)
         except Exception as e:
@@ -38,7 +38,7 @@ def upload_experience_image(request):
 
         try:
             public_url = upload_image_to_supabase(
-                image_file=image_file, bucket_name='experience-images',
+                image_file=image_file, bucket_name='experience_pictures',
                 user_id=user_id, delete_old=False
             )
             return Response({"url": public_url}, status=status.HTTP_201_CREATED)
