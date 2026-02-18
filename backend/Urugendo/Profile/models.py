@@ -2,7 +2,7 @@ import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
 from Choices.models import PaymentMethod, TravelPreference, Language
-from Location.models import GeoLocation
+from Location.models import Location
 
 
 User = get_user_model()
@@ -42,7 +42,7 @@ class Guide(models.Model):
 
     expertise = models.ManyToManyField( TravelPreference, blank=True )
     
-    location = models.OneToOneField( GeoLocation, on_delete=models.SET_NULL, null=True,
+    location = models.OneToOneField( Location, on_delete=models.SET_NULL, null=True,
         blank=True, related_name='guide_location'
     )
 

@@ -1,107 +1,135 @@
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
-from Urugendo.permissions import IsAdmin, IsSuperAdmin
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
+from Urugendo.permissions import IsAdmin
 from .serializers import GuideSerializer, TouristSerializer
 
 User = get_user_model()
 
 
-# Create a new profile
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def create_profile(request):
-    user = request.user
+class ProfileViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
 
-    # Check if the user already has a profile
-    if (user.role == 'Tourist' and hasattr(user, 'tourist_profile')) or (user.role == 'Guide' and hasattr(user, 'guide_profile')):
-        return Response({"error": "This user already has a profile."}, status=status.HTTP_400_BAD_REQUEST)
-    
-    serializer = None
-    if user.role == 'Tourist':
-        serializer = TouristSerializer(data=request.data)
-    elif user.role == 'Guide':
-        serializer = GuideSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save(user_id=user)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def _get_serializer(self, user, *args, **kwargs):
+        """Return the appropriate serializer based on the user's role."""
+        if user.role == 'Tourist':
+            return TouristSerializer(*args, **kwargs)
+        elif user.role == 'Guide':
+            return GuideSerializer(*args, **kwargs)
+        return None
 
-# Retrieve all profiles (admin only)
-@api_view(['GET'])
-@permission_classes([IsAuthenticated, IsAdmin | IsSuperAdmin])
-def get_profiles(request):
-    tourists = TouristSerializer(User.objects.filter(role='Tourist', tourist_profile__isnull=False), many=True)
-    guides = GuideSerializer(User.objects.filter(role='Guide', guide_profile__isnull=False), many=True)
-    return Response({
-        "tourists": tourists.data,
-        "guides": guides.data
-    })
+    def _get_profile(self, user):
+        """Return the profile instance for the given user, or None."""
+        if user.role == 'Tourist' and hasattr(user, 'tourist_profile'):
+            return user.tourist_profile
+        elif user.role == 'Guide' and hasattr(user, 'guide_profile'):
+            return user.guide_profile
+        return None
 
+    def _is_owner_or_admin(self, request, user):
+        """Check if the requester is the profile owner or an Admin."""
+        return request.user == user or request.user.role == 'Admin'
 
-# Retrieve a profile
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def get_profile(request, user_id):
-    user = get_object_or_404(User, id=user_id)
+    # POST /profiles/create/
+    def create(self, request):
+        """Create a profile for the authenticated user."""
+        user = request.user
 
-    # Only admins and the user themselves can access this endpoint
-    if not (request.user.role == 'admin' or request.user.id == user_id):
-        return Response({"detail": "You do not have permission to perform this action."}, status=status.HTTP_403_FORBIDDEN)
-    
-    if user.role == 'Tourist' and hasattr(user, 'tourist_profile'):
-        serializer = TouristSerializer(user.tourist_profile)
+        if self._get_profile(user):
+            return Response(
+                {"error": "This user already has a profile."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        serializer = self._get_serializer(user, data=request.data)
+        if serializer is None:
+            return Response(
+                {"error": "Admins do not have profiles."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if serializer.is_valid():
+            serializer.save(user_id=user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # GET /profiles/
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated, IsAdmin])
+    def get_profiles(self, request):
+        """List all tourist and guide profiles (Admin/SuperAdmin only)."""
+        tourists = TouristSerializer(
+            User.objects.filter(role='Tourist', tourist_profile__isnull=False),
+            many=True
+        )
+        guides = GuideSerializer(
+            User.objects.filter(role='Guide', guide_profile__isnull=False),
+            many=True
+        )
+        return Response({"tourists": tourists.data, "guides": guides.data})
+
+    # GET /profiles/<user_id>/
+    def retrieve(self, request, pk=None):
+        """Retrieve a single user's profile."""
+        user = get_object_or_404(User, id=pk)
+
+        if not self._is_owner_or_admin(request, user):
+            return Response(
+                {"detail": "You do not have permission to perform this action."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        profile = self._get_profile(user)
+        if profile is None:
+            return Response({"error": "Profile not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = self._get_serializer(user, profile)
         return Response(serializer.data)
-    elif user.role == 'Guide' and hasattr(user, 'guide_profile'):
-        serializer = GuideSerializer(user.guide_profile)
-        return Response(serializer.data)
-    
-    return Response({"error": "Profile not found."}, status=status.HTTP_404_NOT_FOUND)
 
-# Update a profile
-@api_view(['PUT', 'PATCH'])
-@permission_classes([IsAuthenticated])
-def update_profile(request, user_id):
+    # PUT/PATCH /profiles/<user_id>/
+    def update(self, request, pk=None):
+        """Full update of a user's profile."""
+        return self._update(request, pk, partial=False)
 
-    user = get_object_or_404(User, id=user_id)
+    def partial_update(self, request, pk=None):
+        """Partial update of a user's profile."""
+        return self._update(request, pk, partial=True)
 
-    # Check if the user is the owner of the profile or an admin
-    if request.user != user and not (request.user.role == 'Admin'):
-        return Response({"error": "You do not have permission to update this profile."}, status=status.HTTP_403_FORBIDDEN)
+    def _update(self, request, pk, partial):
+        user = get_object_or_404(User, id=pk)
 
-    
-    partial = request.method == 'PATCH'
+        if not self._is_owner_or_admin(request, user):
+            return Response(
+                {"error": "You do not have permission to update this profile."},
+                status=status.HTTP_403_FORBIDDEN
+            )
 
-    if user.role == 'Tourist' and hasattr(user, 'tourist_profile'):
-        serializer = TouristSerializer(user.tourist_profile, data=request.data, partial=partial)
-    elif user.role == 'Guide' and hasattr(user, 'guide_profile'):
-        serializer = GuideSerializer(user.guide_profile, data=request.data, partial=partial)
-    else:
-        return Response({"error": "Profile not found."}, status=status.HTTP_404_NOT_FOUND)
+        profile = self._get_profile(user)
+        if profile is None:
+            return Response({"error": "Profile not found."}, status=status.HTTP_404_NOT_FOUND)
 
-    if serializer.is_valid():
-        serializer.save(user_id=user)
-        return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer = self._get_serializer(user, profile, data=request.data, partial=partial)
+        if serializer.is_valid():
+            serializer.save(user_id=user)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# Delete a profile
-@api_view(['DELETE'])
-@permission_classes([IsAuthenticated])
-def delete_profile(request, user_id):
-    user = get_object_or_404(User, id=user_id)
+    # DELETE /profiles/<user_id>/
+    def destroy(self, request, pk=None):
+        """Delete a user's profile."""
+        user = get_object_or_404(User, id=pk)
 
-    # Check if the user is the owner of the profile or an admin
-    if request.user != user and not (request.user.role == 'Admin'):
-        return Response({"error": "You do not have permission to delete this profile."}, status=status.HTTP_403_FORBIDDEN)
+        if not self._is_owner_or_admin(request, user):
+            return Response(
+                {"error": "You do not have permission to delete this profile."},
+                status=status.HTTP_403_FORBIDDEN
+            )
 
-    if user.role == 'Tourist' and hasattr(user, 'tourist_profile'):
-        user.tourist_profile.delete()
+        profile = self._get_profile(user)
+        if profile is None:
+            return Response({"error": "Profile not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        profile.delete()
         return Response({"detail": "Profile deleted."}, status=status.HTTP_204_NO_CONTENT)
-    elif user.role == 'Guide' and hasattr(user, 'guide_profile'):
-        user.guide_profile.delete()
-        return Response({"detail": "Profile deleted."}, status=status.HTTP_204_NO_CONTENT)
-    
-    return Response({"error": "Profile not found."}, status=status.HTTP_404_NOT_FOUND)
