@@ -3,7 +3,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from Utils.jwt import get_tokens_for_user
 from .serializers import UserSerializer
-
 from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
@@ -14,22 +13,23 @@ from Utils.email import send_verification_email
 
 User = get_user_model()
 
+def generate_verification_link(user, request):
+    uid = urlsafe_base64_encode(force_bytes(user.pk))
+    token = default_token_generator.make_token(user)
+    verification_path = reverse('verify-email', kwargs={'uidb64': uid, 'token': token})
+    return request.build_absolute_uri(verification_path)
 
-# Tourist registration endpoint
+# User registration endpoint
 @api_view(['POST'])
 def register(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()
 
-        # Generate verification token
-        uid = urlsafe_base64_encode(force_bytes(user.pk))
-        token = default_token_generator.make_token(user)
+        # Generate verification token and link
+        verification_link = generate_verification_link(user, request)
 
-        verification_path = reverse('verify-email', kwargs={'uidb64': uid, 'token': token})
-        verification_link = request.build_absolute_uri(verification_path)
-
-        # Mock email send
+        # Send verification email
         send_verification_email(user.email, verification_link)
 
         return Response({
@@ -38,13 +38,14 @@ def register(request):
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 # Email verification endpoint
 @api_view(['GET'])
 def verify_email(request, uidb64, token):
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
+        if user.is_active:
+            return Response({"message": "Account is already verified."}, status=status.HTTP_200_OK)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         return Response({"error": "Invalid verification link."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -55,7 +56,24 @@ def verify_email(request, uidb64, token):
     else:
         return Response({"error": "Verification link is invalid or expired."}, status=status.HTTP_400_BAD_REQUEST)
 
+# Resend verification email endpoint
+@api_view(['POST'])
+def resend_verification_email(request):
+    email = request.data.get('email')
+    if not email:
+        return Response({"error": "Email is required."}, status=status.HTTP_400_BAD_REQUEST)
 
+    try:
+        user = User.objects.get(email=email)
+        if user.is_active:
+            return Response({"message": "Account is already verified."}, status=status.HTTP_200_OK)
+
+        verification_link = generate_verification_link(user, request)
+        send_verification_email(user.email, verification_link)
+        return Response({"message": "Verification email resent. Please check your inbox."}, status=status.HTTP_200_OK)
+
+    except User.DoesNotExist:
+        return Response({"error": "No account found with that email."}, status=status.HTTP_404_NOT_FOUND)
 
 # Login endpoint
 @api_view(['POST'])

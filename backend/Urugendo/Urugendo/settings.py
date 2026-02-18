@@ -62,6 +62,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 15,
 }
 
 SIMPLE_JWT = {
@@ -85,6 +87,25 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Google - Gmail
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+GOOGLE_REFRESH_TOKEN = os.getenv("GOOGLE_REFRESH_TOKEN")
+GMAIL_SENDER_EMAIL = os.getenv("GMAIL_SENDER_EMAIL")
+
+# Google - Calendar
+GOOGLE_CALENDAR_CLIENT_ID = os.getenv("GOOGLE_CALENDAR_CLIENT_ID")
+GOOGLE_CALENDAR_CLIENT_SECRET = os.getenv("GOOGLE_CALENDAR_CLIENT_SECRET")
+GOOGLE_CALENDAR_REDIRECT_URI = os.getenv("GOOGLE_CALENDAR_REDIRECT_URI")
+
+# Google - Maps
+GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
+
+# Microsoft - Translator
+AZURE_TRANSLATOR_KEY = os.getenv("AZURE_TRANSLATOR_KEY")
+AZURE_TRANSLATOR_REGION = os.getenv("AZURE_TRANSLATOR_REGION")
+AZURE_TRANSLATOR_ENDPOINT = os.getenv("AZURE_TRANSLATOR_ENDPOINT")
+
 CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'Urugendo.urls'
@@ -106,6 +127,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Urugendo.wsgi.application'
 
+# Password reset token expiration time (in seconds)
+PASSWORD_RESET_TIMEOUT = 3600  # 1 hour in seconds
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

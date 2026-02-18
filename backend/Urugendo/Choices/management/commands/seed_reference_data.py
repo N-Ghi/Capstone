@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from Choices.models import ( PaymentMethod, TravelPreference, Language, PaymentStatus, BookingStatus, MobileProvider, PayoutStatus,
+from Choices.models import ( PaymentMethod, TravelPreference, Language, PaymentStatus, MobileProvider, PayoutStatus,
 )
 
 class Command(BaseCommand):
@@ -8,71 +8,18 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         self.stdout.write("Seeding reference data...")
 
-        payment_methods = [
-            "Mobile Money",
-            "Credit Card",
-            "Debit Card",
-        ]
+        label_data = {
+            PaymentMethod: ["Mobile Money", "Credit Card", "Debit Card"],
+            TravelPreference: ["Adventure", "Cultural", "Relaxation", "Eco-Tourism", "Luxury"],
+            Language: ["English", "French", "Kinyarwanda"],
+            PaymentStatus: ["PENDING", "COMPLETED", "FAILED", "REFUNDED"],
+            MobileProvider: ["MTN Mobile Money", "Airtel Money"],
+            PayoutStatus: ["PENDING", "PROCESSING", "PAID", "FAILED"],
+        }
 
-        travel_preferences = [
-            "Adventure",
-            "Cultural",
-            "Relaxation",
-            "Eco-Tourism",
-            "Luxury",
-        ]
-
-        languages = [
-            "English",
-            "French",
-            "Kinyarwanda",
-        ]
-
-        payment_statuses = [
-            "PENDING",
-            "COMPLETED",
-            "FAILED",
-            "REFUNDED",
-        ]
-
-        booking_statuses = [
-            "PENDING",
-            "CONFIRMED",
-            "CANCELLED",
-            "COMPLETED",
-        ]
-
-        mobile_providers = [
-            "MTN Mobile Money",
-            "Airtel Money",
-        ]
-
-        payout_statuses = [
-            "PENDING",
-            "PROCESSING",
-            "PAID",
-            "FAILED",
-        ]
-
-        for name in payment_methods:
-            PaymentMethod.objects.get_or_create(name=name)
-
-        for name in travel_preferences:
-            TravelPreference.objects.get_or_create(name=name)
-
-        for name in languages:
-            Language.objects.get_or_create(name=name)
-
-        for code in payment_statuses:
-            PaymentStatus.objects.get_or_create(code=code)
-
-        for code in booking_statuses:
-            BookingStatus.objects.get_or_create(code=code)
-
-        for name in mobile_providers:
-            MobileProvider.objects.get_or_create(name=name)
-
-        for code in payout_statuses:
-            PayoutStatus.objects.get_or_create(code=code)
+        for model, entries in label_data.items():
+            for entry in entries:
+                field_name = 'name' if hasattr(model, 'name') else 'code'
+                model.objects.get_or_create(**{field_name: entry})
 
         self.stdout.write(self.style.SUCCESS("Reference data seeded successfully."))

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from Location.models import GeoLocation
-from Location.serializers import GeoLocationSerializer
+from Location.models import Location
+from Location.serializers import LocationSerializer
 from .models import Tourist, Guide
 
 
@@ -71,7 +71,7 @@ class TouristSerializer(serializers.ModelSerializer):
         return instance
     
 class GuideSerializer(serializers.ModelSerializer):
-    location = GeoLocationSerializer(required=False)
+    location = LocationSerializer(required=False)
 
     class Meta:
         model = Guide
@@ -82,7 +82,7 @@ class GuideSerializer(serializers.ModelSerializer):
         location_data = validated_data.pop('location', None)
         guide = Guide.objects.create(**validated_data)
         if location_data:
-            location = GeoLocation.objects.create(**location_data)
+            location = Location.objects.create(**location_data)
             guide.location = location
             guide.save()
         return guide

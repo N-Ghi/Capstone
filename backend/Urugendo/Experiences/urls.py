@@ -1,10 +1,20 @@
-from .views import create_experience, get_experiences, get_experience, update_experience, delete_experience
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import ExperienceViewSet, ExperienceSlotViewSet
+
+router = DefaultRouter()
+router.register(r'', ExperienceViewSet, basename='experience')
 
 urlpatterns = [
-    path('create/', create_experience, name='create_experience'),
-    path('get_experiences/', get_experiences, name='get_experiences'),
-    path('get/<uuid:experience_id>/', get_experience, name='get_experience'),
-    path('update/<uuid:experience_id>/', update_experience, name='update_experience'),
-    path('delete/<uuid:experience_id>/', delete_experience, name='delete_experience'),
+    # Experience CRUD
+    path('', include(router.urls)),
+
+    # Nested slot routes: /experiences/<exp_id>/slots/ and /experiences/<exp_id>/slots/<pk>/
+    path( '<uuid:exp_id>/slots/', ExperienceSlotViewSet.as_view({ 'get': 'list',
+        'post': 'create', }), name='experience-slot-list'
+    ),
+    path( '<uuid:exp_id>/slots/<uuid:pk>/', ExperienceSlotViewSet.as_view({
+            'get': 'retrieve', 'put': 'update', 'patch': 'partial_update',
+            'delete': 'destroy', }), name='experience-slot-detail'
+    ),
 ]

@@ -40,16 +40,6 @@ class PaymentStatus(models.Model):
 
     def __str__(self):
         return self.code
-    
-class BookingStatus(models.Model):
-    """Model representing a booking status.
-    """
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    
-    code = models.CharField(max_length=20, unique=True)
-
-    def __str__(self):
-        return self.code
 
 class MobileProvider(models.Model):
     """Model representing a mobile money provider.
