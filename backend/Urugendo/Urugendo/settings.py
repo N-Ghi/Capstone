@@ -64,6 +64,10 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 15,
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.OrderingFilter",
+    ]
 }
 
 SIMPLE_JWT = {
@@ -86,6 +90,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# Frontend URL for CORS and email links
+FRONTEND_URL = os.getenv('FRONTEND_URL')
 
 # Google - Gmail
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
