@@ -1,0 +1,19 @@
+{
+  "header": {
+    "language": "Language",
+    "login": "Login",
+    "signup": "Sign up",
+    "becomeGuide": "Become a Guide"
+  },
+  "explore": {
+    "title": "Explore by Category",
+    "clearFilter": "✕ Clear filter"
+  },
+  "experiences": {
+    "title": "Featured Experiences",
+    "empty": "No experiences found."
+  },
+  "brand": {
+    "tagline": "Thousand Experiences"
+  }
+}

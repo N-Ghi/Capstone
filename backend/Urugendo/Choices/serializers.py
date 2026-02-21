@@ -19,7 +19,7 @@ class TravelPreferenceSerializer(LabelSerializer):
 class LanguageSerializer(LabelSerializer):
     class Meta(LabelSerializer.Meta):
         model = Language
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'code']
 
 class PaymentStatusSerializer(LabelSerializer):
     class Meta(LabelSerializer.Meta):

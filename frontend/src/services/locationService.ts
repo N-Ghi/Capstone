@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { LocationData, Location } from "../types/location.types";
+import type { LocationData, Location } from "../@types/location.types";
 
 const API_URL = import.meta.env.VITE_API_BASE_URL
 const timeout = import.meta.env.VITE_API_TIMEOUT;

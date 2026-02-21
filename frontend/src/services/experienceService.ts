@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { CreateExperienceData, ExperienceListItem, ExperienceQueryParams, ExperirnceSlotData, PaginatedResponse } from "../types/experience.types";
+import type { CreateExperienceData, ExperienceListItem, ExperienceQueryParams, ExperirnceSlotData, PaginatedResponse } from "../@types/experience.types";
 
 const API_URL = import.meta.env.VITE_API_BASE_URL
 const timeout = import.meta.env.VITE_API_TIMEOUT;

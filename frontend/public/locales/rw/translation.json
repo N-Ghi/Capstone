@@ -1,0 +1,19 @@
+{
+  "header": {
+    "language": "Ururimi",
+    "login": "Injira",
+    "signup": "Kwiyandikisha",
+    "becomeGuide": "Kuba Umuyobozi"
+  },
+  "explore": {
+    "title": "Reba mu byiciro",
+    "clearFilter": "✕ Siba umwihariko"
+  },
+  "experiences": {
+    "title": "Ibikorwa bimwe na bimwe",
+    "empty": "Ntabikorwa byabonywe."
+  },
+  "brand": {
+    "tagline": "Thousand Experiences"
+  }
+}
