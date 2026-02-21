@@ -1,10 +1,12 @@
 from rest_framework import serializers, viewsets, status
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import OrderingFilter   
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
-
+from .filters import ExperienceFilter
 from .models import Experience, ExperienceSlot
 from .serializers import ExperienceSerializer, ExperienceListSerializer, ExperienceSlotSerializer
 from Urugendo.permissions import IsGuideOwnerOrAdmin, IsAdmin, IsGuide
@@ -15,9 +17,14 @@ User = get_user_model()
 class ExperienceViewSet(ModelViewSet):
     queryset = Experience.objects.select_related( "guide", "location"
     ).prefetch_related( "expertise", "languages", "payment_methods"
-    ).filter(is_active=True)
+    ).filter(is_active=True).distinct()
 
     permission_classes = [IsAuthenticated]
+
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_class = ExperienceFilter
+
+    ordering_fields = [ 'created_at', 'updated_at', 'title' ]
 
     def get_serializer_class(self):
         if self.action == 'list':
@@ -25,6 +32,8 @@ class ExperienceViewSet(ModelViewSet):
         return ExperienceSerializer
 
     def get_permissions(self):
+        if self.action == 'list':
+            return [AllowAny()]
         if self.action in ['update', 'partial_update', 'destroy']:
             return [IsAuthenticated(), IsGuideOwnerOrAdmin()]
         if self.action == 'create':
