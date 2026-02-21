@@ -4,6 +4,7 @@
  * Login form component; uses `useAuth` context to perform login
  * and redirects based on user role.
  */
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeftFromLine, Compass } from 'lucide-react';
@@ -13,6 +14,7 @@ import styles from './LoginForm.module.css';
 import logo from '../../assets/logo.png';
 
 const LoginForm: React.FC = () => {
+  const { t } = useTranslation('auth');
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -23,7 +25,7 @@ const LoginForm: React.FC = () => {
 
   const goBack = () => navigate(-1);
 
-  const handleLogin = async (event: React.FormEvent) => {
+  const handleLogin = async (event: React.SubmitEvent) => {
     event.preventDefault();
     setLoading(true);
     setError(null);
@@ -35,7 +37,7 @@ const LoginForm: React.FC = () => {
       console.error('Login failed:', err);
       setError(
         err?.response?.data?.error ||
-        'Login failed. Please check your credentials.'
+        t('login.error.default')
       );
     } finally {
       setLoading(false);
@@ -58,30 +60,29 @@ const LoginForm: React.FC = () => {
 
         <div className={styles.panelContent}>
           <p className={styles.panelQuote}>
-            Every great journey begins with a single <span>step forward</span>.
+           {t('panel.quote')} <span>{t('panel.quoteHighlight')}</span>.
           </p>
-          <span className={styles.panelSub}>Welcome back, traveller</span>
+          <span className={styles.panelSub}>{t('panel.welcome')}</span>
         </div>
       </div>
 
       {/* ── Right form panel ─────────────────────────────────────────────── */}
       <div className={styles.formPanel}>
         <div className={styles.formBox}>
-
           <div className={styles.formHeader}>
-            <h2 className={styles.title}>Welcome back</h2>
-            <p className={styles.subtitle}>Sign in to continue your journey</p>
+            <h2 className={styles.title}>{t('login.title')}</h2>
+            <p className={styles.subtitle}>{t('login.subtitle')}</p>
           </div>
 
           {error && <div className={styles.errorAlert}>{error}</div>}
 
           <form onSubmit={handleLogin}>
             <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Email or Username</label>
+              <label className={styles.formLabel}>{t('login.emailOrUsername')}</label>
               <input
                 className={styles.formControl}
                 type="text"
-                placeholder="Enter email or username"
+                placeholder={t('login.emailPlaceholder')}
                 value={identifier}
                 onChange={(e) => setIdentifier(e.target.value)}
                 required
@@ -90,11 +91,11 @@ const LoginForm: React.FC = () => {
             </div>
 
             <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Password</label>
+              <label className={styles.formLabel}>{t('login.password')}</label>
               <input
                 className={styles.formControl}
                 type="password"
-                placeholder="Enter password"
+                placeholder={t('login.passwordPlaceholder')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -103,18 +104,18 @@ const LoginForm: React.FC = () => {
             </div>
 
             <button type="submit" className={styles.submitBtn} disabled={loading}>
-              {loading ? 'Signing in…' : 'Sign in'}
+              {loading ? t('login.submitting') : t('login.submit')}
             </button>
 
             <button type="button" className={styles.backBtn} onClick={goBack}>
               <ArrowLeftFromLine size={15} />
-              Go back
+              {t('login.goBack')}
             </button>
           </form>
 
           <div className={styles.formFooter}>
-            Don't have an account?{' '}
-            <button onClick={() => navigate('/register')}>Register</button>
+            {t('login.noAccount')}{' '}
+            <button onClick={() => navigate('/register')}>{t('login.register')}</button>
           </div>
         </div>
       </div>

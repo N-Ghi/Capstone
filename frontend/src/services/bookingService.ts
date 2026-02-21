@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Booking, CreateBookingResponse, CreateBooking } from "../types/booking.types";
+import type { Booking, CreateBookingResponse, CreateBooking } from "../@types/booking.types";
 const API_URL = import.meta.env.VITE_API_BASE_URL
 const timeout = import.meta.env.VITE_API_TIMEOUT;
 

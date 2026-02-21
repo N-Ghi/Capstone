@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { AuthResponse, User } from "../types/auth.types";
+import type { AuthResponse, User } from "../@types/auth.types";
 
 const API_URL = import.meta.env.VITE_API_BASE_URL
 const timeout = import.meta.env.VITE_API_TIMEOUT;
