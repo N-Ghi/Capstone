@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=DM+Sans:wght@300;400;500&display=swap');
+
+:root {
+  --primary:       #627F67;
+  --primary-dark:  #506957;
+  --dark:          #2B4150;
+  --white:         #ffffff;
+  --radius-md:     10px;
+}
+
+/* ─── Layout ─────────────────────────────────────────────────────────────── */
+.wrapper {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-family: 'DM Sans', sans-serif;
+  overflow: hidden;
+}
+
+/* ─── Left panel ─────────────────────────────────────────────────────────── */
+.panel {
+  position: relative;
+  background: linear-gradient(160deg, #3a5c45 0%, #2b4150 55%, #1e2e38 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 3rem;
+  overflow: hidden;
+}
+
+.panel::before,
+.panel::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.panel::before {
+  width: 520px; height: 520px;
+  top: -140px; left: -140px;
+  background: radial-gradient(circle, rgba(116,198,157,0.18) 0%, transparent 70%);
+}
+
+.panel::after {
+  width: 340px; height: 340px;
+  bottom: 60px; right: -100px;
+  background: radial-gradient(circle, rgba(98,127,103,0.22) 0%, transparent 70%);
+}
+
+.panelBrand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: absolute;
+  top: 2.5rem; left: 3rem;
+  z-index: 2;
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+.panelLogo {
+  height: 36px;
+  width: auto;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.panelBrandName {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.92);
+  letter-spacing: 0.01em;
+}
+
+.panelBadge {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -55%);
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(141,213,173,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: slowSpin 28s linear infinite;
+}
+
+.panelBadge::before {
+  content: '';
+  position: absolute;
+  inset: 18px;
+  border-radius: 50%;
+  border: 1px dashed rgba(141,213,173,0.20);
+}
+
+.panelBadgeIcon { color: rgba(141,213,173,0.55); }
+
+@keyframes slowSpin {
+  to { transform: translate(-50%, -55%) rotate(360deg); }
+}
+
+.panelContent { position: relative; z-index: 2; }
+
+.panelQuote {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+  font-style: italic;
+  font-weight: 500;
+  color: rgba(255,255,255,0.90);
+  line-height: 1.35;
+  margin-bottom: 1.25rem;
+  max-width: 380px;
+}
+
+.panelQuote span { color: #8dd5ad; font-style: normal; font-weight: 600; }
+
+.panelSub {
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ─── Right / notice panel ───────────────────────────────────────────────── */
+.formPanel {
+  background: #f7f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  overflow-y: auto;
+}
+
+.formBox {
+  width: 100%;
+  max-width: 420px;
+}
+
+/* ─── Notice content ─────────────────────────────────────────────────────── */
+.successBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  animation: slideUp 0.45s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.successIcon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 6px 18px rgba(98,127,103,0.32);
+}
+
+.title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin: 0 0 0.3rem;
+  letter-spacing: -0.01em;
+}
+
+.noticeBody {
+  font-size: 0.925rem;
+  color: rgba(43,65,80,0.75);
+  line-height: 1.65;
+  margin: 0.5rem 0 0.75rem;
+}
+
+.noticeHint {
+  font-size: 0.825rem;
+  color: rgba(43,65,80,0.5);
+  line-height: 1.55;
+  margin-bottom: 1.75rem;
+}
+
+.noticeHint strong {
+  color: var(--dark);
+  font-weight: 500;
+}
+
+/* ─── Buttons ────────────────────────────────────────────────────────────── */
+.submitBtn {
+  width: 100%;
+  padding: 11px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.925rem;
+  font-weight: 500;
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.22s;
+  box-shadow: 0 4px 14px rgba(98,127,103,0.28);
+  margin-bottom: 10px;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.submitBtn:hover {
+  background: linear-gradient(135deg, #6e8e73, var(--primary));
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(98,127,103,0.38);
+}
+
+.backBtn {
+  width: 100%;
+  padding: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: rgba(43,65,80,0.65);
+  background: transparent;
+  border: 1.5px solid rgba(43,65,80,0.15);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.backBtn:hover {
+  background: rgba(43,65,80,0.05);
+  border-color: rgba(43,65,80,0.28);
+  color: var(--dark);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .wrapper { grid-template-columns: 1fr; }
+  .panel   { display: none; }
+  .formPanel {
+    padding: 3rem 1.25rem 2rem;
+    align-items: flex-start;
+  }
+}
