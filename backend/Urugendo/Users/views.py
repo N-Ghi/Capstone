@@ -37,6 +37,11 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
+    def retrieve_me(self, request, *args, **kwargs):
+        """GET /users/me/ — Retrieve the authenticated user's profile."""
+        serializer = self.get_serializer(request.user)
+        return Response(serializer.data)
+
     def update(self, request, *args, **kwargs):
         """PUT/PATCH /users/<id>/ — Update a user."""
         instance = self.get_object()

@@ -1,3 +1,4 @@
+from django.conf import settings
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -11,13 +12,15 @@ from django.contrib.auth import get_user_model
 from .serializers import UserSerializer
 from Utils.email import send_verification_email
 
+
 User = get_user_model()
 
 def generate_verification_link(user, request):
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     token = default_token_generator.make_token(user)
-    verification_path = reverse('verify-email', kwargs={'uidb64': uid, 'token': token})
-    return request.build_absolute_uri(verification_path)
+    frontend_url = settings.FRONTEND_URL
+    verification_path = f"/verify-email/{uid}/{token}/"
+    return f"{frontend_url}{verification_path}"
 
 # User registration endpoint
 @api_view(['POST'])
