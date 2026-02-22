@@ -1,9 +1,3 @@
-/**
- * LoginForm
- *
- * Login form component; uses `useAuth` context to perform login
- * and redirects based on user role.
- */
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -60,9 +54,9 @@ const LoginForm: React.FC = () => {
 
         <div className={styles.panelContent}>
           <p className={styles.panelQuote}>
-           {t('panel.quote')} <span>{t('panel.quoteHighlight')}</span>.
+           {t('login.panel.quote')} <span>{t('login.panel.quoteHighlight')}</span>.
           </p>
-          <span className={styles.panelSub}>{t('panel.welcome')}</span>
+          <span className={styles.panelSub}>{t('login.panel.welcome')}</span>
         </div>
       </div>
 

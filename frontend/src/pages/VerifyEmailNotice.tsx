@@ -1,3 +1,4 @@
+import { Trans, useTranslation } from 'react-i18next';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MailCheck, RefreshCw, Compass } from 'lucide-react';
@@ -5,6 +6,7 @@ import styles from './VerifyEmailNotice.module.css';
 import logo from '../assets/logo.png';
 
 const VerifyEmailNotice: React.FC = () => {
+  const { t } = useTranslation('auth');
   const navigate = useNavigate();
 
   return (
@@ -23,9 +25,9 @@ const VerifyEmailNotice: React.FC = () => {
 
         <div className={styles.panelContent}>
           <p className={styles.panelQuote}>
-            Your journey is just getting <span>started</span>.
+            {t('verifyEmailNotice.panel.quote')} <span>{t('verifyEmailNotice.panel.quoteHighlight')}</span>.
           </p>
-          <span className={styles.panelSub}>One last step</span>
+          <span className={styles.panelSub}>{t('verifyEmailNotice.panel.welcome')}</span>
         </div>
       </div>
 
@@ -38,16 +40,18 @@ const VerifyEmailNotice: React.FC = () => {
               <MailCheck size={28} color="#fff" strokeWidth={1.8} />
             </div>
 
-            <h2 className={styles.title}>Check your inbox</h2>
+            <h2 className={styles.title}>{t('verifyEmailNotice.title')}</h2>
 
             <p className={styles.noticeBody}>
-              Registration successful! We've sent a verification link to your
-              email address. Click it to activate your account and start
-              exploring.
+              {t('verifyEmailNotice.body')}
             </p>
 
             <p className={styles.noticeHint}>
-              Can't find it? Check your <strong>spam or junk folder</strong>.
+              <Trans
+                i18nKey="verifyEmailNotice.hint"
+                ns="auth"
+                components={{ strong: <strong /> }}
+              />
             </p>
 
             <button
@@ -55,7 +59,7 @@ const VerifyEmailNotice: React.FC = () => {
               onClick={() => navigate('/resend-email')}
             >
               <RefreshCw size={15} style={{ marginRight: 7 }} />
-              Resend verification email
+              {t('verifyEmailNotice.resend')}
             </button>
 
             <button
@@ -63,7 +67,7 @@ const VerifyEmailNotice: React.FC = () => {
               style={{ marginTop: 10 }}
               onClick={() => navigate('/')}
             >
-              Back to home
+              {t('verifyEmailNotice.backToHome')}
             </button>
 
           </div>

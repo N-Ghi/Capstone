@@ -1,8 +1,4 @@
-/**
- * RegisterForm
- *
- * Registration form; uses `useAuth` context to register new users.
- */
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeftFromLine, Compass, MapPin } from 'lucide-react';
@@ -10,11 +6,10 @@ import { useAuth } from '../../context/AuthContext';
 import styles from './RegisterForm.module.css';
 import logo from '../../assets/logo.png';
 
-interface RegisterFormProps {
-  role: 'Tourist' | 'Guide';
-}
+interface RegisterFormProps { role: 'Tourist' | 'Guide'; }
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ role }) => {
+  const { t } = useTranslation('auth');
   const navigate = useNavigate();
   const { register } = useAuth();
 
@@ -49,7 +44,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ role }) => {
       console.error('Registration failed:', err);
       setError(
         err?.response?.data?.error ||
-        'Registration failed. Please check your details.'
+        t('register.error.default')
       );
     } finally {
       setLoading(false);
@@ -72,9 +67,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ role }) => {
 
         <div className={styles.panelContent}>
           <p className={styles.panelQuote}>
-            Join a community of <span>authentic experiences</span> across Rwanda.
+            {t('register.panel.quote1')} <span>{t('register.panel.quoteHighlight')}</span> {t('register.panel.quote2')}
           </p>
-          <span className={styles.panelSub}>Your adventure starts here</span>
+          <span className={styles.panelSub}>{t('register.panel.panelSub')}</span>
         </div>
       </div>
 
@@ -83,11 +78,11 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ role }) => {
         <div className={styles.formBox}>
 
           <div className={styles.formHeader}>
-            <h2 className={styles.title}>Create account</h2>
-            <p className={styles.subtitle}>Fill in your details to get started</p>
+            <h2 className={styles.title}>{t('register.title')}</h2>
+            <p className={styles.subtitle}>{t('register.subtitle')}</p>
             <div className={styles.roleBadge}>
               <MapPin size={11} />
-              Registering as {role}
+              {t('register.roleBadge', { role: t(`roles.${role}`) })}
             </div>
           </div>
 
@@ -98,22 +93,22 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ role }) => {
             {/* First + Last name side by side */}
             <div className={styles.nameRow}>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>First Name</label>
+                <label className={styles.formLabel}>{t('register.firstName')}</label>
                 <input
                   className={styles.formControl}
                   type="text"
-                  placeholder="Jane"
+                  placeholder={t('register.firstNamePlaceholder')}
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   required
                 />
               </div>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Last Name</label>
+                <label className={styles.formLabel}>{t('register.lastName')}</label>
                 <input
                   className={styles.formControl}
                   type="text"
-                  placeholder="Doe"
+                  placeholder={t('register.lastNamePlaceholder')}
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   required
@@ -122,11 +117,11 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ role }) => {
             </div>
 
             <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Username</label>
+              <label className={styles.formLabel}>{t('register.username')}</label>
               <input
                 className={styles.formControl}
                 type="text"
-                placeholder="Choose a username"
+                placeholder={t('register.usernamePlaceholder')}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -135,11 +130,11 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ role }) => {
             </div>
 
             <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Email</label>
+              <label className={styles.formLabel}>{t('register.email')}</label>
               <input
                 className={styles.formControl}
                 type="email"
-                placeholder="you@example.com"
+                placeholder={t('register.emailPlaceholder')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -148,11 +143,11 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ role }) => {
             </div>
 
             <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Password</label>
+              <label className={styles.formLabel}>{t('register.password')}</label>
               <input
                 className={styles.formControl}
                 type="password"
-                placeholder="Create a password"
+                placeholder={t('register.passwordPlaceholder')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -161,11 +156,11 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ role }) => {
             </div>
 
             <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Confirm Password</label>
+              <label className={styles.formLabel}>{t('register.confirmPassword')}</label>
               <input
                 className={styles.formControl}
                 type="password"
-                placeholder="Repeat your password"
+                placeholder={t('register.confirmPasswordPlaceholder')}
                 value={confirm_password}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
@@ -174,18 +169,18 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ role }) => {
             </div>
 
             <button type="submit" className={styles.submitBtn} disabled={loading}>
-              {loading ? 'Creating account…' : 'Create account'}
+              {loading ? t('register.submitting') : t('register.submit')}
             </button>
 
             <button type="button" className={styles.backBtn} onClick={goBack}>
               <ArrowLeftFromLine size={15} />
-              Go back
+              {t('register.goBack')}
             </button>
           </form>
 
           <div className={styles.formFooter}>
-            Already have an account?{' '}
-            <button onClick={() => navigate('/login')}>Sign in</button>
+            {t('register.haveAccount')}{' '}
+            <button onClick={() => navigate('/login')}>{t('register.login')}</button>
           </div>
         </div>
       </div>
