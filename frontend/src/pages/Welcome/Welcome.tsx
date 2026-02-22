@@ -20,7 +20,7 @@ interface Experience {
   title: string;
   description: string;
   photos: string[];
-  language?: string; // source language code from the API e.g. "en", "rw"
+  language?: string;
 }
 
 interface Language {

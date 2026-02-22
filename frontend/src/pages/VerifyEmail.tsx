@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { verifyEmail } from "../services/authService";
@@ -6,6 +7,7 @@ import styles from "./VerifyEmail.module.css";
 import logo from "../assets/logo.png";
 
 const VerifyEmail: React.FC = () => {
+  const { t } = useTranslation('auth');
   const { uid, token } = useParams();
   const navigate = useNavigate();
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
@@ -29,21 +31,21 @@ const VerifyEmail: React.FC = () => {
   const stateConfig = {
     loading: {
       icon: <Loader size={26} color="#fff" strokeWidth={1.8} className={styles.spinIcon} />,
-      title: "Verifying your email…",
-      body: "Please wait while we confirm your email address. This only takes a moment.",
+      title: t('verifyEmail.loading.title'),
+      body: t('verifyEmail.loading.body'),
       hint: null,
     },
     success: {
       icon: <MailCheck size={26} color="#fff" strokeWidth={1.8} />,
-      title: "Email verified!",
-      body: "Your account is now active. You're all set to start exploring authentic experiences across Africa.",
+      title: t('verifyEmail.success.title'),
+      body: t('verifyEmail.success.body'),
       hint: null,
     },
     error: {
       icon: <XCircle size={26} color="#fff" strokeWidth={1.8} />,
-      title: "Verification failed",
-      body: "This link may have expired or already been used.",
-      hint: "Request a new verification link below and we'll send one to your inbox.",
+      title: t('verifyEmail.error.title'),
+      body:  t('verifyEmail.error.body'),
+      hint:  t('verifyEmail.error.hint'),
     },
   };
 
@@ -65,9 +67,9 @@ const VerifyEmail: React.FC = () => {
 
         <div className={styles.panelContent}>
           <p className={styles.panelQuote}>
-            Every adventure begins with a <span>verified step</span>.
+            {t('verifyEmail.panel.quote')} <span>{t('verifyEmail.panel.quoteHighlight')}</span>.
           </p>
-          <span className={styles.panelSub}>Account activation</span>
+          <span className={styles.panelSub}>{t('verifyEmail.panel.panelSub')}</span>
         </div>
       </div>
 
@@ -85,17 +87,17 @@ const VerifyEmail: React.FC = () => {
 
           {status === "success" && (
             <button className={styles.primaryBtn} onClick={() => navigate("/login")}>
-              Go to login
+              {t('verifyEmail.success.goToLogin')}
             </button>
           )}
 
           {status === "error" && (
             <>
               <button className={styles.primaryBtn} onClick={() => navigate("/resend-email")}>
-                Resend verification email
+                {t('verifyEmail.error.resend')}
               </button>
               <button className={styles.ghostBtn} onClick={() => navigate("/")}>
-                Back to home
+                {t('verifyEmail.error.backToHome')}
               </button>
             </>
           )}

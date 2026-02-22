@@ -1,6 +1,4 @@
-/**
- * Resend email
- */
+import { Trans, useTranslation } from 'react-i18next';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, ArrowLeftFromLine, Compass } from 'lucide-react';
@@ -9,6 +7,7 @@ import styles from './ResendEmail.module.css';
 import logo from '../../assets/logo.png';
 
 const ResendEmail: React.FC = () => {
+  const { t } = useTranslation('auth');
   const navigate = useNavigate();
 
   const [identifier, setIdentifier] = React.useState('');
@@ -30,7 +29,7 @@ const ResendEmail: React.FC = () => {
       console.error('Resend verification email failed:', err);
       setError(
         err?.response?.data?.error ||
-        'Failed to resend verification email.'
+        t('resendVerification.error.default')
       );
     } finally {
       setLoading(false);
@@ -53,9 +52,9 @@ const ResendEmail: React.FC = () => {
 
         <div className={styles.panelContent}>
           <p className={styles.panelQuote}>
-            One email away from your next <span>great adventure</span>.
+            {t('resendVerification.leftPanel.quote')} <span>{t('resendVerification.leftPanel.quoteHighlight')}</span>.
           </p>
-          <span className={styles.panelSub}>Almost there</span>
+          <span className={styles.panelSub}>{t('resendVerification.leftPanel.panelSub')}</span>
         </div>
       </div>
 
@@ -69,13 +68,17 @@ const ResendEmail: React.FC = () => {
               <div className={styles.successIcon}>
                 <Mail size={28} color="#fff" strokeWidth={1.8} />
               </div>
-              <h2 className={styles.title}>Email sent!</h2>
+              <h2 className={styles.title}>{t('resendVerification.rightPanel.title')}</h2>
               <p className={styles.subtitle}>
-                A verification link is on its way to <strong>{identifier}</strong>.
-                Check your inbox — and your spam folder just in case.
+                <Trans
+                  i18nKey="resendVerification.rightPanel.subtitle"
+                  ns="auth"
+                  values={{ identifier }}
+                  components={{ strong: <strong /> }}
+                />
               </p>
               <button className={styles.submitBtn} onClick={() => navigate('/')}>
-                Back to home
+                {t('resendVerification.rightPanel.home')}
               </button>
             </div>
           ) : (
@@ -85,9 +88,9 @@ const ResendEmail: React.FC = () => {
                 <div className={styles.iconWrapper}>
                   <Mail size={24} color="#fff" strokeWidth={1.8} />
                 </div>
-                <h2 className={styles.title}>Resend verification</h2>
+                <h2 className={styles.title}>{t('resendVerification.form.title')}</h2>
                 <p className={styles.subtitle}>
-                  Enter your email and we'll send a new verification link
+                  {t('resendVerification.form.subtitle')}
                 </p>
               </div>
 
@@ -95,11 +98,11 @@ const ResendEmail: React.FC = () => {
 
               <form onSubmit={handleResend}>
                 <div className={styles.formGroup}>
-                  <label className={styles.formLabel}>Email address</label>
+                  <label className={styles.formLabel}>{t('resendVerification.form.email')}</label>
                   <input
                     className={styles.formControl}
                     type="email"
-                    placeholder="you@example.com"
+                    placeholder={t('resendVerification.form.emailPlaceholder')}
                     value={identifier}
                     onChange={(e) => setIdentifier(e.target.value)}
                     required
@@ -108,12 +111,12 @@ const ResendEmail: React.FC = () => {
                 </div>
 
                 <button type="submit" className={styles.submitBtn} disabled={loading}>
-                  {loading ? 'Sending…' : 'Resend verification email'}
+                  {loading ? t('resendVerification.form.submitting') : t('resendVerification.form.submit')}
                 </button>
 
                 <button type="button" className={styles.backBtn} onClick={goBack}>
                   <ArrowLeftFromLine size={15} />
-                  Go back
+                  {t('resendVerification.form.goBack')}
                 </button>
               </form>
 
