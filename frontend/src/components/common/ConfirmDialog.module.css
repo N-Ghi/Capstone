@@ -1,0 +1,70 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(43, 65, 80, 0.45);
+  backdrop-filter: blur(3px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.dialog {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 28px 28px 24px;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(43, 65, 80, 0.2);
+  animation: slideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.dialogMsg {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 400;
+  color: #2B4150;
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+.dialogActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btnSecondary {
+  padding: 9px 18px;
+  background: transparent;
+  color: rgba(43, 65, 80, 0.6);
+  border: 1.5px solid rgba(43, 65, 80, 0.15);
+  border-radius: 7px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.86rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btnSecondary:hover:not(:disabled) { background: rgba(43, 65, 80, 0.05); }
+.btnSecondary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btnDanger {
+  padding: 9px 18px;
+  background: #c0392b;
+  color: #ffffff;
+  border: none;
+  border-radius: 7px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.btnDanger:hover:not(:disabled) { opacity: 0.88; }
+.btnDanger:disabled { opacity: 0.55; cursor: not-allowed; }

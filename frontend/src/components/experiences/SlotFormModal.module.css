@@ -1,0 +1,163 @@
+/* ── SlotFormModal.module.css ─────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* ── Tokens ──────────────────────────────────────────────────────── */
+:local {
+  --ink:   43, 65, 80;
+  --green: 98, 127, 103;
+  --sans:  'DM Sans', sans-serif;
+  --serif: 'Playfair Display', Georgia, serif;
+}
+
+/* ── Overlay ─────────────────────────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(var(--ink), 0.45);
+  backdrop-filter: blur(3px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+/* ── Modal ───────────────────────────────────────────────────────── */
+.modal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 28px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 20px 60px rgba(var(--ink), 0.2);
+  animation: rise 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+/* ── Header ──────────────────────────────────────────────────────── */
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.modalTitle {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2B4150;
+  margin: 0;
+}
+
+.closeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(var(--ink), 0.15);
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(var(--ink), 0.45);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.closeBtn:hover { background: rgba(var(--ink), 0.05); border-color: rgba(var(--ink), 0.3); color: #2B4150; }
+
+/* ── Error ───────────────────────────────────────────────────────── */
+.error {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: #c0392b;
+  background: rgba(192, 57, 43, 0.07);
+  border: 1px solid rgba(192, 57, 43, 0.2);
+  border-radius: 7px;
+  padding: 9px 12px;
+  margin: 0 0 18px;
+}
+
+/* ── Form ────────────────────────────────────────────────────────── */
+.form { display: flex; flex-direction: column; gap: 16px; }
+
+.row   { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+
+.label {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(var(--ink), 0.45);
+}
+
+.input {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: #2B4150;
+  background: #fff;
+  border: 1.5px solid rgba(var(--ink), 0.15);
+  border-radius: 7px;
+  padding: 9px 12px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  width: 100%;
+  box-sizing: border-box;
+}
+.input:focus {
+  border-color: #627F67;
+  box-shadow: 0 0 0 3px rgba(var(--green), 0.12);
+}
+.input::-webkit-calendar-picker-indicator { opacity: 0.4; cursor: pointer; }
+
+/* ── Actions ─────────────────────────────────────────────────────── */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.btnSecondary {
+  padding: 9px 18px;
+  background: transparent;
+  color: rgba(var(--ink), 0.6);
+  border: 1.5px solid rgba(var(--ink), 0.15);
+  border-radius: 7px;
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btnSecondary:hover:not(:disabled) { background: rgba(var(--ink), 0.05); }
+.btnSecondary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btnPrimary {
+  padding: 9px 20px;
+  background: linear-gradient(135deg, #627F67, #506957);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(var(--green), 0.25);
+  transition: opacity 0.15s;
+}
+.btnPrimary:hover:not(:disabled) { opacity: 0.88; }
+.btnPrimary:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .modal  { padding: 20px; }
+  .row    { grid-template-columns: 1fr; }
+}

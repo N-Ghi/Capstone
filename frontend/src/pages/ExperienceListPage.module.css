@@ -1,0 +1,120 @@
+/* ── ExperienceListPage.module.css ───────────────────────────────── */
+
+.page {
+  min-height: 100vh;
+  background: #f7f4f4;
+  padding: 40px 16px 80px;
+  font-family: 'DM Sans', sans-serif;
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* ── Header ──────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1.5px solid rgba(43, 65, 80, 0.15);
+  border-radius: 7px;
+  background: #ffffff;
+  cursor: pointer;
+  color: #2B4150;
+  flex-shrink: 0;
+  margin-top: 4px;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.backBtn:hover {
+  background: rgba(98, 127, 103, 0.08);
+  border-color: #627F67;
+  color: #506957;
+}
+
+.title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #2B4150;
+  margin: 0 0 3px;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: rgba(43, 65, 80, 0.5);
+  margin: 0;
+  transition: color 0.2s;
+}
+
+.subtitleTranslating {
+  color: #627F67;
+}
+
+.createBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #627F67, #506957);
+  color: #ffffff;
+  border: none;
+  border-radius: 7px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(98, 127, 103, 0.28);
+  transition: opacity 0.15s, transform 0.1s;
+  flex-shrink: 0;
+}
+.createBtn:hover { opacity: 0.88; }
+.createBtn:active { transform: scale(0.98); }
+
+/* ── Error banner ────────────────────────────────────────────────── */
+.errorBanner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background: #fdf2f0;
+  border: 1px solid #f5c6c0;
+  border-radius: 10px;
+  color: #c0392b;
+  font-size: 0.88rem;
+  margin-bottom: 24px;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .page { padding: 24px 12px 60px; }
+  .header { flex-direction: column; align-items: flex-start; }
+  .createBtn { width: 100%; justify-content: center; }
+}

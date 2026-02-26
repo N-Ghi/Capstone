@@ -1,0 +1,28 @@
+{
+  "header": {
+    "experiences": "Experiences",
+    "createExperience": "Create experience",
+    "allExperiences": "See all experiences",
+    "myBookings": "My bookings",
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "settings": "Settings",
+    "profile": "Profile",
+    "defaultName": "Guide",
+    "logout": "Logout",
+    "logoutError": "Error during logout. Please try again."
+  },
+  "guide": {
+    "stats": {
+      "totalExperiences": "Total experiences",
+      "upcomingSlots": "Upcoming experience slots"
+    },
+    "table": {
+      "title": "Upcoming Experiences & Slots",
+      "experienceId": "Experience ID",
+      "date": "Date",
+      "time": "Time",
+      "empty": "No upcoming experience slots available."
+    }
+  }
+}

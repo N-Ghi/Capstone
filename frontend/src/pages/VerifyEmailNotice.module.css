@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=DM+Sans:wght@300;400;500&display=swap');
-
 :root {
   --primary:       #627F67;
   --primary-dark:  #506957;
@@ -8,7 +6,7 @@
   --radius-md:     10px;
 }
 
-/* ─── Layout ─────────────────────────────────────────────────────────────── */
+/* Layout */
 .wrapper {
   min-height: 100vh;
   display: grid;
@@ -17,7 +15,7 @@
   overflow: hidden;
 }
 
-/* ─── Left panel ─────────────────────────────────────────────────────────── */
+/* Left panel */
 .panel {
   position: relative;
   background: linear-gradient(160deg, #3a5c45 0%, #2b4150 55%, #1e2e38 100%);
@@ -125,7 +123,7 @@
   text-transform: uppercase;
 }
 
-/* ─── Right / notice panel ───────────────────────────────────────────────── */
+/* Right / notice panel */
 .formPanel {
   background: #f7f4f4;
   display: flex;
@@ -140,7 +138,7 @@
   max-width: 420px;
 }
 
-/* ─── Notice content ─────────────────────────────────────────────────────── */
+/* Notice content */
 .successBox {
   display: flex;
   flex-direction: column;
@@ -192,7 +190,7 @@
   font-weight: 500;
 }
 
-/* ─── Buttons ────────────────────────────────────────────────────────────── */
+/* Buttons */
 .submitBtn {
   width: 100%;
   padding: 11px;
@@ -244,7 +242,7 @@
   color: var(--dark);
 }
 
-/* ─── Responsive ─────────────────────────────────────────────────────────── */
+/* Responsive */
 @media (max-width: 860px) {
   .wrapper { grid-template-columns: 1fr; }
   .panel   { display: none; }

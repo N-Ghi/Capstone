@@ -1,0 +1,27 @@
+{
+    "location":{
+        "notFound": "Could not find that location. Try a different search.",
+        "saveFailed": "Failed to save location. Please try again.",
+        "searchPlaceholder": "Search for a location...",
+        "saving": "Saving...",
+        "save": "Save"
+    },
+    "confirmDialog": {
+        "cancel": "Cancel",
+        "deleting": "Deleting..."
+    },
+    "multiSelect": {
+        "placeholder": "Select options…",
+        "loading": "Loading..."
+    },
+    "photoUploader": {
+        "label": "Photos",
+        "removePhoto": "Remove photo",
+        "uploading": "Uploading…",
+        "dragDrop": "Drag & drop photos here, or",
+        "browse": "browse",
+        "hint": "{{current}}/{{max}} photos · JPG, PNG, WEBP",
+        "errorMax": "Maximum {{max}} photos allowed.",
+        "errorUpload": "One or more photos failed to upload. Please try again."
+    }
+}

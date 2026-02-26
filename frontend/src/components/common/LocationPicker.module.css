@@ -1,0 +1,171 @@
+/* ── LocationPicker.module.css ─────────────────────────────────── */
+
+.picker {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #2B4150;
+  margin-bottom: 7px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.inputWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  position: absolute;
+  left: 11px;
+  color: rgba(43, 65, 80, 0.4);
+  display: flex;
+  pointer-events: none;
+}
+
+.input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 38px;
+  background: #ffffff;
+  border: 1.5px solid rgba(43, 65, 80, 0.15);
+  border-radius: 7px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: #2B4150;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  appearance: none;
+}
+.input::placeholder { color: rgba(43, 65, 80, 0.3); }
+.input:focus {
+  border-color: #627F67;
+  box-shadow: 0 0 0 3px rgba(98, 127, 103, 0.13);
+}
+
+.spinner {
+  position: absolute;
+  right: 11px;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(43, 65, 80, 0.12);
+  border-top-color: #627F67;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.clearBtn {
+  position: absolute;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: rgba(43, 65, 80, 0.4);
+  padding: 0;
+  transition: color 0.12s;
+}
+.clearBtn:hover { color: #c0392b; }
+
+/* ── Geocode result card ──────────────────────────────────────── */
+.geocodeResult {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  padding: 12px 14px;
+  background: rgba(98, 127, 103, 0.08);
+  border: 1px solid rgba(98, 127, 103, 0.25);
+  border-radius: 7px;
+}
+
+.geocodeInfo {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: #627F67;
+  min-width: 0;
+}
+
+.placeName {
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #2B4150;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.coords {
+  margin: 2px 0 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  color: rgba(43, 65, 80, 0.45);
+}
+
+.confirmBtn {
+  padding: 7px 16px;
+  background: linear-gradient(135deg, #627F67, #506957);
+  color: #ffffff;
+  border: none;
+  border-radius: 7px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(98, 127, 103, 0.25);
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+.confirmBtn:hover:not(:disabled) { opacity: 0.88; }
+.confirmBtn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* ── Saved badge ─────────────────────────────────────────────── */
+.savedBadge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 9px 13px;
+  background: rgba(98, 127, 103, 0.08);
+  border: 1px solid rgba(98, 127, 103, 0.25);
+  border-radius: 7px;
+  color: #627F67;
+}
+
+.savedBadge span {
+  flex: 1;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: #2B4150;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.error {
+  margin: 6px 0 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  color: #c0392b;
+}

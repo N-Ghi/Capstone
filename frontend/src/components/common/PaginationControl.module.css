@@ -1,0 +1,99 @@
+.paginationContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 0 8px;
+}
+
+.paginationInfo {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: rgba(43, 65, 80, 0.5);
+}
+
+.paginationNav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Prev / Next / First / Last */
+.paginationButton {
+  padding: 7px 13px;
+  background: #ffffff;
+  border: 1.5px solid rgba(43, 65, 80, 0.15);
+  border-radius: 7px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #2B4150;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.paginationButton:hover:not(:disabled) {
+  background: rgba(98, 127, 103, 0.08);
+  border-color: #627F67;
+  color: #506957;
+}
+.paginationButton:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Numbered page buttons */
+.paginationItem {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 1.5px solid rgba(43, 65, 80, 0.15);
+  border-radius: 7px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #2B4150;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.paginationItem:hover {
+  background: rgba(98, 127, 103, 0.08);
+  border-color: #627F67;
+  color: #506957;
+}
+
+.paginationItemActive {
+  background: linear-gradient(135deg, #627F67, #506957);
+  border-color: transparent;
+  color: #ffffff !important;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(98, 127, 103, 0.3);
+  cursor: default;
+}
+.paginationItemActive:hover {
+  background: linear-gradient(135deg, #627F67, #506957);
+  border-color: transparent;
+  color: #ffffff;
+}
+
+.ellipsis {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(43, 65, 80, 0.4);
+  user-select: none;
+}
+
+@media (max-width: 480px) {
+  .paginationButton { padding: 6px 9px; font-size: 0.75rem; }
+}

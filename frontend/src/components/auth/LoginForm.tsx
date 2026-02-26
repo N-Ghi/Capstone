@@ -3,9 +3,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeftFromLine, Compass } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { getDashboardRoute } from '../../utils/roleRedirect';
 import styles from './LoginForm.module.css';
 import logo from '../../assets/logo.png';
+import { Roles } from '../../@types/auth.types';
 
 const LoginForm: React.FC = () => {
   const { t } = useTranslation('auth');
@@ -26,7 +26,11 @@ const LoginForm: React.FC = () => {
 
     try {
       const user = await login(identifier, password);
-      navigate(getDashboardRoute(user.role));
+
+      // Redirect based on role
+      if (user.role === Roles.Admin) navigate("/admin");
+      else if (user.role === Roles.Guide) navigate("/guide");
+      else navigate("/tourist");
     } catch (err: any) {
       console.error('Login failed:', err);
       setError(

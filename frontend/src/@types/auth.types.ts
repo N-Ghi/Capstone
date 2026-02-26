@@ -1,5 +1,5 @@
 export interface User {
-  id: number;
+  id: string;
   username: string;
   email: string;
   first_name: string;
@@ -23,8 +23,10 @@ export interface LoginData {
   password: string;
 }
 
-export interface Roles {
-  Tourist: 'Tourist';
-  Guide: 'Guide';
-  Admin: 'Admin';
+export const Roles = {
+  Tourist: 'Tourist',
+  Guide: 'Guide',
+  Admin: 'Admin',
 }
+
+export type Role = typeof Roles[keyof typeof Roles];

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import * as authService from "../services/authService";
 import type { User } from "../@types/auth.types";
+import { Roles } from "../@types/auth.types";
 
 interface AuthContextType {
   user: User | null;
@@ -9,6 +10,10 @@ interface AuthContextType {
   register: (data: any) => Promise<void>;
   logout: () => void;
   refreshUser: () => Promise<void>;
+
+  isAdmin: boolean;
+  isGuide: boolean;
+  isTourist: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -17,6 +22,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<User | null>(null);
+  const isAdmin = user?.role === Roles.Admin;
+  const isGuide = user?.role === Roles.Guide;
+  const isTourist = user?.role === Roles.Tourist;
   const [loading, setLoading] = useState(true);
 
   // Load user on app start
@@ -69,8 +77,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <AuthContext.Provider
-      value={{ user, loading, login, register, logout, refreshUser }}
+    <AuthContext.Provider value={{ user, loading, login, register, logout,
+      refreshUser, isAdmin, isGuide, isTourist, }}
     >
       {children}
     </AuthContext.Provider>

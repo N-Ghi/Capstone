@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { CreateExperienceData, ExperienceListItem, ExperienceQueryParams, ExperirnceSlotData, PaginatedResponse } from "../@types/experience.types";
+import type { CreateExperienceData, ExperienceListItem, ExperienceQueryParams, ExperirnceSlotData, PaginatedResponse, GetAllSlotsParams } from "../@types/experience.types";
 
 const API_URL = import.meta.env.VITE_API_BASE_URL
 const timeout = import.meta.env.VITE_API_TIMEOUT;
@@ -53,6 +53,16 @@ export const getAllExperiences = async (params?: ExperienceQueryParams) => {
   }
 };
 
+export const getAllExperiencesCount = async (guide_id: string) => {
+  try {
+    const response = await getAllExperiences({  guide_id });
+    return response.count;
+  } catch (error) {
+    console.error("Error fetching upcoming experiences count:", error);
+    return 0;
+  }
+};
+
 export const updateExperienceFull = async (id: string, experienceData: CreateExperienceData) => {
   try {
     const response = await api.put(`/experiences/${id}/`, experienceData);
@@ -92,13 +102,61 @@ export const createExperienceSlot = async (experienceId: string, slotData: Exper
   }
 };
 
-export const getExperienceSlots = async (experienceId: string) => {
+export const getExperienceSlots = async ( experienceId: string, params?: GetAllSlotsParams ) => {
   try {
-    const response = await api.get(`/experiences/${experienceId}/slots/`);
+    const queryParams = new URLSearchParams();
+
+    if (params?.upcoming !== undefined) {
+      queryParams.append("upcoming", params.upcoming ? "true" : "false");
+    }
+    if (params?.past !== undefined) {
+      queryParams.append("past", params.past ? "true" : "false");
+    }
+
+
+    const queryString = queryParams.toString();
+    const url = `/experiences/${experienceId}/slots/${queryString ? `?${queryString}` : ""}`;
+
+    const response = await api.get(url);
     return response.data;
   } catch (error) {
     console.error("Error fetching experience slots:", error);
     throw error;
+  }
+};
+
+export const getAllExperienceSlots = async (params?: GetAllSlotsParams) => {
+  try {
+    const queryParams = new URLSearchParams();
+
+    if (params?.upcoming !== undefined) {
+      queryParams.append("upcoming", params.upcoming ? "true" : "false");
+    }
+    if (params?.past !== undefined) {
+      queryParams.append("past", params.past ? "true" : "false");
+    }
+    if (params?.guide_id) {
+      queryParams.append("guide_id", params.guide_id.toString());
+    }
+
+    const queryString = queryParams.toString();
+    const url = `/experiences/all_slots/${queryString ? `?${queryString}` : ""}`;
+
+    const response = await api.get(url);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all experience slots:", error);
+    throw error;
+  }
+};
+
+export const getUpcomingSlotsCount = async (guide_id: string) => {
+  try {
+    const response = await getAllExperienceSlots({ upcoming: true, guide_id });
+    return response.count;
+  } catch (error) {
+    console.error("Error fetching upcoming slots count:", error);
+    return 0;
   }
 };
 
