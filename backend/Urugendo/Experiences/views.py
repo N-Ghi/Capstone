@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework import serializers, viewsets, status
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -75,10 +76,21 @@ class ExperienceSlotViewSet(ModelViewSet):
         return self._experience
 
     def get_queryset(self):
-        return ExperienceSlot.objects.filter(
+        queryset = ExperienceSlot.objects.filter(
             experience=self._get_experience(),
             is_active=True
         ).order_by('date')
+
+        # Optional filter for upcoming and past slots
+        upcoming = self.request.query_params.get('upcoming')
+        if upcoming and upcoming.lower() in ['true', '1']:
+            queryset = queryset.filter(date__gte=timezone.now())
+
+        past = self.request.query_params.get('past')
+        if past and past.lower() in ['true', '1']:
+            queryset = queryset.filter(date__lt=timezone.now())
+
+        return queryset
 
     def get_permissions(self):
         if self.action in ['create', 'update', 'partial_update', 'destroy']:
@@ -146,3 +158,31 @@ class ExperienceSlotViewSet(ModelViewSet):
             {"detail": "Slot deleted successfully."},
             status=status.HTTP_204_NO_CONTENT
         )
+
+class AllExperienceSlotsViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    ViewSet to fetch all slots across experiences,
+    with optional filters for upcoming/past slots.
+    """
+    serializer_class = ExperienceSlotSerializer
+    permission_classes = [IsAuthenticated, IsAdmin | IsGuide]
+
+    def get_queryset(self):
+        queryset = ExperienceSlot.objects.filter(is_active=True).order_by('date')
+
+        # Filter by upcoming slots
+        upcoming = self.request.query_params.get('upcoming')
+        if upcoming and upcoming.lower() in ['true', '1']:
+            queryset = queryset.filter(date__gte=timezone.now())
+
+        # Filter by past slots
+        past = self.request.query_params.get('past')
+        if past and past.lower() in ['true', '1']:
+            queryset = queryset.filter(date__lt=timezone.now())
+
+        # Optional filter by guide
+        guide_id = self.request.query_params.get('guide_id')
+        if guide_id:
+            queryset = queryset.filter(experience__guide__id=guide_id)
+
+        return queryset

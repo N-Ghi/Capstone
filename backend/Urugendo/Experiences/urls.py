@@ -1,10 +1,11 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import ExperienceViewSet, ExperienceSlotViewSet
+from .views import ExperienceViewSet, ExperienceSlotViewSet, AllExperienceSlotsViewSet
 
 router = DefaultRouter()
-router.register(r'', ExperienceViewSet, basename='experience')
 
+router.register(r'all_slots', AllExperienceSlotsViewSet, basename='all-experience-slots')
+router.register(r'', ExperienceViewSet, basename='experience')
 urlpatterns = [
     # Experience CRUD
     path('', include(router.urls)),

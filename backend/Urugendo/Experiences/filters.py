@@ -13,6 +13,12 @@ class ExperienceFilter(django_filters.FilterSet):
         lookup_expr='iexact'
     )
 
+    # Filter by guideId
+    guide_id = django_filters.UUIDFilter(
+        field_name='guide__id'
+    )
+
+
     class Meta:
         model = Experience
-        fields = ['expertise', 'expertise_name']
+        fields = ['expertise', 'expertise_name', 'guide_id']
