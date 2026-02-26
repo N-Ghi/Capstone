@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 from Urugendo.permissions import IsAdmin
 from .serializers import UserSerializer
+from rest_framework.decorators import action
 
 User = get_user_model()
 
@@ -36,7 +37,8 @@ class UserViewSet(viewsets.ModelViewSet):
             )
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
-
+    
+    @action(detail=False, methods=['get'], url_path='me')
     def retrieve_me(self, request, *args, **kwargs):
         """GET /users/me/ — Retrieve the authenticated user's profile."""
         serializer = self.get_serializer(request.user)
