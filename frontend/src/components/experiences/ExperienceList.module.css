@@ -1,0 +1,125 @@
+/* ── ExperienceList.module.css ───────────────────────────────────── */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── List ────────────────────────────────────────────────────────── */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ── Skeleton ────────────────────────────────────────────────────── */
+.skeletonList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.skeletonCard {
+  height: 120px;
+  border-radius: 10px;
+  background: linear-gradient(90deg,
+    rgba(43, 65, 80, 0.06) 25%,
+    rgba(43, 65, 80, 0.10) 50%,
+    rgba(43, 65, 80, 0.06) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+/* ── Empty state ─────────────────────────────────────────────────── */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 64px 24px;
+  background: #ffffff;
+  border: 1px solid rgba(43, 65, 80, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(43, 65, 80, 0.05);
+  text-align: center;
+}
+
+.emptyIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: rgba(98, 127, 103, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #627F67;
+}
+
+.emptyTitle {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2B4150;
+  margin: 0;
+}
+
+.emptyText {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: rgba(43, 65, 80, 0.5);
+  margin: 0;
+}
+
+.emptyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 22px;
+  background: linear-gradient(135deg, #627F67, #506957);
+  color: #ffffff;
+  border: none;
+  border-radius: 7px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(98, 127, 103, 0.28);
+  margin-top: 8px;
+  transition: opacity 0.15s;
+}
+.emptyBtn:hover { opacity: 0.88; }
+
+/* ── Translating banner ──────────────────────────────────────────── */
+.translatingBanner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  background: rgba(98, 127, 103, 0.08);
+  border: 1px solid rgba(98, 127, 103, 0.2);
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.83rem;
+  font-weight: 400;
+  color: #506957;
+  margin-bottom: 16px;
+}
+
+.translatingSpinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(98, 127, 103, 0.25);
+  border-top-color: #627F67;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }

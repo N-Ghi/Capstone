@@ -1,0 +1,27 @@
+{
+    "location":{
+        "notFound": "Ahantu ntago habonetse. Gerageza ahandi.",
+        "saveFailed": "Kwemeza ahantu biranze. Ongera ugerageze.",
+        "searchPlaceholder": "Shakisha Ahantu...",
+        "saving": "Kwemeza...",
+        "save": "Emeza"
+    },
+    "confirmDialog": {
+        "cancel": "Subika",
+        "deleting": "Gusiba..."
+    },
+    "multiSelect": {
+        "placeholder": "Amahitamo...",
+        "loading": "Tegereza..."
+    },
+    "photoUploader": {
+        "label": "Amafoto",
+        "removePhoto": "Kuraho ifoto",
+        "uploading": "Kwemeza...",
+        "dragDrop": "Tereka ifoto hane cyangwa",
+        "browse": "ushakishe",
+        "hint": "Amafoto {{current}}/{{max}} · JPG, PNG, WEBP",
+        "errorMax": "Amafoto {{max}} ntarengwa.",
+        "errorUpload": "Hakenewe nibura ifoto imwe. Ongera ugerageze."
+    }
+}

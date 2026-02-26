@@ -1,17 +1,19 @@
-export interface CreateExperienceData {
-    title: string;
-    description: string;
-    expertise: string[];
-    photos: string[];
-    date: Date;
-    languages: string[];
-    payment_methods: string[];
-    location_id?: string;
+import type{ Location } from './location.types';
 
+export interface CreateExperienceData {
+  title: string;
+  description: string;
+  expertise: string[];
+  photos: string[];
+  date: string;
+  languages: string[];
+  payment_methods: string[];
+  location_id?: string;
+  guide_id?: string;
 }
 
 export interface ExperirnceSlotData {
-  date: Date,
+  date: string,
   capacity: number,
   price: number,
   start_time: string,
@@ -20,7 +22,7 @@ export interface ExperirnceSlotData {
 
 export interface Slot {
     id: string;
-    date: Date;
+    date: string;
     start_time: string;
     end_time: string;
     capacity: number;
@@ -34,6 +36,13 @@ export interface ExperienceQueryParams {
   ordering?: string;
   expertise?: string;
   expertise_name?: string;
+  guide_id?: string;
+}
+
+export interface GetAllSlotsParams {
+  upcoming?: boolean;
+  past?: boolean;
+  guide_id?: string;
 }
 
 export interface PaginatedResponse<T> {
@@ -46,10 +55,25 @@ export interface PaginatedResponse<T> {
 export interface ExperienceListItem {
   id: string;
   title: string;
-  photos: string[];
   description: string;
-  location?: {
-    id: string;
-    name: string;
-  };
+  photos: string[];
+  location?: Location;
+  guide_name?: string;
+  is_active: boolean;
+  created_at: string;
+}
+
+export interface ExperienceDetail {
+  id: string;
+  guide: string;
+  title: string;
+  description: string;
+  expertise: string[];
+  location?: Location;
+  photos: string[];
+  languages: string[];
+  payment_methods: string[];
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
 }

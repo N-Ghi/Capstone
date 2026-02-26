@@ -1,4 +1,5 @@
 import axios from "axios";
+import type { User } from "../@types/auth.types";
 
 const API_URL = import.meta.env.VITE_API_BASE_URL
 const timeout = import.meta.env.VITE_API_TIMEOUT;
@@ -31,25 +32,13 @@ export const getUserById = async (id: string) => {
     return response.data;
 }
 
-export const updateUserFull = async (id: string, data: {
-    username: string;
-    email: string;
-    first_name: string;
-    last_name: string;
-    role: string;
-}) => {
+export const updateUserFull = async (id: string, data: User) => {
     // Update user details
     const response = await api.put(`/users/${id}/`, data);
     return response.data;
 }
 
-export const updateUserPartial = async (id: string, data: {
-    username?: string;
-    email?: string;
-    first_name?: string;
-    last_name?: string;
-    profile_picture?: string;
-}) => {
+export const updateUserPartial = async (id: string, data: Partial<User>) => {
     // Partially update user details
     const response = await api.patch(`/users/${id}/`, data);
     return response.data;

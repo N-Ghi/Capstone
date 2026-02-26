@@ -1,0 +1,58 @@
+{
+  "profile": {
+    "roleBadges": {
+      "Tourist": "Tourist",
+      "Guide": "Guide",
+      "Admin": "Administrator"
+    },
+    "account": {
+      "title": "Account Information",
+      "sub": "Update your username, name and profile picture",
+      "resetPassword": "Reset Password"
+    },
+    "roleProfile": {
+      "title": "{{role}} Profile",
+      "titleFallback": "Profile",
+      "subGuide": "Manage your public guide profile visible to travellers",
+      "subTourist": "Manage your travel preferences and languages",
+      "badgeNew": "New"
+    },
+    "errors": {
+      "loadUser": "Failed to load user information.",
+      "loadProfile": "Failed to load profile information."
+    }
+  },
+  "userInfo": {
+    "changePhoto": "Change photo",
+    "removePhoto": "Remove photo",
+    "username": "Username",
+    "email": "Email",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "errorSave": "Failed to save changes.",
+    "saving": "Saving…",
+    "saved": "Saved!",
+    "saveChanges": "Save Changes"
+  },
+  "profileForm": {
+    "displayName": "Display Name",
+    "displayNamePlaceholder": "Your public guide name",
+    "bio": "Bio",
+    "bioPlaceholder": "Tell travellers about yourself and your tours...",
+    "languages": "Languages",
+    "languagesPlaceholderGuide": "Languages you guide in...",
+    "languagesPlaceholderTourist": "Languages you speak...",
+    "expertise": "Areas of Expertise",
+    "expertisePlaceholder": "Select your specialisations...",
+    "travelPreferences": "Travel Preferences",
+    "travelPreferencesPlaceholder": "Select your travel style...",
+    "paymentMethods": "Payment Methods",
+    "paymentMethodsPlaceholder": "Accepted payment methods...",
+    "saving": "Saving...",
+    "saved": "Saved!",
+    "saveProfile": "Save Profile",
+    "errorOptions": "Failed to load form options.",
+    "errorSave": "Failed to save profile."
+  }
+  
+}

@@ -1,0 +1,173 @@
+{
+    "experienceList": {
+        "page": {
+            "title": "My Experiences",
+            "subtitle": "{{count}} experience listed",
+            "subtitle_plural": "{{count}} experiences listed",
+            "subtitle_loading": "Loading…",
+            "newExperience": "New Experience"
+        },
+        "status": {
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "card": {
+            "edit": "Edit",
+            "view": "View"
+        },
+        "empty": {
+            "title": "No experiences yet",
+            "text": "Create your first experience and start sharing your expertise with travellers.",
+            "cta": "Create Experience"
+        },
+        "error": {
+            "load": "Failed to load experiences. Please try again."
+        },
+        "pagination": {
+            "itemLabel": "experiences"
+        },
+        "translating": "Translating…"
+    },
+    "experienceDetail": {
+    "nav": {
+      "back": "Back"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "meta": {
+      "created": "Created {{date}}"
+    },
+    "sections": {
+      "photos": "Photos",
+      "location": "Location",
+      "photoAlt": "Photo {{number}}"
+    },
+    "actions": {
+      "editExperience": "Edit experience",
+      "deleteExperience": "Delete experience",
+      "goBack": "Go back"
+    },
+    "slots": {
+      "title": "Slot Details",
+      "addSlot": "Add Slot",
+      "bookSlot": "Book experience",
+      "editSlot": "Edit slot",
+      "deleteSlot": "Delete slot",
+      "empty": "No slots yet.",
+      "table": {
+        "date": "Date",
+        "time": "Time",
+        "capacity": "Capacity",
+        "remaining": "Remaining",
+        "price": "Price",
+        "status": "Status"
+      },
+      "timeSeparator": "–",
+      "price": "RWF{{amount}}",
+      "status": {
+        "active": "Active",
+        "inactive": "Off"
+      }
+    },
+    "loading": {
+      "experience": "Loading experience..."
+    },
+    "errors": {
+      "loadFailed": "Failed to load experience.",
+      "notFound": "Experience not found."
+    },
+    "dialogs": {
+      "deleteExperience": {
+        "message": "Delete this experience? This cannot be undone."
+      },
+      "deleteSlot": {
+        "message": "Delete this slot? This cannot be undone."
+      }
+    }
+    },
+    "slotFormModal": {
+        "title": {
+        "edit": "Edit Slot",
+        "add": "Add Slot"
+        },
+        "fields": {
+        "date": "Date",
+        "startTime": "Start Time",
+        "endTime": "End Time",
+        "capacity": "Capacity",
+        "price": "Price"
+        },
+        "actions": {
+        "cancel": "Cancel",
+        "saving": "Saving…",
+        "saveChanges": "Save Changes",
+        "addSlot": "Add Slot"
+        },
+        "errors": {
+        "saveFailed": "Failed to save slot. Please try again."
+        }
+    },
+    "experienceForm": {
+        "title": {
+        "edit": "Edit Experience",
+        "create": "Create Experience"
+        },
+        "subtitle": {
+        "edit": "Update the details of your existing experience.",
+        "create": "Share your expertise with travellers around the world."
+        },
+        "sections": {
+        "basicInfo": "Basic Information",
+        "details": "Details",
+        "location": "Location",
+        "photos": "Photos"
+        },
+        "fields": {
+        "title": {
+            "label": "Title",
+            "placeholder": "e.g. Morning Hike Through Nyungwe Forest"
+        },
+        "description": {
+            "label": "Description",
+            "placeholder": "Describe what travellers will experience, what to bring, and why it's special…"
+        },
+        "date": "Date",
+        "expertise": {
+            "label": "Expertise / Travel Preferences",
+            "placeholder": "Select categories…"
+        },
+        "languages": {
+            "label": "Languages Spoken",
+            "placeholder": "Select languages…"
+        },
+        "paymentMethods": {
+            "label": "Accepted Payment Methods",
+            "placeholder": "Select payment methods…"
+        },
+        "location": "Meeting Point",
+        "photos": "Experience Photos(at least 1, max 10)"
+        },
+        "actions": {
+        "cancel": "Cancel",
+        "saving": "Saving…",
+        "creating": "Creating…",
+        "saveChanges": "Save Changes",
+        "createExperience": "Create Experience"
+        },
+        "errors": {
+        "loadFailed": "Failed to load experience data. Please try again.",
+        "default": "Something went wrong. Please try again."
+        }
+    },
+    "experienceFilter": {
+        "title": "Filter Experiences",
+        "categories": "Categories",
+        "languages": "Languages Spoken",
+        "paymentMethods": "Payment Methods",
+        "applyFilters": "Apply Filters",
+        "clearFilters": "Clear Filters",
+        "empty": "No experiences match your filters."
+    }
+}

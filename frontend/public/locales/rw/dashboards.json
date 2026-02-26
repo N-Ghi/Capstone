@@ -1,0 +1,27 @@
+{
+  "header": {
+    "experiences": "Ubutembere",
+    "createExperience": "Andikisha ubutembere",
+    "allExperiences": "Reba ubutembere bwose",
+    "myBookings": "My bookings",
+    "users": "Abantu",
+    "settings": "Iboneza",
+    "profile": "Imyirondoro",
+    "defaultName": "Guide",
+    "logout": "Sohoka",
+    "logoutError": "Gusohoka byanze. Gerageza mukanya."
+  },
+  "guide": {
+    "stats": {
+      "totalExperiences": "Ubutembere bwose",
+      "upcomingSlots": "Amasaha y'ubutembere butegerejwe"
+    },
+    "table": {
+      "title": "Ubutembere butegerejwe n'Amasaha",
+      "experienceId": "Umwirondoro w'ubutembere",
+      "date": "Itariki",
+      "time": "Amasaha",
+      "empty": "Nta butembere butegerejwe."
+    }
+  }
+}

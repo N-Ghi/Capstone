@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap');
-
 /* Tokens  */
 :root {
   --primary:        #627F67;
@@ -98,7 +96,7 @@
   margin-top: 2px;
 }
 
-/* Desktop nav─ */
+/* Desktop nav */
 .desktopNav {
   display: flex;
   align-items: center;
@@ -180,7 +178,7 @@
   transform: translateY(0);
 }
 
-/* Language selector─ */
+/* Language selector */
 .langWrapper {
   position: relative;
 }
@@ -267,13 +265,13 @@
   font-weight: 500;
 }
 
-/* Lang item icon─ */
+/* Lang item icon */
 .langItemIcon {
   opacity: 0.5;
   flex-shrink: 0;
 }
 
-/* Mobile hamburger── */
+/* Mobile hamburger */
 .hamburger {
   display: none;
   align-items: center;
@@ -292,7 +290,7 @@
   background: var(--primary-light);
 }
 
-/* Mobile overlay menu── */
+/* Mobile overlay menu */
 .mobileMenu {
   position: fixed;
   top: var(--header-h);
@@ -352,7 +350,7 @@
   background: rgba(98, 127, 103, 0.15);
 }
 
-/* Responsive── */
+/* Responsive */
 @media (max-width: 768px) {
   .desktopNav { display: none; }
   .hamburger  { display: flex; }
@@ -368,75 +366,13 @@
   padding-bottom: 4rem;
 }
 
-/* Section title── */
+/* Section title */
 .sectionTitle {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.75rem;
   font-weight: 600;
   color: var(--dark);
   margin-bottom: 1.25rem;
-}
-
-/* Category pill strip── */
-.categoryStrip {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 1.75rem;
-}
-
-.categoryPill {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--dark);
-  background: var(--white);
-  border: 1.5px solid rgba(98, 127, 103, 0.22);
-  border-radius: 999px;
-  padding: 8px 20px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.categoryPill:hover {
-  background: var(--primary-light);
-  border-color: rgba(98, 127, 103, 0.45);
-  color: var(--primary-dark);
-  transform: translateY(-1px);
-}
-
-.categoryPillActive {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(98, 127, 103, 0.3);
-}
-
-.categoryPillActive:hover {
-  background: var(--primary-dark);
-  border-color: var(--primary-dark);
-  color: #fff;
-}
-
-/* Clear filter */
-.clearBtn {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--primary-dark);
-  background: var(--primary-light);
-  border: 1.5px solid rgba(98, 127, 103, 0.3);
-  border-radius: 999px;
-  padding: 6px 16px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.clearBtn:hover {
-  background: rgba(98, 127, 103, 0.18);
-  border-color: var(--primary);
 }
 
 /* Experience cards */
@@ -506,7 +442,7 @@
   100% { background-position: -200% 0; }
 }
 
-/* Empty state─ */
+/* Empty state */
 .emptyMsg {
   color: rgba(43, 65, 80, 0.55);
   font-size: 0.95rem;

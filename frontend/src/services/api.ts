@@ -11,7 +11,7 @@ const api: AxiosInstance = axios.create({
 
 // Attach access token
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  const token = localStorage.getItem('accessToken');
+  const token = localStorage.getItem('access');
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -27,7 +27,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      const refreshToken = localStorage.getItem('refreshToken');
+      const refreshToken = localStorage.getItem('refresh');
       if (!refreshToken) {
         logout();
         return Promise.reject(error);

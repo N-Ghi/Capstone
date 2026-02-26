@@ -5,8 +5,7 @@ const AZURE_ENDPOINT = import.meta.env.VITE_AZURE_TRANSLATOR_ENDPOINT;
 const translateCache = new Map<string, string>();
 const detectCache   = new Map<string, string>();
 
-// ── Detect ────────────────────────────────────────────────────────────────
-
+// Detect
 export async function detectLanguage(text: string): Promise<string> {
   if (!text) return 'en';
   if (detectCache.has(text)) return detectCache.get(text)!;
@@ -29,8 +28,7 @@ export async function detectLanguage(text: string): Promise<string> {
   return lang;
 }
 
-// ── Translate ─────────────────────────────────────────────────────────────
-
+// Translate
 export async function translateBatch(
   texts: string[],
   toLang: string,

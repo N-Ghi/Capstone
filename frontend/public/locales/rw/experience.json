@@ -1,0 +1,173 @@
+{
+    "experienceList": {
+        "page": {
+            "title": "Ibitemberwa byanjye",
+            "subtitle": "Ibitemberwa {{count}} bibonetse",
+            "subtitle_plural": "Ibitemberwa {{count}} bibonetse",
+            "subtitle_loading": "Tegereza…",
+            "newExperience": "Igitemberwa gishya"
+        },
+        "status": {
+            "active": "Gifunguye",
+            "inactive": "Cyarangiye"
+        },
+        "card": {
+            "edit": "Hindura",
+            "view": "Reba"
+        },
+        "empty": {
+            "title": "Nta bitemberwa bibonetse",
+            "text": "Andikisha igitemberwa cyawe cyambere. ",
+            "cta": "Cyandikishe"
+        },
+        "error": {
+            "load": "Kureba ibitemberwa biranze. Gerageza mukanya."
+        },
+        "pagination": {
+            "itemLabel": "Ibitemberwa"
+        },
+        "translating": "Guhindura ururimi…"
+    },
+    "experienceDetail": {
+        "nav": {
+        "back": "Subira inyuma"
+        },
+        "status": {
+        "active": "Gifunguye",
+        "inactive": "Cyarangiye"
+        },
+        "meta": {
+        "created": "Cyakozwe {{date}}"
+        },
+        "sections": {
+        "photos": "Amafoto",
+        "location": "Ahantu",
+        "photoAlt": "Ifoto ya {{number}}"
+        },
+        "actions": {
+        "editExperience": "Hindura igitemberwa",
+        "deleteExperience": "Siba igitemberwa",
+        "goBack": "Subira inyuma"
+        },
+        "slots": {
+        "title": "Ibijyanye n'igihe",
+        "addSlot": "Ongera igihe",
+        "bookSlot": "Fata umwanya",
+        "editSlot": "Hindura igihe",
+        "deleteSlot": "Siba igihe",
+        "empty": "Nta kigihe cyakozwe.",
+        "table": {
+            "date": "Itariki",
+            "time": "Amasaha",
+            "capacity": "Ubushobozi",
+            "remaining": "Hasigaye",
+            "price": "Amafaranga",
+            "status": "Icyiciro"
+        },
+        "timeSeparator": "–",
+        "price": "RWF{{amount}}",
+        "status": {
+            "active": "Gifunguye",
+            "inactive": "Cyarangiye"
+        }
+        },
+        "loading": {
+        "experience": "Tegereza gato..."
+        },
+        "errors": {
+        "loadFailed": "Kureba ibitemberwa biranze. Gerageza mukanya.",
+        "notFound": "Nta gitemberwa kibonetse."
+        },
+        "dialogs": {
+        "deleteExperience": {
+            "message": "Urashaka gusiba? Ntago bisubirwamo."
+        },
+        "deleteSlot": {
+            "message": "Urashaka gusiba? Ntago bisubirwamo."
+        }
+        }
+        },
+    "slotFormModal": {
+        "title": {
+        "edit": "Guhindura Igihe",
+        "add": "Kongera Igihe"
+        },
+        "fields": {
+        "date": "Itariki",
+        "startTime": "Igihe cyo gutangira",
+        "endTime": "Igihe cyo gusoza",
+        "capacity": "Ubushobozi",
+        "price": "Amafaranga"
+        },
+        "actions": {
+        "cancel": "Bireke",
+        "saving": "Kubika…",
+        "saveChanges": "Emeza ibyahindutse",
+        "addSlot": "Kongera igihe"
+        },
+        "errors": {
+        "saveFailed": "Kwemeza igihe biranze. Gerageza mukanya."
+        }
+    },
+    "experienceForm": {
+        "title": {
+        "edit": "Hindura Igitemberwa",
+        "create": "Andikisha Igitemberwa"
+        },
+        "subtitle": {
+        "edit": "Hindura imyirondoro y'igitemberwa.",
+        "create": "Sangiza abandi."
+        },
+        "sections": {
+        "basicInfo": "Amakuru y'ibanze.",
+        "details": "Ubusobanuro",
+        "location": "Ahantu",
+        "photos": "Amafoto"
+        },
+        "fields": {
+        "title": {
+            "label": "Umutwe",
+            "placeholder": "e.g. Kwiga kubyina amaraba."
+        },
+        "description": {
+            "label": "Amakuru arambuye",
+            "placeholder": "Nwino wige kubyina amaraba hamwe nanjye! Hamwe natwe uziga intambwe z'ibanze, uburyo bwo kuguma mu murongo, n'ibindi byinshi."
+        },
+        "date": "Itariki",
+        "expertise": {
+            "label": "Ubwoko bw'igitemberwa",
+            "placeholder": "Hitamo ubwoko…"
+        },
+        "languages": {
+            "label": "Ururimi rukoreshwa",
+            "placeholder": "Hitamo ururimi…"
+        },
+        "paymentMethods": {
+            "label": "Uburwo bwemewe bwo kwishura",
+            "placeholder": "Hitamo uburyo bwo kwishyura…"
+        },
+        "location": "Aho igitemberwa kizabera",
+        "photos": "Amafoto y'igitemberwa (byibuze 1, ntarengwa 10)"
+        },
+        "actions": {
+        "cancel": "Bireke",
+        "saving": "Kwemeza...",
+        "creating": "Kubika...",
+        "saveChanges": "Emeza ibyahindutse",
+        "createExperience": "Andikisha Igitemberwa"
+        },
+        "errors": {
+        "loadFailed": "Kureba ibitemberwa biranze. Gerageza mukanya.",
+        "default": "Hari ikitangenze neza. Gerageza mukanya."
+        }
+    },
+    "experienceFilter": {
+        "title": "Reba ibyiciro",
+        "categories": "Ibyiciro",
+        "languages": "Ururimi rukoreshwa",
+        "paymentMethods": "Uburwo bwemewe bwo kwishura",
+        "applyFilters": "Emeza ibyiciro",
+        "clearFilters": "Siba ibyiciro",
+        "empty": "Nta gitemberwa kibonetse."
+    }
+}

@@ -7,7 +7,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { authRoutes } from './AuthRoutes';
-// import { protectedRoutes } from './ProtectedRoutes';
+import { protectedRoutes } from './ProtectedRoutes';
 import Welcome from '../pages/Welcome/Welcome';
 // import NotFound from '../pages/NotFound';
 
@@ -23,9 +23,9 @@ const AppRoutes: React.FC = () => {
             ))}
 
             {/* Protected routes */}
-            {/* {protectedRoutes.map(({ path, element }) => (
+            {protectedRoutes.map(({ path, element }) => (
                 <Route key={path} path={path} element={element} />
-            ))} */}
+            ))}
 
             {/* Not Found route */}
             {/* <Route path="/not-found" element={<NotFound />} /> */}

@@ -12,7 +12,7 @@ const VerifyEmailNotice: React.FC = () => {
   return (
     <div className={styles.wrapper}>
 
-      {/* ── Left brand panel ────────────────────────────────────────────── */}
+      {/* Left brand panel */}
       <div className={styles.panel}>
         <a className={styles.panelBrand} onClick={() => navigate('/')}>
           <img src={logo} alt="Urugendo" className={styles.panelLogo} />
@@ -31,7 +31,7 @@ const VerifyEmailNotice: React.FC = () => {
         </div>
       </div>
 
-      {/* ── Right notice panel ───────────────────────────────────────────── */}
+      {/* Right notice panel */}
       <div className={styles.formPanel}>
         <div className={styles.formBox}>
           <div className={styles.successBox}>

@@ -1,0 +1,142 @@
+/* ── PhotoUploader.module.css ───────────────────────────────────── */
+
+.uploader {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.label {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #2B4150;
+  margin-bottom: -4px;
+}
+
+/* ── Thumbnail grid ──────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 10px;
+}
+
+.thumb {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 7px;
+  overflow: hidden;
+  border: 1.5px solid rgba(43, 65, 80, 0.12);
+  box-shadow: 0 1px 4px rgba(43, 65, 80, 0.06);
+}
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.removeBtn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(43, 65, 80, 0.55);
+  color: #ffffff;
+  font-size: 1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.12s;
+}
+.removeBtn:hover { background: rgba(192, 57, 43, 0.85); }
+
+/* ── Drop zone ───────────────────────────────────────────────── */
+.dropzone {
+  border: 2px dashed rgba(43, 65, 80, 0.18);
+  border-radius: 10px;
+  padding: 36px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+.dropzone:hover,
+.dropzone:focus {
+  border-color: #627F67;
+  background: rgba(98, 127, 103, 0.06);
+  outline: none;
+}
+
+.dropzoneUploading {
+  cursor: default;
+  background: rgba(98, 127, 103, 0.06);
+  border-color: #627F67;
+}
+
+.idleContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(43, 65, 80, 0.35);
+}
+
+.uploadingContent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  color: #627F67;
+}
+
+.dropText {
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: rgba(43, 65, 80, 0.5);
+}
+
+.dropLink {
+  color: #627F67;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.dropHint {
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.76rem;
+  color: rgba(43, 65, 80, 0.35);
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(43, 65, 80, 0.12);
+  border-top-color: #627F67;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.error {
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  color: #c0392b;
+}

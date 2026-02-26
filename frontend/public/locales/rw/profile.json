@@ -1,0 +1,58 @@
+{
+  "profile": {
+    "roleBadges": {
+      "Tourist": "Umukerarugendo",
+      "Guide": "Umuyobozi",
+      "Admin": "Admin"
+    },
+    "account": {
+      "title": "Imyirondoro",
+      "sub": "Hindura izina rya konti, amazina yawe, cyangwa ifoto ikuranga",
+      "resetPassword": "Hindura ijambo banga"
+    },
+    "roleProfile": {
+      "title": "Imyirondoro y'{{role}}",
+      "titleFallback": "Indi myirondoro",
+      "subGuide": "Imyirondoro yawe yerekwa abakerarugendo",
+      "subTourist": "Imyirondoro ijyanye n'ibyo ukunda mu bitemberwa",
+      "badgeNew": "Gishya"
+    },
+    "errors": {
+      "loadUser": "Failed to load user information.",
+      "loadProfile": "Failed to load profile information."
+    }
+  },
+  "userInfo": {
+    "changePhoto": "Hindura ifoto",
+    "removePhoto": "Kuraho ifoto",
+    "username": "izina rya konti",
+    "email": "Emeyili",
+    "firstName": "Izina rya mbere",
+    "lastName": "Izina rya nyuma",
+    "errorSave": "Kwemeza biranze.",
+    "saving": "Kwemeza...",
+    "saved": "Byemejwe!",
+    "saveChanges": "Emeza Impinduka"
+  },
+  "profileForm": {
+    "displayName": "Izina rikuranga",
+    "displayNamePlaceholder": "Izina rikuranga",
+    "bio": "Ubusobanuro",
+    "bioPlaceholder": "Bwira abakerarugendo ibijyanye nawe...",
+    "languages": "Indimi",
+    "languagesPlaceholderGuide": "Indimi ukoresha mu kuyobora...",
+    "languagesPlaceholderTourist": "Indimi uvuga...",
+    "expertise": "Ubwoko bw'ibitemberwa byawe",
+    "expertisePlaceholder": "Hitamo...",
+    "travelPreferences": "Ubwoko bw'ibyo ukunda mu bitemberwa",
+    "travelPreferencesPlaceholder": "Hitamo...",
+    "paymentMethods": "Uburyo bwo kwishyura",
+    "paymentMethodsPlaceholder": "Uburyo bwo kwishyura wemera...",
+    "saving": "Kwemeza...",
+    "saved": "Byemejwe!",
+    "saveProfile": "Emeza Imyirondoro",
+    "errorOptions": "Kureba amahitamo byanze. Ongera ugerageze.",
+    "errorSave": "Kwemeza imyirondoro byanze."
+  }
+  
+}

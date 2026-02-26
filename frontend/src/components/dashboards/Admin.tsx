@@ -3,11 +3,16 @@
 
  */
 import React from 'react';
+import Header from '../common/Header';
 
 
 const AdminDashboard: React.FC = () => {
     return (
-        <p>Admin Dashboard</p>
+        
+        <div>
+            <Header />
+            <p>Admin Dashboard</p>
+        </div>
     );
 };
 
