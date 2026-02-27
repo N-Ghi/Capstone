@@ -1,7 +1,7 @@
 /* Design tokens */
 :root {
-  --color-accent: #4f46e5;
-  --color-accent-dark: #3730a3;
+  --color-accent: #627F67;
+  --color-accent-dark: #506957;
   --color-danger: #ef4444;
   --color-border: #e5e7eb;
   --color-surface: #ffffff;
@@ -148,6 +148,30 @@
 }
 
 .resetPasswordBtn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 5%, transparent);
+}
+
+/* Link google calendar button */
+.linkButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border-radius: 10px;
+  border: 1.5px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  align-self: flex-start;
+  font-family: inherit;
+}
+
+.linkButton:hover {
   border-color: var(--color-accent);
   color: var(--color-accent);
   background: color-mix(in srgb, var(--color-accent) 5%, transparent);

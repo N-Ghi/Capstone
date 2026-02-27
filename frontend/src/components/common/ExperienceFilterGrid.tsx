@@ -22,15 +22,10 @@ interface Experience {
 }
 
 interface ExperienceFilterGridProps {
-  /** Max experiences to show per fetch. Defaults to 15. */
   limit?: number;
-  /** Number of grid columns. Defaults to 'auto'. */
   columns?: 'auto' | 2 | 3 | 4;
-  /** Override the default route when a card is clicked. */
   onView?: (id: string) => void;
-  /** Additional static query params merged into every fetch. */
   baseParams?: Partial<ExperienceQueryParams>;
-  /** Override section labels if needed. */
   labels?: {
     categories?: string;
     experiences?: string;
@@ -114,12 +109,9 @@ export const ExperienceFilterGrid: React.FC<ExperienceFilterGridProps> = ({
       }
     };
     init();
-    // Only re-run if limit changes — baseParams is intentionally excluded
-    // to avoid re-fetching when the parent re-renders with an inline object.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit]);
 
-  // Re-fetch when a preference is selected
   useEffect(() => {
     if (!selectedPreference) return;
     fetchExperiences({ expertise: selectedPreference });
