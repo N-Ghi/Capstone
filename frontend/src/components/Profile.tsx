@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ChevronRight, KeyRound, Loader2 } from 'lucide-react';
+import { LinkIcon, NextIcon, KeyIcon, LoaderIcon } from './common/Icons';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import Header from './common/Header';
@@ -135,7 +135,7 @@ const ProfileComponent: React.FC = () => {
 
           {loadingUser ? (
             <div className={styles.loading}>
-              <Loader2 size={24} className={styles.spin} />
+              <LoaderIcon size={24} className={styles.spin} />
             </div>
           ) : userError ? (
             <p className={styles.error}>{userError}</p>
@@ -149,9 +149,20 @@ const ProfileComponent: React.FC = () => {
               className={styles.resetPasswordBtn}
               onClick={() => alert('Navigate to password reset flow.')}
             >
-              <KeyRound size={16} />
+              <KeyIcon size={16} />
               {t('profile.account.resetPassword')}
-              <ChevronRight size={14} className={styles.chevron} />
+              <NextIcon size={14} className={styles.chevron} />
+            </button>
+          )}
+          {!loadingUser && !isAdmin && (
+            <button
+              type="button"
+              className={styles.linkButton}
+              onClick={() => alert('Navigate to google calendar linking.')}
+            >
+              <LinkIcon size={16} />
+              {t('profile.account.linkGoogleCalendar')}
+              <NextIcon size={14} className={styles.chevron} />
             </button>
           )}
         </section>
@@ -179,7 +190,7 @@ const ProfileComponent: React.FC = () => {
 
             {loadingProfile ? (
               <div className={styles.loading}>
-                <Loader2 size={24} className={styles.spin} />
+                <LoaderIcon size={24} className={styles.spin} />
               </div>
             ) : profileError ? (
               <p className={styles.error}>{profileError}</p>

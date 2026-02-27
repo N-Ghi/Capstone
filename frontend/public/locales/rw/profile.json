@@ -8,7 +8,8 @@
     "account": {
       "title": "Imyirondoro",
       "sub": "Hindura izina rya konti, amazina yawe, cyangwa ifoto ikuranga",
-      "resetPassword": "Hindura ijambo banga"
+      "resetPassword": "Hindura ijambo banga",
+      "linkGoogleCalendar": "Huza na Calendari ya Google"
     },
     "roleProfile": {
       "title": "Imyirondoro y'{{role}}",
@@ -18,8 +19,8 @@
       "badgeNew": "Gishya"
     },
     "errors": {
-      "loadUser": "Failed to load user information.",
-      "loadProfile": "Failed to load profile information."
+      "loadUser": "Kureba imyirondoro biranze.",
+      "loadProfile": "Kureba imyirondoro biranze."
     }
   },
   "userInfo": {

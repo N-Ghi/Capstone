@@ -6,11 +6,16 @@ import { useAuth } from '../../context/AuthContext';
 import styles from './LoginForm.module.css';
 import logo from '../../assets/logo.png';
 import { Roles } from '../../@types/auth.types';
+import { useLocation } from 'react-router-dom';
+
 
 const LoginForm: React.FC = () => {
   const { t } = useTranslation('auth');
   const navigate = useNavigate();
   const { login } = useAuth();
+  const location = useLocation();
+  const redirectMessage = (location.state as any)?.message;
+  const from = (location.state as any)?.from;
 
   const [identifier, setIdentifier] = React.useState('');
   const [password,   setPassword]   = React.useState('');
@@ -27,7 +32,12 @@ const LoginForm: React.FC = () => {
     try {
       const user = await login(identifier, password);
 
-      // Redirect based on role
+      // Redirect back to the original page if there was one else go to role-based dashboard
+      if (from) {
+        navigate(from, { replace: true });
+        return;
+      }
+
       if (user.role === Roles.Admin) navigate("/admin");
       else if (user.role === Roles.Guide) navigate("/guide");
       else navigate("/tourist");
@@ -45,7 +55,7 @@ const LoginForm: React.FC = () => {
   return (
     <div className={styles.wrapper}>
 
-      {/* ── Left brand panel ────────────────────────────────────────────── */}
+      {/* Left brand panel */}
       <div className={styles.panel}>
         <a className={styles.panelBrand} onClick={() => navigate('/')}>
           <img src={logo} alt="Urugendo" className={styles.panelLogo} />
@@ -64,7 +74,7 @@ const LoginForm: React.FC = () => {
         </div>
       </div>
 
-      {/* ── Right form panel ─────────────────────────────────────────────── */}
+      {/* Right form panel */}
       <div className={styles.formPanel}>
         <div className={styles.formBox}>
           <div className={styles.formHeader}>
@@ -72,7 +82,11 @@ const LoginForm: React.FC = () => {
             <p className={styles.subtitle}>{t('login.subtitle')}</p>
           </div>
 
-          {error && <div className={styles.errorAlert}>{error}</div>}
+          {(error || redirectMessage) && (
+            <div className={styles.errorAlert}>
+              {error || redirectMessage}
+            </div>
+          )}
 
           <form onSubmit={handleLogin}>
             <div className={styles.formGroup}>

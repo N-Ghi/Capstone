@@ -358,7 +358,6 @@ class BookingViewSet(viewsets.ModelViewSet):
         # Add to traveler's calendar (if authorized)
         try:
             if hasattr(booking.traveler, 'google_token'):
-                # Default to 9 AM - 12 PM (make configurable later if needed)
                 start_time = f"{booking.slot.date}T{booking.slot.start_time.strftime('%H:%M:%S')}"
                 end_time = f"{booking.slot.date}T{booking.slot.end_time.strftime('%H:%M:%S')}"
                 
