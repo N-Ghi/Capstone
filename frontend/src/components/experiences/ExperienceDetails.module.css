@@ -48,15 +48,13 @@
   align-items: start;
 }
 
-/* Panels */
-.left,
-.right {
+.left, .right {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-/* Card (shared section wrapper) */
+/* Card */
 .card {
   background: #ffffff;
   border: 1px solid rgba(43, 65, 80, 0.08);
@@ -65,7 +63,6 @@
   box-shadow: 0 2px 10px rgba(43, 65, 80, 0.05);
 }
 
-/* Panel header (title + icons row) */
 .panelHeader {
   display: flex;
   align-items: flex-start;
@@ -73,7 +70,6 @@
   gap: 12px;
 }
 
-/* Experience title */
 .expTitle {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.75rem;
@@ -102,8 +98,8 @@
   font-size: 0.75rem;
   font-weight: 500;
 }
-.statusActive  { background: rgba(98, 127, 103, 0.12); color: #506957; }
-.statusInactive { background: rgba(43, 65, 80, 0.08); color: rgba(43, 65, 80, 0.5); }
+.statusActive   { background: rgba(98, 127, 103, 0.12); color: #506957; }
+.statusInactive { background: rgba(43, 65, 80, 0.08);   color: rgba(43, 65, 80, 0.5); }
 .statusDot {
   width: 6px;
   height: 6px;
@@ -112,11 +108,7 @@
 }
 
 /* Icon buttons */
-.iconBtns {
-  display: flex;
-  gap: 6px;
-  flex-shrink: 0;
-}
+.iconBtns { display: flex; gap: 6px; flex-shrink: 0; }
 
 .iconBtn {
   display: flex;
@@ -131,18 +123,10 @@
   color: rgba(43, 65, 80, 0.5);
   transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
-.iconBtn:hover {
-  background: rgba(98, 127, 103, 0.08);
-  border-color: #627F67;
-  color: #506957;
-}
-.iconBtnDanger:hover {
-  background: rgba(192, 57, 43, 0.07);
-  border-color: #c0392b;
-  color: #c0392b;
-}
+.iconBtn:hover       { background: rgba(98, 127, 103, 0.08); border-color: #627F67; color: #506957; }
+.iconBtnDanger:hover { background: rgba(192, 57, 43, 0.07);  border-color: #c0392b; color: #c0392b; }
 
-/* Description card */
+/* Description */
 .description {
   font-size: 0.9rem;
   font-weight: 300;
@@ -156,17 +140,11 @@
   align-items: center;
   gap: 6px;
   font-size: 0.8rem;
-  font-weight: 400;
   color: rgba(43, 65, 80, 0.55);
   margin-bottom: 8px;
 }
 
-.metaRow {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
+.metaRow  { display: flex; gap: 16px; flex-wrap: wrap; }
 .metaItem {
   display: flex;
   align-items: center;
@@ -176,7 +154,6 @@
   color: rgba(43, 65, 80, 0.45);
 }
 
-/* Section label */
 .sectionLabel {
   font-size: 0.72rem;
   font-weight: 500;
@@ -195,20 +172,9 @@
   margin-bottom: 10px;
   background: rgba(43, 65, 80, 0.05);
 }
+.photoLarge { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.2s; }
 
-.photoLarge {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: opacity 0.2s;
-}
-
-.photoThumbs {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
+.photoThumbs { display: flex; gap: 8px; flex-wrap: wrap; }
 
 .thumb {
   width: 60px;
@@ -222,10 +188,10 @@
   transition: border-color 0.15s;
   flex-shrink: 0;
 }
-.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb img   { width: 100%; height: 100%; object-fit: cover; display: block; }
 .thumbActive { border-color: #627F67; }
 
-/* Slot table */
+/* Slots */
 .addSlotBtn {
   display: inline-flex;
   align-items: center;
@@ -255,27 +221,12 @@
   color: rgba(43, 65, 80, 0.3);
   text-align: center;
 }
-.emptySlots p {
-  margin: 0;
-  font-size: 0.85rem;
-  font-weight: 300;
-}
+.emptySlots p { margin: 0; font-size: 0.85rem; font-weight: 300; }
 
-.tableWrap {
-  overflow-x: auto;
-  margin: -4px;
-}
+.tableWrap { overflow-x: auto; margin: -4px; }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.82rem;
-}
-
-.table thead tr {
-  background: rgba(43, 65, 80, 0.03);
-}
-
+.table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.table thead tr { background: rgba(43, 65, 80, 0.03); }
 .table th {
   padding: 9px 12px;
   text-align: left;
@@ -287,7 +238,6 @@
   border-bottom: 1px solid rgba(43, 65, 80, 0.08);
   white-space: nowrap;
 }
-
 .table td {
   padding: 11px 12px;
   color: #2B4150;
@@ -295,25 +245,13 @@
   border-bottom: 1px solid rgba(43, 65, 80, 0.06);
   vertical-align: middle;
 }
-
 .table tbody tr:last-child td { border-bottom: none; }
 .table tbody tr { transition: background 0.12s; }
 .table tbody tr:hover { background: rgba(98, 127, 103, 0.04); }
 
-.timeCell {
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-}
-
-.timeSep {
-  margin: 0 3px;
-  color: rgba(43, 65, 80, 0.3);
-}
-
-.price {
-  font-weight: 500;
-  color: #2B4150;
-}
+.timeCell { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.timeSep  { margin: 0 3px; color: rgba(43, 65, 80, 0.3); }
+.price    { font-weight: 500; color: #2B4150; }
 
 .remaining {
   display: inline-flex;
@@ -327,51 +265,31 @@
   font-weight: 500;
   font-size: 0.8rem;
 }
-.remainingFull {
-  background: rgba(192, 57, 43, 0.08);
-  color: #c0392b;
-}
+.remainingFull { background: rgba(192, 57, 43, 0.08); color: #c0392b; }
 
-.slotBadge {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 8px;
-  border-radius: 999px;
-  font-size: 0.74rem;
-  font-weight: 500;
-}
+.slotBadge  { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px; font-size: 0.74rem; font-weight: 500; }
 .slotActive   { background: rgba(98, 127, 103, 0.1); color: #506957; }
-.slotInactive { background: rgba(43, 65, 80, 0.07); color: rgba(43, 65, 80, 0.45); }
+.slotInactive { background: rgba(43, 65, 80, 0.07);  color: rgba(43, 65, 80, 0.45); }
 
-.rowActions {
-  display: flex;
-  gap: 4px;
-  justify-content: flex-end;
-}
+.rowActions { display: flex; gap: 4px; justify-content: flex-end; }
 
 /* Skeletons */
 .skeletonTitle {
   height: 36px;
   width: 50%;
   border-radius: 6px;
-  background: linear-gradient(90deg,
-    rgba(43,65,80,0.06) 25%, rgba(43,65,80,0.10) 50%, rgba(43,65,80,0.06) 75%
-  );
+  background: linear-gradient(90deg, rgba(43,65,80,0.06) 25%, rgba(43,65,80,0.10) 50%, rgba(43,65,80,0.06) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite;
   margin-bottom: 14px;
 }
-
 .skeletonBlock {
   height: 100px;
   border-radius: 10px;
-  background: linear-gradient(90deg,
-    rgba(43,65,80,0.06) 25%, rgba(43,65,80,0.10) 50%, rgba(43,65,80,0.06) 75%
-  );
+  background: linear-gradient(90deg, rgba(43,65,80,0.06) 25%, rgba(43,65,80,0.10) 50%, rgba(43,65,80,0.06) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite;
 }
-
 @keyframes shimmer {
   from { background-position: 200% 0; }
   to   { background-position: -200% 0; }
@@ -389,8 +307,6 @@
   color: rgba(43, 65, 80, 0.6);
   font-size: 0.9rem;
 }
-
-/* Shared button (used in error state) */
 .btnSecondary {
   padding: 9px 18px;
   background: transparent;
@@ -404,13 +320,63 @@
 }
 .btnSecondary:hover:not(:disabled) { background: rgba(43, 65, 80, 0.05); }
 
-/* Responsive */
-@media (max-width: 900px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
+/* Booking modal */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.modalContent {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(43, 65, 80, 0.18);
+  max-width: 480px;
+  width: 90%;
+  padding: 1.5rem;
+  position: relative;
+  animation: fadeIn 0.2s ease-out;
+}
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+.modalTitle {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2B4150;
+  margin: 0;
+}
+.modalClose {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  color: rgba(43, 65, 80, 0.4);
+  padding: 0 4px;
+  transition: color 0.15s;
+}
+.modalClose:hover { color: #2B4150; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Translating state */
+.translating { opacity: 0.5; transition: opacity 0.2s; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+}
 @media (max-width: 600px) {
   .page { padding: 16px 12px 60px; }
   .expTitle { font-size: 1.4rem; }

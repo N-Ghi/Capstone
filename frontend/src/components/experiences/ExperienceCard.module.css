@@ -1,4 +1,4 @@
-/* ── ExperienceCard.module.css ───────────────────────────────────── */
+/* ExperienceCard.module.css */
 
 .card {
   display: flex;
@@ -15,7 +15,7 @@
   transform: translateY(-2px);
 }
 
-/* ── Photo strip ─────────────────────────────────────────────────── */
+/* Photo strip */
 .photoStrip {
   width: 140px;
   flex-shrink: 0;
@@ -55,7 +55,7 @@
   backdrop-filter: blur(4px);
 }
 
-/* ── Card body ───────────────────────────────────────────────────── */
+/* Card body */
 .cardBody {
   flex: 1;
   padding: 18px 20px;
@@ -140,7 +140,7 @@
   color: rgba(43, 65, 80, 0.5);
 }
 
-/* ── Actions ─────────────────────────────────────────────────────── */
+/* Actions */
 .cardActions {
   display: flex;
   gap: 8px;
@@ -181,7 +181,7 @@
   color: #2B4150;
 }
 
-/* ── Responsive ──────────────────────────────────────────────────── */
+/* Responsive */
 @media (max-width: 600px) {
   .photoStrip { width: 100px; }
   .cardBody { padding: 14px; }

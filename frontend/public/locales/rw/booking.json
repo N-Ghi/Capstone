@@ -1,0 +1,63 @@
+{
+  "booking": {
+    "guests": "Umubare w'abasura",
+    "saving": "Gufata Umwanya...",
+    "saved": "Umwanya Wafashwe!",
+    "confirm": "Emeza",
+    "errorSave": "Gufata Umwanya Byanze."
+  },
+  "bookingList": {
+    "empty": {
+      "title": "Ntamyanya yari yafatwa.",
+      "text": "Imyanya wafashe izagaragara hano.",
+      "textGuide": "Imyanya yishuwe y'ibisurwa byawe izagaragara hano."
+    },
+    "filter": {
+      "all": "Byose"
+    },
+    "status": {
+      "confirmed": "Byemejwe",
+      "pending": "Birategereje",
+      "cancelled": "Byahagaritswe",
+      "completed": "Byararangiye"
+    },
+    "card": {
+      "view": "Reba",
+      "guest": "Umukerarugendo",
+      "guests": "Abakerarugendo"
+    },
+    "pagination": {
+      "itemLabel": "Ibyemejwe"
+    },
+    "error": {
+      "load": "Byanze kwerekana imyanya."
+    },
+     "page":{
+      "subtitle_loading": "Tegereza...",
+      "title": "Ibiteganyijwe",
+      "subtitle_one": "{{count}} giteganyijwe",
+      "subtitle_other": "{{count}} biteganyijwe",
+      "subtitle_filtered_one": "{{count}} giteganyijwe",
+      "subtitle_filtered_other": "{{count}} biteganyijwe"
+    }
+  },
+  "bookingDetails": {
+    "back": "Inyuma",
+    "loading": "Buretse...",
+    "traveler": "Umukerarugendo",
+    "notFound": "Nta cyemejwe kibonetse",
+    "date": "Itariki",
+    "time": "Igihe",
+    "location": "Ahantu",
+    "guests": "Abakerarugendo",
+    "pricePerGuest": "Ku muntu",
+    "totalPrice": "Yose",
+    "currency": "RWF",
+    "payNow": "Ishyura None",
+    "close": "Funga",
+    "error": {
+      "load": "Kureba imyanya y'ibisurwa byanze.",
+      "noPayment": "Kureba biranze."
+    }
+  }
+}

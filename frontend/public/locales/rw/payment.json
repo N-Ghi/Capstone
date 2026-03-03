@@ -1,0 +1,13 @@
+{
+    "paymentForm": {
+        "title": "Payment Information",
+        "methodLabel": "Uburyo bwo Kwishyura",
+        "providerLabel": "Kuri Telefoni",
+        "submitButton": "Ishyura",
+        "selectMethod": "Hitamo...",
+        "selectProvider": "Hitamo...",
+        "cardNumber": "Nimero y'ikarita",
+        "phoneNumber": "Nimero ya telefone",
+        "processing": "Tegereza..."
+    }
+}

@@ -4,6 +4,7 @@ from django.utils import timezone
 from .models import Booking
 from Experiences.models import ExperienceSlot, Experience
 from Experiences.serializers import ExperienceSlotSerializer
+from Payment.models import Payment
 
 
 class BookingCreateSerializer(serializers.Serializer):
@@ -85,6 +86,7 @@ class BookingSerializer(serializers.ModelSerializer):
     traveler_name = serializers.CharField(source='traveler.get_full_name', read_only=True)
     experience_id = serializers.UUIDField(source='slot.experience.id', read_only=True)
     experience_location = serializers.CharField(source='slot.experience.location.place_name', read_only=True)
+    payment_id = serializers.SerializerMethodField()
 
     class Meta:
         model = Booking
@@ -92,12 +94,17 @@ class BookingSerializer(serializers.ModelSerializer):
             'id', 'traveler', 'traveler_name', 'slot', 'guests',
             'experience_id', 'experience_title', 'experience_location',
             'price_per_guest', 'total_price', 'status',
-            'created_at', 'updated_at'
+            'created_at', 'updated_at', 'payment_id'
         ]
         read_only_fields = [
             'id', 'traveler', 'experience_title', 'price_per_guest',
-            'total_price', 'created_at', 'updated_at'
+            'total_price', 'created_at', 'updated_at', 'payment_id'
         ]
+    def get_payment_id(self, obj):
+        payment = obj.payments.first()
+        if payment:
+            return str(payment.id)
+        return None
 
 class BookingListSerializer(serializers.ModelSerializer):
     """

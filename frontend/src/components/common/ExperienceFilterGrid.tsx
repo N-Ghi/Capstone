@@ -57,7 +57,7 @@ export const ExperienceFilterGrid: React.FC<ExperienceFilterGridProps> = ({
   baseParams = {},
   labels = {},
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('translation');
   const navigate = useNavigate();
 
   const [preferences, setPreferences] = useState<TravelPreference[]>([]);
@@ -160,7 +160,7 @@ export const ExperienceFilterGrid: React.FC<ExperienceFilterGridProps> = ({
       {/* Experience grid */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>
-          {labels.experiences ?? t('experiences.title')}
+          { t('experiences.title') }
         </h2>
 
         {isBusy ? (

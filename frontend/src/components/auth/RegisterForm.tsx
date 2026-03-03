@@ -54,7 +54,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ role }) => {
   return (
     <div className={styles.wrapper}>
 
-      {/* ── Left brand panel ────────────────────────────────────────────── */}
+      {/* Left brand panel */}
       <div className={styles.panel}>
         <a className={styles.panelBrand} onClick={() => navigate('/')}>
           <img src={logo} alt="Urugendo" className={styles.panelLogo} />
@@ -73,7 +73,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ role }) => {
         </div>
       </div>
 
-      {/* ── Right form panel ─────────────────────────────────────────────── */}
+      {/* Right form panel */}
       <div className={styles.formPanel}>
         <div className={styles.formBox}>
 

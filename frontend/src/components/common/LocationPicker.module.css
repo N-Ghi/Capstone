@@ -1,4 +1,4 @@
-/* ── LocationPicker.module.css ─────────────────────────────────── */
+/* LocationPicker.module.css */
 
 .picker {
   display: flex;
@@ -82,7 +82,7 @@
 }
 .clearBtn:hover { color: #c0392b; }
 
-/* ── Geocode result card ──────────────────────────────────────── */
+/* Geocode result card */
 .geocodeResult {
   display: flex;
   align-items: center;
@@ -139,7 +139,7 @@
 .confirmBtn:hover:not(:disabled) { opacity: 0.88; }
 .confirmBtn:disabled { opacity: 0.55; cursor: not-allowed; }
 
-/* ── Saved badge ─────────────────────────────────────────────── */
+/* Saved badge */
 .savedBadge {
   display: flex;
   align-items: center;

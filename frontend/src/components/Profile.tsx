@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { LinkIcon, NextIcon, KeyIcon, LoaderIcon } from './common/Icons';
+import { LinkIcon, NextIcon, KeyIcon, LoaderIcon, CheckIcon, CloseIcon } from './common/Icons';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import Header from './common/Header';
 import UserInfoForm from './UserInfo';
 import ProfileForm from './ProfileForm';
+import calendarService, { type CalendarStatus } from '../services/calendarService';
 import { getUserById, updateUserPartial } from '../services/userService';
 import { getProfileById, updatePartialProfile, createGuideProfile, createTouristProfile } from '../services/profileService';
 import { Roles, type Role } from '../@types/auth.types';
@@ -28,6 +29,14 @@ const ProfileComponent: React.FC = () => {
   const [loadingProfile, setLoadingProfile] = useState(true);
   const [userError, setUserError] = useState<string | null>(null);
   const [profileError, setProfileError] = useState<string | null>(null);
+  
+  // Calendar state
+  const [calendarStatus, setCalendarStatus] = useState<CalendarStatus>({ 
+    connected: false, 
+    connected_at: null 
+  });
+  const [loadingCalendar, setLoadingCalendar] = useState(true);
+  const [disconnectingCalendar, setDisconnectingCalendar] = useState(false);
 
   // Fetch user
   useEffect(() => {
@@ -70,6 +79,56 @@ const ProfileComponent: React.FC = () => {
       })
       .finally(() => setLoadingProfile(false));
   }, [userId, user]);
+
+  // Fetch calendar status
+  useEffect(() => {
+    if (!userId || !user || user.role === Roles.Admin) return;
+    
+    fetchCalendarStatus();
+    checkAuthCallback();
+  }, [userId, user]);
+
+  const fetchCalendarStatus = async () => {
+    try {
+      setLoadingCalendar(true);
+      const data = await calendarService.getStatus();
+      setCalendarStatus(data);
+    } catch (err) {
+      console.error('Failed to fetch calendar status:', err);
+    } finally {
+      setLoadingCalendar(false);
+    }
+  };
+
+  const checkAuthCallback = () => {
+    if (calendarService.checkAuthCallback()) {
+      calendarService.clearAuthCallback();
+      fetchCalendarStatus();
+    }
+  };
+
+  const handleConnectCalendar = () => {
+    if (!userId) {
+      alert('User ID not found. Please refresh and try again.');
+      return;
+    }
+    calendarService.connect(userId);
+  };
+
+  const handleDisconnectCalendar = async () => {
+    if (!confirm(t('calendar.confirmDisconnect'))) return;
+    
+    try {
+      setDisconnectingCalendar(true);
+      await calendarService.disconnect();
+      setCalendarStatus({ connected: false, connected_at: null });
+    } catch (err) {
+      console.error('Failed to disconnect calendar:', err);
+      alert(t('calendar.errors.disconnect'));
+    } finally {
+      setDisconnectingCalendar(false);
+    }
+  };
 
   // Save user account info
   const handleSaveUser = async (data: Partial<User>) => {
@@ -154,16 +213,47 @@ const ProfileComponent: React.FC = () => {
               <NextIcon size={14} className={styles.chevron} />
             </button>
           )}
+          
+          {/* Calendar Button */}
           {!loadingUser && !isAdmin && (
-            <button
-              type="button"
-              className={styles.linkButton}
-              onClick={() => alert('Navigate to google calendar linking.')}
-            >
-              <LinkIcon size={16} />
-              {t('profile.account.linkGoogleCalendar')}
-              <NextIcon size={14} className={styles.chevron} />
-            </button>
+            <>
+              {loadingCalendar ? (
+                <button type="button" className={styles.linkButton} disabled>
+                  <LoaderIcon size={16} className={styles.spin} />
+                  {t('calendar.loading')}
+                </button>
+              ) : calendarStatus.connected ? (
+                <button
+                  type="button"
+                  className={`${styles.linkButton} ${styles.linkButtonConnected}`}
+                  onClick={handleDisconnectCalendar}
+                  disabled={disconnectingCalendar}
+                >
+                  {disconnectingCalendar ? (
+                    <>
+                      <LoaderIcon size={16} className={styles.spin} />
+                      {t('calendar.disconnecting')}
+                    </>
+                  ) : (
+                    <>
+                      <CheckIcon size={16} />
+                      {t('calendar.connected')}
+                      <CloseIcon size={14} className={styles.disconnectIcon} />
+                    </>
+                  )}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className={styles.linkButton}
+                  onClick={handleConnectCalendar}
+                >
+                  <LinkIcon size={16} />
+                  {t('profile.account.linkGoogleCalendar')}
+                  <NextIcon size={14} className={styles.chevron} />
+                </button>
+              )}
+            </>
           )}
         </section>
 
@@ -184,7 +274,9 @@ const ProfileComponent: React.FC = () => {
                 </p>
               </div>
               {!profileExists && !loadingProfile && (
-                <span className={`${styles.badge} ${styles.badgeNew}`}>{t('profile.roleProfile.badgeNew')}</span>
+                <span className={`${styles.badge} ${styles.badgeNew}`}>
+                  {t('profile.roleProfile.badgeNew')}
+                </span>
               )}
             </div>
 

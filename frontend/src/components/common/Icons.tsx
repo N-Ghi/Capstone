@@ -1,8 +1,9 @@
 import { 
   Pencil, Trash2, Eye, MapPin, Calendar, Images, ImageOff, Plus, 
   ChevronLeft, AlertCircle, ChevronDown, Check, Home, X, 
-  BookCheckIcon, Link, ChevronRight, KeyRound, Loader2 
+  BookCheckIcon, Link, ChevronRight, KeyRound, Loader2, Clock, Users
 } from 'lucide-react';
+
 
 export { 
   Pencil as EditIcon,
@@ -23,5 +24,7 @@ export {
   Link as LinkIcon,
   ChevronRight as NextIcon,
   KeyRound as KeyIcon,
-  Loader2 as LoaderIcon
+  Loader2 as LoaderIcon,
+  Clock as ClockIcon,
+  Users as UsersIcon,
 };
