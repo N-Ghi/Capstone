@@ -20,7 +20,7 @@ const HeaderComponent: React.FC = () => {
   const { user } = useAuth();
   const [expMenuOpen, setExpMenuOpen] = useState(false);
 
-  // ── Language state ──────────────────────────────────────────────────────
+  // Language state
   const [languages, setLanguages] = useState<Language[]>([]);
   const [langOpen, setLangOpen]   = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
@@ -48,7 +48,6 @@ const HeaderComponent: React.FC = () => {
     i18n.changeLanguage(lang.code);
     setLangOpen(false);
   };
-  // ───────────────────────────────────────────────────────────────────────
 
   const role = user?.role;
 
@@ -101,9 +100,9 @@ const HeaderComponent: React.FC = () => {
           </div>
         )}
 
-        {/* Tourist-specific link */}
-        {role === 'Tourist' && (
-          <button className={styles.linkBtn} onClick={() => navigate('/tourist/bookings')}>
+        {/* Tourist&Guide-specific link */}
+        {role != 'Admin' && (
+          <button className={styles.dropdownTrigger} onClick={() => navigate('/bookings')}>
             {t('header.myBookings')}
           </button>
         )}

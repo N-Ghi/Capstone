@@ -23,5 +23,9 @@
         "hint": "{{current}}/{{max}} photos · JPG, PNG, WEBP",
         "errorMax": "Maximum {{max}} photos allowed.",
         "errorUpload": "One or more photos failed to upload. Please try again."
+    },
+    "experiences":{
+        "title": "Experiences",
+        "empty": "No experiences found. Try adjusting your filters."
     }
 }

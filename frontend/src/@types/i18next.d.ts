@@ -4,7 +4,8 @@ import dashboards from '../i18n/locales/en/dashboards.json';
 import experience from '../i18n/locales/en/experience.json';
 import profile from '../i18n/locales/en/profile.json';
 import common from '../i18n/locales/en/common.json';
-
+import booking from '../i18n/locales/en/booking.json';
+import payment from '../i18n/locales/en/payment.json';
 
 declare module 'i18next' {
   interface CustomTypeOptions {
@@ -16,6 +17,8 @@ declare module 'i18next' {
       experience:   typeof experience;
       profile:      typeof profile;
       common:       typeof common;
+      booking:      typeof booking;
+      payment:      typeof payment;
     };
   }
 }

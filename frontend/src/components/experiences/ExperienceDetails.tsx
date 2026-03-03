@@ -13,6 +13,9 @@ import type { Slot, ExperirnceSlotData } from '../../@types/experience.types';
 import { useTranslatedData } from '../../hooks/useTranslatedData';
 import styles from './ExperienceDetails.module.css';
 import { BackIcon, BookIcon } from '../common/Icons';
+import { createBooking } from '../../services/bookingService';
+import BookingForm from '../booking/BookingForm';
+import type { CreateBooking } from '../../@types/booking.types';
 
 
 // Helpers
@@ -44,6 +47,7 @@ const ExperienceDetailComponent: React.FC = () => {
   const [deletingSlot, setDeletingSlot] = useState(false);
 
   const [activePhoto, setActivePhoto] = useState(0);
+  const [bookingSlotId, setBookingSlotId] = useState<string | null>(null);
 
 
   const experienceArray = useMemo(
@@ -105,7 +109,13 @@ const ExperienceDetailComponent: React.FC = () => {
       setDeleteExp(false);
     }
   };
-  const handleBookingExperience = () => navigate(`/experience/${id}/book`);
+  
+  const handleOpenBooking = (slotId: string) => setBookingSlotId(slotId);
+
+  const handleBook = async (data: CreateBooking) => {
+    const booking = await createBooking(data);
+    navigate(`/payment/${booking.payment_id}`);
+  };
 
   const handleSaveSlot = async (data: ExperirnceSlotData) => {
     if (!id) return;
@@ -350,7 +360,7 @@ const ExperienceDetailComponent: React.FC = () => {
                               <div className={styles.rowActions}>
                                 <button
                                   className={styles.iconBtn}
-                                  onClick={() => handleBookingExperience()}
+                                  onClick={() => handleOpenBooking(slot.id)}
                                   title={t('experienceDetail.slots.bookSlot')}
                                 >
                                   <BookIcon />
@@ -368,6 +378,33 @@ const ExperienceDetailComponent: React.FC = () => {
           </div>
         </div>
       </div>
+      
+      {bookingSlotId && (
+        <div className={styles.modalOverlay} onClick={() => setBookingSlotId(null)}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h3 className={styles.modalTitle}>
+                {t('experienceDetail.slots.bookSlot')}
+              </h3>
+              <button
+                className={styles.modalClose}
+                onClick={() => setBookingSlotId(null)}
+                type="button"
+              >
+                ×
+              </button>
+            </div>
+            <BookingForm
+              slotId={bookingSlotId}
+              maxGuests={slots.find((s) => s.id === bookingSlotId)?.remaining_slots}
+              onBook={async (data) => {
+                await handleBook(data);
+                setBookingSlotId(null);
+              }}
+            />
+          </div>
+        </div>
+      )}
 
       {slotModal.open && (
         <SlotFormModal

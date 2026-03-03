@@ -1,0 +1,63 @@
+{
+  "booking": {
+    "guests": "Number of Guests",
+    "saving": "Booking…",
+    "saved": "Booked!",
+    "confirm": "Confirm Booking",
+    "errorSave": "Failed to complete booking."
+  },
+  "bookingList": {
+    "empty": {
+      "title": "No bookings yet",
+      "text": "Booked experiences will appear here.",
+      "textGuide": "Confirmed bookings for your experiences will appear here."
+    },
+    "status": {
+      "confirmed": "Confirmed",
+      "pending": "Pending",
+      "cancelled": "Cancelled",
+      "completed": "Completed"
+    },
+    "filter": {
+      "all": "All"
+    },
+    "card": {
+      "view": "View",
+      "guest": "Guest",
+      "guests": "Guests"
+    },
+    "pagination": {
+      "itemLabel": "bookings"
+    },
+    "error": {
+      "load": "Failed to load bookings."
+    },
+    "page": {
+      "subtitle_loading": "Loading your bookings...",
+      "title": "Bookings",
+      "subtitle_one": "{{count}} booking",
+      "subtitle_other": "{{count}} bookings",
+      "subtitle_filtered_one": "{{count}} booking",
+      "subtitle_filtered_other": "{{count}} bookings"
+    }
+  },
+  "bookingDetails": {
+    "back": "Back",
+    "loading": "Loading...",
+    "traveler": "Traveler",
+    "notFound": "Booking not found",
+    "date": "Date",
+    "time": "Time",
+    "location": "Location",
+    "guests": "Guests",
+    "pricePerGuest": "Per Guest",
+    "totalPrice": "Total",
+    "currency": "RWF",
+    "payNow": "Pay Now",
+    "close": "Close",
+    "error": {
+      "load": "Failed to load booking details.",
+      "noPayment": "Payment not found."
+    }
+  }
+}

@@ -1,0 +1,146 @@
+/* BookingCard.module.css */
+
+.card {
+  display: flex;
+  background: #ffffff;
+  border: 1px solid rgba(43, 65, 80, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(43, 65, 80, 0.05);
+  cursor: pointer;
+  transition: box-shadow 0.18s, transform 0.18s;
+  overflow: hidden;
+}
+
+.card:hover {
+  box-shadow: 0 6px 20px rgba(43, 65, 80, 0.10);
+  transform: translateY(-1px);
+}
+
+/* Body */
+.cardBody {
+  flex: 1;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cardTitles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cardTitle {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2B4150;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.travelerName {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: rgba(43, 65, 80, 0.55);
+  margin: 0;
+}
+
+/* Status badge */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.8;
+}
+
+.status_confirmed {
+  background: rgba(98, 127, 103, 0.1);
+  color: #506957;
+}
+
+.status_pending {
+  background: rgba(200, 160, 60, 0.1);
+  color: #a07c20;
+}
+
+.status_cancelled {
+  background: rgba(180, 70, 70, 0.1);
+  color: #a03030;
+}
+
+.status_completed {
+  background: rgba(43, 65, 80, 0.08);
+  color: #2B4150;
+}
+
+/* Meta row */
+.cardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.metaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.80rem;
+  font-weight: 300;
+  color: rgba(43, 65, 80, 0.55);
+}
+
+/* Actions */
+.cardActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.80rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s;
+}
+
+.actionBtn:hover { opacity: 0.82; }
+
+.actionBtnView {
+  background: rgba(43, 65, 80, 0.07);
+  color: #2B4150;
+}

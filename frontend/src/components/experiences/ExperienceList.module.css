@@ -1,4 +1,4 @@
-/* ── ExperienceList.module.css ───────────────────────────────────── */
+/* ExperienceList.module.css */
 
 .wrapper {
   display: flex;
@@ -6,14 +6,14 @@
   gap: 0;
 }
 
-/* ── List ────────────────────────────────────────────────────────── */
+/* List */
 .list {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-/* ── Skeleton ────────────────────────────────────────────────────── */
+/* Skeleton */
 .skeletonList {
   display: flex;
   flex-direction: column;
@@ -37,7 +37,7 @@
   to   { background-position: -200% 0; }
 }
 
-/* ── Empty state ─────────────────────────────────────────────────── */
+/* Empty state */
 .empty {
   display: flex;
   flex-direction: column;
@@ -96,7 +96,7 @@
 }
 .emptyBtn:hover { opacity: 0.88; }
 
-/* ── Translating banner ──────────────────────────────────────────── */
+/* Translating banner */
 .translatingBanner {
   display: flex;
   align-items: center;

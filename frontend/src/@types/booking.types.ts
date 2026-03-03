@@ -2,7 +2,7 @@ import type { Slot } from './experience.types'
 
 export interface CreateBooking {
     slot_id: string;
-    guest: number;
+    guests: number;
 }
 
 export interface CreateBookingResponse {
@@ -19,6 +19,7 @@ export interface CreateBookingResponse {
     status: string;
     created_at: string;
     updated_at: string;
+    payment_id: string;
 }
 
 export interface Booking  {
@@ -30,4 +31,5 @@ export interface Booking  {
     total_price: number;
     status: string;
     created_at: string;
+    payment_id?: string;
 }

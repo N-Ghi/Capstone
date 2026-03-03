@@ -5,18 +5,12 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.contrib.auth import get_user_model
-
-from Users.models import GoogleOAuthToken
-from Utils.email import send_booking_confirmation, send_guide_new_booking_alert, send_reminder_email, send_booking_cancellation, send_cancellation_alert
-from Utils.calendar import add_event
+from Utils.email import send_booking_pending_alert, send_booking_cancellation, send_cancellation_alert
 from .models import Booking
-from .serializers import (
-    BookingCreateSerializer,
-    BookingSerializer,
-    BookingListSerializer,
-    BookingStatusUpdateSerializer
-)
-from Urugendo.permissions import IsAdmin
+from Payment.models import Payment
+from Choices.models import PaymentStatus
+from .serializers import ( BookingCreateSerializer, BookingSerializer, BookingListSerializer, BookingStatusUpdateSerializer )
+
 
 User = get_user_model()
 
@@ -36,25 +30,22 @@ class BookingViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         user = self.request.user
-        
-        # Admins see all bookings
+
         if user.role == 'Admin':
             return Booking.objects.select_related(
                 'traveler', 'slot', 'slot__experience', 'slot__experience__guide',
                 'slot__experience__location'
-            ).all()
-        
-        # Guides see bookings for their experiences only
+            ).all().order_by('-created_at')
+
         if user.role == 'Guide':
             return Booking.objects.select_related(
                 'traveler', 'slot', 'slot__experience', 'slot__experience__location'
-            ).filter(slot__experience__guide=user)
-        
-        # Tourists see only their own bookings
+            ).filter(slot__experience__guide=user).order_by('-created_at')
+
         return Booking.objects.select_related(
             'slot', 'slot__experience', 'slot__experience__guide',
             'slot__experience__location'
-        ).filter(traveler=user)
+        ).filter(traveler=user).order_by('-created_at')
     
     def get_serializer_class(self):
         if self.action == 'create':
@@ -64,58 +55,52 @@ class BookingViewSet(viewsets.ModelViewSet):
         return BookingSerializer
     
     def create(self, request, *args, **kwargs):
-        """
-        POST /bookings/
-        Create a booking.
-        
-        - Tourist: Can book for themselves
-        - Admin: Can book for any tourist (requires tourist_id in request)
-        - Guide: Cannot create bookings
-        """
         user = request.user
-        
+
         # Guides cannot create bookings
-        if user.role == 'Guide':
-            return Response(
-                {"detail": "Guides cannot create bookings."},
-                status=status.HTTP_403_FORBIDDEN
-            )
-        
-        # Determine the traveler
-        if user.role == 'Admin':
-            tourist_id = request.data.get('tourist_id')
+        if user.role == "Guide":
+            return Response({"detail": "Guides cannot create bookings."}, status=status.HTTP_403_FORBIDDEN)
+
+        # Determine traveler
+        if user.role == "Admin":
+            tourist_id = request.data.get("tourist_id")
             if not tourist_id:
-                return Response(
-                    {"tourist_id": "Required for admin to create bookings."},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-            try:
-                traveler = User.objects.get(id=tourist_id, role='Tourist')
-            except User.DoesNotExist:
-                return Response(
-                    {"tourist_id": "Invalid tourist ID."},
-                    status=status.HTTP_404_NOT_FOUND
-                )
+                return Response({"tourist_id": "Required for admin to create bookings."}, status=status.HTTP_400_BAD_REQUEST)
+            traveler = get_object_or_404(User, id=tourist_id, role="Tourist")
         else:
-            # Tourist booking for themselves
             traveler = user
-        
-        # Create the booking
+
+        # Create booking with PENDING status
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        
-        # Save with the determined traveler
         booking = serializer.save()
         booking.traveler = traveler
+        booking.status = Booking.Status.PENDING
         booking.save()
-        
-        # Send notifications and add to calendar
-        self._send_booking_notifications(booking)
-        
-        return Response(
-            BookingSerializer(booking).data,
-            status=status.HTTP_201_CREATED
+
+        # Create associated payment (PENDING)
+        payment = Payment.objects.create(
+            booking=booking,
+            amount=booking.slot.price * booking.guests,
+            payment_status=PaymentStatus.objects.get(code="PENDING")
         )
+
+        # Send pending alert emails
+        try:
+            send_booking_pending_alert(
+                to=traveler.email,
+                tourist_name=traveler.get_full_name(),
+                experience_title=booking.experience_title,
+                booking_date=booking.slot.date.strftime("%B %d, %Y"),
+                start_time=booking.slot.start_time.strftime("%I:%M %p"),
+                end_time=booking.slot.end_time.strftime("%I:%M %p"),
+            )
+        except Exception as e:
+            print(f"Failed to send pending booking emails: {e}")
+
+        response_data = BookingSerializer(booking).data
+        response_data["payment_id"] = str(payment.id)
+        return Response(response_data, status=status.HTTP_201_CREATED)
     
     def retrieve(self, request, *args, **kwargs):
         """
@@ -190,38 +175,19 @@ class BookingViewSet(viewsets.ModelViewSet):
         serializer = BookingListSerializer(bookings, many=True)
         return Response(serializer.data)
     
-    @action(detail=True, methods=['patch'], url_path='status')
+    @action(detail=True, methods=["patch"], url_path="status")
     def update_status(self, request, pk=None):
         """
         PATCH /bookings/{id}/status/
-        Update booking status.
-        
-        - Admin: Can update any booking status
-        - Guide: Can update status for bookings on their experiences
-        - Tourist: Cannot update status (use DELETE to cancel)
+        Used by backend/payment webhook to mark booking CONFIRMED after payment success.
         """
         booking = self.get_object()
-        user = request.user
-        
-        # Permission check
-        is_guide_owner = (
-            user.role == 'Guide' and 
-            booking.slot.experience.guide == user
-        )
-        
-        if not (user.role == 'Admin' or is_guide_owner):
-            return Response(
-                {"detail": "Only admins or the guide can update booking status."},
-                status=status.HTTP_403_FORBIDDEN
-            )
-        
         serializer = BookingStatusUpdateSerializer(
-            data=request.data,
-            context={'booking': booking}
+            data=request.data, context={"booking": booking}
         )
         serializer.is_valid(raise_exception=True)
         serializer.update(booking, serializer.validated_data)
-        
+
         return Response(BookingSerializer(booking).data)
     
     def destroy(self, request, *args, **kwargs):
@@ -327,51 +293,3 @@ class BookingViewSet(viewsets.ModelViewSet):
         
         serializer = BookingListSerializer(past_bookings, many=True)
         return Response(serializer.data)
-    
-    def _send_booking_notifications(self, booking):
-        """Helper method to send emails and add calendar events."""
-        # Send confirmation email to traveler
-        try:
-            send_booking_confirmation(
-                to=booking.traveler.email,
-                tourist_name=booking.traveler.get_full_name(),
-                experience_title=booking.experience_title,
-                booking_date=booking.slot.date.strftime("%B %d, %Y"),
-                start_time = booking.slot.start_time.strftime('%H:%M:%S'),
-                end_time = booking.slot.end_time.strftime('%H:%M:%S')
-            )
-        except Exception as e:
-            print(f"Failed to send confirmation email: {e}")
-        
-        # Send notification to guide
-        try:
-            send_guide_new_booking_alert(
-                to=booking.slot.experience.guide.email,
-                guide_name=booking.slot.experience.guide.get_full_name(),
-                tourist_name=booking.traveler.get_full_name(),
-                experience_title=booking.experience_title,
-                booking_date=booking.slot.date.strftime("%B %d, %Y")
-            )
-        except Exception as e:
-            print(f"Failed to send guide notification: {e}")
-        
-        # Add to traveler's calendar (if authorized)
-        try:
-            if hasattr(booking.traveler, 'google_token'):
-                start_time = f"{booking.slot.date}T{booking.slot.start_time.strftime('%H:%M:%S')}"
-                end_time = f"{booking.slot.date}T{booking.slot.end_time.strftime('%H:%M:%S')}"
-                
-                location_name = ""
-                if booking.slot.experience.location:
-                    location_name = booking.slot.experience.location.place_name
-                
-                add_event(
-                    user=booking.traveler,
-                    title=booking.experience_title,
-                    description=f"Booked with {booking.slot.experience.guide.get_full_name()}. {booking.guests} guest(s).",
-                    start_datetime=start_time,
-                    end_datetime=end_time,
-                    location=location_name
-                )
-        except Exception as e:
-            print(f"Failed to add calendar event: {e}")

@@ -8,6 +8,8 @@ import ExperienceFormPage from "../pages/ExperienceFormPage";
 import ExperienceListPage from "../pages/ExperienceListPage";
 import ExperienceDetailPage from "../pages/ExperienceDetail";
 import ProfilePage from "../pages/ProfilePage";
+import BookingListPage from "../pages/BookingListPage";
+import BookingDetailsPage from "../pages/BookingDetailsPage";
 
 export const protectedRoutes = [
   {
@@ -74,4 +76,21 @@ export const protectedRoutes = [
       </ProtectedRoute>
     ),
   },
+  {
+    path: '/bookings',
+    element: (
+      <ProtectedRoute allowedRoles={[Roles.Tourist, Roles.Guide]}>
+        <BookingListPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/bookings/:id',
+    element: (
+      <ProtectedRoute allowedRoles={[Roles.Tourist, Roles.Admin]}>
+        <BookingDetailsPage />
+      </ProtectedRoute>
+    ),
+  },
+
 ];

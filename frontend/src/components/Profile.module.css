@@ -181,3 +181,43 @@
   margin-left: auto;
   opacity: 0.5;
 }
+
+.chevronUp {
+  transform: rotate(90deg);
+}
+
+.linkButton .chevron {
+  transition: transform 0.2s ease;
+}
+
+.linkButtonConnected {
+  background: #d4edda !important;
+  color: #155724 !important;
+  border-color: #c3e6cb !important;
+}
+
+.linkButtonConnected:hover {
+  background: #c3e6cb !important;
+}
+
+.linkButtonConnected:hover .disconnectIcon {
+  opacity: 1;
+}
+
+.disconnectIcon {
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

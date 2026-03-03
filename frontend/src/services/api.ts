@@ -2,11 +2,13 @@ import axios, { type AxiosInstance, AxiosError, type InternalAxiosRequestConfig 
 import { logout } from './authService';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/';
+const timeout = import.meta.env.VITE_API_TIMEOUT;
 
 const api: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 10000,
+  timeout: timeout,
   headers: { 'Content-Type': 'application/json' },
+  withCredentials: true,
 });
 
 // Attach access token

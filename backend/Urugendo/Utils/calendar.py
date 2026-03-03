@@ -4,7 +4,6 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-
 CALENDAR_SCOPES = ["https://www.googleapis.com/auth/calendar.events"]
 
 
@@ -34,15 +33,7 @@ def _get_calendar_service(user):
     return build("calendar", "v3", credentials=creds)
 
 
-def add_event(
-    user,
-    title: str,
-    description: str,
-    start_datetime: str,
-    end_datetime: str,
-    location: str = "",
-    timezone: str = "Africa/Kigali",
-) -> dict:
+def add_event( user, title: str, description: str, start_datetime: str, end_datetime: str, location: str = "", timezone: str = "Africa/Kigali", ) -> dict:
     """
     Add an event to the user's Google Calendar.
 

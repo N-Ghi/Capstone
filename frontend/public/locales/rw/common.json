@@ -23,5 +23,9 @@
         "hint": "Amafoto {{current}}/{{max}} · JPG, PNG, WEBP",
         "errorMax": "Amafoto {{max}} ntarengwa.",
         "errorUpload": "Hakenewe nibura ifoto imwe. Ongera ugerageze."
+    },
+    "experiences":{
+        "title": "Ibitemberwa",
+        "empty": "Ntagitemberwa kibonetse. Gerageza guhindura ibyiciro ukoresheje."
     }
 }

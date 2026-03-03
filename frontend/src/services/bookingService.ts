@@ -1,34 +1,27 @@
-import axios from "axios";
+import api from './api';
 import type { Booking, CreateBookingResponse, CreateBooking } from "../@types/booking.types";
-const API_URL = import.meta.env.VITE_API_BASE_URL
-const timeout = import.meta.env.VITE_API_TIMEOUT;
 
-// Create axios instance
-const api = axios.create({
-  baseURL: API_URL,
-  timeout: timeout,
-  headers: { 'Content-Type': 'application/json' },
-});
 
-// Attach access token automatically
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("access");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
 
 export const createBooking = async (bookingData: CreateBooking): Promise<CreateBookingResponse> => {
   try {
+    console.log('Creating booking with data:', bookingData);
     const response = await api.post<CreateBookingResponse>('/bookings/', bookingData);
+    console.log('Booking created:', response.data);
     return response.data;
-  } catch (error) {
-    console.error("Error creating booking:", error);
-    throw error;
+  } catch (error: any) {
+    if (error.response) {
+      console.error('Booking failed with status:', error.response.status);
+      console.error('Backend response:', error.response.data);
+      throw new Error(error.response.data.detail || JSON.stringify(error.response.data));
+    } else {
+      console.error('Booking error:', error.message);
+      throw error;
+    }
   }
 };
 
+// Get booking by ID
 export const getBookingById = async (id: string): Promise<CreateBookingResponse> => {
   try {
     const response = await api.get<CreateBookingResponse>(`/bookings/${id}/`);
@@ -39,9 +32,12 @@ export const getBookingById = async (id: string): Promise<CreateBookingResponse>
   }
 };
 
-export const getAllBookings = async (): Promise<Booking[]> => {
+// List all bookings
+export const getAllBookings = async (page: number = 1): Promise<{ results: Booking[]; count: number }> => {
   try {
-    const response = await api.get<Booking[]>('/bookings/');
+    const response = await api.get<{ results: Booking[]; count: number }>('/bookings/', {
+      params: { page },
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching all bookings:", error);
@@ -49,6 +45,7 @@ export const getAllBookings = async (): Promise<Booking[]> => {
   }
 };
 
+// List bookings by slot
 export const getBookingBySlotId = async (slotId: string): Promise<Booking[]> => {
   try {
     const response = await api.get<Booking[]>(`/bookings/slot/${slotId}/`);
@@ -59,26 +56,29 @@ export const getBookingBySlotId = async (slotId: string): Promise<Booking[]> => 
   }
 };
 
+// Update booking (partial)
 export const updateBooking = async (id: string, bookingData: Partial<CreateBooking>): Promise<CreateBookingResponse> => {
   try {
     const response = await api.patch<CreateBookingResponse>(`/bookings/${id}/`, bookingData);
     return response.data;
-    } catch (error) {
+  } catch (error) {
     console.error("Error updating booking:", error);
     throw error;
   }
 };
 
+// Cancel booking
 export const deleteBooking = async (id: string): Promise<void> => {
   try {
     await api.delete(`/bookings/${id}/`);
-    } catch (error) {
-    console.error("Error deleting booking:", error);
+  } catch (error) {
+    console.error("Error cancelling booking:", error);
     throw error;
   }
 };
 
-export const upcommingBookings = async (): Promise<Booking[]> => {
+// Upcoming bookings
+export const upcomingBookings = async (): Promise<Booking[]> => {
   try {
     const response = await api.get<Booking[]>('/bookings/upcoming/');
     return response.data;
@@ -88,6 +88,7 @@ export const upcommingBookings = async (): Promise<Booking[]> => {
   }
 };
 
+// Past bookings
 export const pastBookings = async (): Promise<Booking[]> => {
   try {
     const response = await api.get<Booking[]>('/bookings/past/');

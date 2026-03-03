@@ -1,12 +1,18 @@
 from rest_framework import viewsets, status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 from Urugendo.permissions import IsAdmin
 from .serializers import UserSerializer
-from rest_framework.decorators import action
+from rest_framework.decorators import APIView, action
+
+from google_auth_oauthlib.flow import Flow
+from django.conf import settings
+from django.shortcuts import redirect
+from .models import GoogleOAuthToken
 
 User = get_user_model()
+CALENDAR_SCOPES = ["https://www.googleapis.com/auth/calendar.events"]
 
 
 class UserViewSet(viewsets.ModelViewSet):

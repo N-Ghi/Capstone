@@ -1,23 +1,4 @@
-import axios from "axios";
-
-const API_URL = import.meta.env.VITE_API_BASE_URL
-const timeout = import.meta.env.VITE_API_TIMEOUT;
-
-// Create axios instance
-const api = axios.create({
-  baseURL: API_URL,
-  timeout: timeout,
-  headers: { 'Content-Type': 'application/json' },
-});
-
-// Attach access token automatically
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("access");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+import api from './api';
 
 export const getPaymentMethods = async () => {
   try {

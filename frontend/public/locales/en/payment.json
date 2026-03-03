@@ -1,0 +1,13 @@
+{
+    "paymentForm": {
+        "title": "Payment Information",
+        "methodLabel": "Payment Method",
+        "providerLabel": "Mobile Provider",
+        "submitButton": "Pay Now",
+        "selectMethod": "Select a method...",
+        "selectProvider": "Select a provider...",
+        "cardNumber": "Card Number",
+        "phoneNumber": "Phone Number",
+        "processing": "Processing…"
+    }
+}

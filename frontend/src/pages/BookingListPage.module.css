@@ -1,0 +1,185 @@
+
+.page {
+  min-height: 100vh;
+  background: #f7f4f4;
+  padding: 40px 16px 80px;
+  font-family: 'DM Sans', sans-serif;
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1.5px solid rgba(43, 65, 80, 0.15);
+  border-radius: 7px;
+  background: #ffffff;
+  cursor: pointer;
+  color: #506957;
+  flex-shrink: 0;
+  margin-top: 4px;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.backBtn:hover {
+  background: rgba(98, 127, 103, 0.08);
+  border-color: #627F67;
+  color: #506957;
+}
+
+.title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #506957;
+  margin: 0 0 3px;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: rgba(43, 65, 80, 0.5);
+  margin: 0;
+}
+
+/* Error banner */
+.errorBanner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background: #fdf2f0;
+  border: 1px solid #f5c6c0;
+  border-radius: 10px;
+  color: #c0392b;
+  font-size: 0.88rem;
+  margin-bottom: 24px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .page { padding: 24px 12px 60px; }
+  .header { flex-direction: column; align-items: flex-start; }
+}
+
+/* Status filter pills */
+
+.filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.filterPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border: 1.5px solid rgba(43, 65, 80, 0.15);
+  border-radius: 999px;
+  background: #ffffff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: rgba(43, 65, 80, 0.55);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.filterPill:hover {
+  background: rgba(43, 65, 80, 0.04);
+  border-color: rgba(43, 65, 80, 0.25);
+  color: #506957;
+}
+
+/* Active — "All" pill */
+.filterPillActive {
+  background: #506957;
+  border-color: #506957;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* Active — status-coloured pills */
+.filterPillActive.pill_pending {
+  background: rgba(146, 113, 10, 0.12);
+  border-color: rgba(146, 113, 10, 0.35);
+  color: #92710a;
+}
+
+.filterPillActive.pill_confirmed {
+  background: rgba(98, 127, 103, 0.12);
+  border-color: rgba(98, 127, 103, 0.35);
+  color: #506957;
+}
+
+.filterPillActive.pill_completed {
+  background: rgba(43, 65, 80, 0.1);
+  border-color: rgba(43, 65, 80, 0.25);
+  color: #506957;
+}
+
+.filterPillActive.pill_cancelled {
+  background: rgba(192, 57, 43, 0.08);
+  border-color: rgba(192, 57, 43, 0.3);
+  color: #c0392b;
+}
+
+/* Count badge inside pill */
+.filterCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: rgba(43, 65, 80, 0.08);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: inherit;
+  line-height: 1;
+}
+
+.filterPillActive .filterCount {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.filterPillActive.pill_pending .filterCount,
+.filterPillActive.pill_confirmed .filterCount,
+.filterPillActive.pill_completed .filterCount,
+.filterPillActive.pill_cancelled .filterCount {
+  background: rgba(43, 65, 80, 0.1);
+}

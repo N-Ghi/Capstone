@@ -11,7 +11,7 @@ from .filters import ExperienceFilter
 from .models import Experience, ExperienceSlot
 from .serializers import ExperienceSerializer, ExperienceListSerializer, ExperienceSlotSerializer
 from Urugendo.permissions import IsGuideOwnerOrAdmin, IsAdmin, IsGuide
-
+from Utils.calendar import add_event
 User = get_user_model()
 
 
@@ -120,6 +120,16 @@ class ExperienceSlotViewSet(ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(experience=experience)
+        # Add event to Google Calendar for the guide
+        slot = serializer.instance
+        add_event(
+            user=experience.guide,
+            title=f"{experience.title} Slot",
+            description=f"Experience: {experience.title}\nSlot ID: {slot.id}",
+            start_datetime=slot.date.isoformat(),
+            end_datetime=(slot.date + timezone.timedelta(hours=2)).isoformat(),  # Assuming 2-hour slots
+            location=experience.location.name if experience.location else "",
+        )
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def update(self, request, *args, **kwargs):

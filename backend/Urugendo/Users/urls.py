@@ -1,6 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import UserViewSet
+from .calendar import CalendarStatusView, CalendarAuthorizeView, CalendarCallbackView, CalendarDisconnectView
 from .auth import register, login, resend_verification_email, verify_email
 from rest_framework_simplejwt.views import TokenRefreshView
 
@@ -14,6 +15,12 @@ urlpatterns = [
     path('auth/resend-verification-email/', resend_verification_email, name='resend-verification-email'),
     path('auth/login/', login, name='login'),
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    # Google Calendar OAuth
+    path("calendar/authorize/", CalendarAuthorizeView.as_view(), name="calendar-authorize"),
+    path("calendar/callback/", CalendarCallbackView.as_view(), name="calendar-callback"),
+    path("calendar/disconnect/", CalendarDisconnectView.as_view(), name="calendar-disconnect"),
+    path("calendar/status/", CalendarStatusView.as_view(), name="calendar-status"),
 
     # UserViewSet routes via router
     path('', include(router.urls)),

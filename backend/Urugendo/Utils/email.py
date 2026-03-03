@@ -86,6 +86,22 @@ def send_booking_confirmation(to, tourist_name, experience_title, booking_date, 
         """,
     )
 
+def send_booking_pending_alert(to, tourist_name, experience_title, booking_date, start_time, end_time):
+    """
+    Send booking pending alert email to tourists.
+    """
+    send_email(
+        to=to,
+        subject=f"Booking Pending: {experience_title}",
+        html_body=f"""
+            <h2>Your booking is pending, {tourist_name}!</h2>
+            <p>Experience: <strong>{experience_title}</strong></p>
+            <p>Date: <strong>{booking_date}</strong></p>
+            <p>Time: <strong>{start_time} - {end_time}</strong></p>
+            <p>Please proceed with payment to confirm your booking.</p>
+        """,
+    )
+
 def send_booking_cancellation(to, tourist_name, experience_title, booking_date):
     """
     Send booking cancellation email to tourists.

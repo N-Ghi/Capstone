@@ -8,6 +8,9 @@ class PaymentMethod(models.Model):
     
     name = models.CharField(max_length=20, unique=True)
 
+    class Meta:
+        ordering = ['id']
+
     def __str__(self):
         return self.name
 
@@ -17,6 +20,9 @@ class TravelPreference(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     
     name = models.CharField(max_length=20, unique=True)
+
+    class Meta:
+        ordering = ['id']
 
     def __str__(self):
         return self.name
@@ -29,6 +35,9 @@ class Language(models.Model):
     name = models.CharField(max_length=20, unique=True)
     code = models.CharField(max_length=10, unique=True)
 
+    class Meta:
+        ordering = ['id']
+
     def __str__(self):
         return self.name
 
@@ -38,6 +47,9 @@ class PaymentStatus(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     
     code = models.CharField(max_length=20, unique=True)
+
+    class Meta:
+        ordering = ['id']
 
     def __str__(self):
         return self.code
@@ -49,6 +61,9 @@ class MobileProvider(models.Model):
 
     name = models.CharField(max_length=50, unique=True)
 
+    class Meta:
+        ordering = ['id']
+
     def __str__(self):
         return self.name
 
@@ -58,6 +73,9 @@ class PayoutStatus(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     code = models.CharField(max_length=20, unique=True)
+
+    class Meta:
+        ordering = ['id']
 
     def __str__(self):
         return self.code

@@ -11,7 +11,7 @@ class Command(BaseCommand):
 
         # Define entries with optional 'code' for Language
         label_data = {
-            PaymentMethod: ["Mobile Money", "Credit Card", "Debit Card"],
+            PaymentMethod: ["Mobile", "Credit", "Debit"],
             TravelPreference: ["Adventure", "Cultural", "Relaxation", "Eco-Tourism", "Luxury"],
             Language: [
                 {"name": "English", "code": "en"},
@@ -19,7 +19,7 @@ class Command(BaseCommand):
                 {"name": "Kinyarwanda", "code": "rw"},
             ],
             PaymentStatus: ["PENDING", "COMPLETED", "FAILED", "REFUNDED"],
-            MobileProvider: ["MTN Mobile Money", "Airtel Money"],
+            MobileProvider: ["MTN", "Airtel"],
             PayoutStatus: ["PENDING", "PROCESSING", "PAID", "FAILED"],
         }
 

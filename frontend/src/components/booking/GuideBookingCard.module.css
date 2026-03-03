@@ -1,0 +1,72 @@
+.card {
+  background: #ffffff;
+  border: 1px solid rgba(43, 65, 80, 0.08);
+  border-radius: 10px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 10px rgba(43, 65, 80, 0.04);
+  transition: box-shadow 0.15s;
+}
+.card:hover {
+  box-shadow: 0 4px 16px rgba(43, 65, 80, 0.09);
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cardTitle {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #2B4150;
+  margin: 0;
+}
+
+/* Confirmed-only badge — always green */
+.confirmedBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.73rem;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+  background: rgba(98, 127, 103, 0.12);
+  color: #506957;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.metaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: rgba(43, 65, 80, 0.6);
+}
+
+.metaItem svg { color: rgba(43, 65, 80, 0.35); }
