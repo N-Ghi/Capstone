@@ -10,6 +10,7 @@ import ExperienceDetailPage from "../pages/ExperienceDetail";
 import ProfilePage from "../pages/ProfilePage";
 import BookingListPage from "../pages/BookingListPage";
 import BookingDetailsPage from "../pages/BookingDetailsPage";
+import CommonProfilePage from "../pages/CommonProfilePage";
 
 export const protectedRoutes = [
   {
@@ -73,6 +74,14 @@ export const protectedRoutes = [
     element: (
       <ProtectedRoute allowedRoles={[Roles.Guide, Roles.Tourist, Roles.Admin]}>
         <ProfilePage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/profile/:id',
+    element: (
+      <ProtectedRoute allowedRoles={[Roles.Guide, Roles.Tourist, Roles.Admin]}>
+        <CommonProfilePage />
       </ProtectedRoute>
     ),
   },

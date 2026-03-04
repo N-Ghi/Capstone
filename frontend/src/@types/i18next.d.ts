@@ -6,6 +6,7 @@ import profile from '../i18n/locales/en/profile.json';
 import common from '../i18n/locales/en/common.json';
 import booking from '../i18n/locales/en/booking.json';
 import payment from '../i18n/locales/en/payment.json';
+import review from '../i18n/locales/en/review.json';
 
 declare module 'i18next' {
   interface CustomTypeOptions {
@@ -19,6 +20,7 @@ declare module 'i18next' {
       common:       typeof common;
       booking:      typeof booking;
       payment:      typeof payment;
+      review:       typeof review;
     };
   }
 }

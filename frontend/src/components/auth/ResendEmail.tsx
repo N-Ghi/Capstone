@@ -39,7 +39,7 @@ const ResendEmail: React.FC = () => {
   return (
     <div className={styles.wrapper}>
 
-      {/* ── Left brand panel ────────────────────────────────────────────── */}
+      {/* Left brand panel */}
       <div className={styles.panel}>
         <a className={styles.panelBrand} onClick={() => navigate('/')}>
           <img src={logo} alt="Urugendo" className={styles.panelLogo} />
@@ -58,12 +58,12 @@ const ResendEmail: React.FC = () => {
         </div>
       </div>
 
-      {/* ── Right form panel ─────────────────────────────────────────────── */}
+      {/* Right form panel */}
       <div className={styles.formPanel}>
         <div className={styles.formBox}>
 
           {success ? (
-            /* ── Success state ─────────────────────────────────────────── */
+            /* Success state */
             <div className={styles.successBox}>
               <div className={styles.successIcon}>
                 <Mail size={28} color="#fff" strokeWidth={1.8} />
@@ -82,7 +82,7 @@ const ResendEmail: React.FC = () => {
               </button>
             </div>
           ) : (
-            /* ── Form state ────────────────────────────────────────────── */
+            /* Form state */
             <>
               <div className={styles.formHeader}>
                 <div className={styles.iconWrapper}>

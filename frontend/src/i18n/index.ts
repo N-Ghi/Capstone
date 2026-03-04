@@ -21,7 +21,7 @@ i18n
       order: ['localStorage', 'navigator'],
       caches: ['localStorage'],
     },
-    ns: ['translation', 'auth', 'dashboards', 'experience', 'profile', 'common', 'booking', 'payment'],
+    ns: ['translation', 'auth', 'dashboards', 'experience', 'profile', 'common', 'booking', 'payment', 'review'],
     defaultNS: 'translation',
   });
 

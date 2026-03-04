@@ -2,7 +2,6 @@
   min-height: 100vh;
   background: #f7f4f4;
   padding: 24px 16px 80px;
-  font-family: 'DM Sans', sans-serif;
   animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -25,7 +24,6 @@
   background: #ffffff;
   border: 1.5px solid rgba(43, 65, 80, 0.15);
   border-radius: 7px;
-  font-family: 'DM Sans', sans-serif;
   font-size: 0.84rem;
   font-weight: 400;
   color: rgba(43, 65, 80, 0.6);
@@ -71,7 +69,6 @@
 }
 
 .expTitle {
-  font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.75rem;
   font-weight: 700;
   color: #2B4150;
@@ -81,7 +78,6 @@
 }
 
 .panelTitle {
-  font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.2rem;
   font-weight: 600;
   color: #2B4150;
@@ -191,6 +187,34 @@
 .thumb img   { width: 100%; height: 100%; object-fit: cover; display: block; }
 .thumbActive { border-color: #627F67; }
 
+.directionsBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  margin-bottom: .5rem;
+  border: 2px solid #506957;
+  border-radius: 7px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+.directionsBtn:hover { 
+  opacity: 0.88; 
+  background-color: #627F67;
+  color: #fff;
+}
+
+.locationCard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
 /* Slots */
 .addSlotBtn {
   display: inline-flex;
@@ -201,7 +225,6 @@
   color: #ffffff;
   border: none;
   border-radius: 7px;
-  font-family: 'DM Sans', sans-serif;
   font-size: 0.82rem;
   font-weight: 500;
   cursor: pointer;
@@ -313,7 +336,6 @@
   color: rgba(43, 65, 80, 0.6);
   border: 1.5px solid rgba(43, 65, 80, 0.15);
   border-radius: 7px;
-  font-family: 'DM Sans', sans-serif;
   font-size: 0.86rem;
   cursor: pointer;
   transition: background 0.15s;
@@ -347,7 +369,6 @@
   margin-bottom: 1.25rem;
 }
 .modalTitle {
-  font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.1rem;
   font-weight: 600;
   color: #2B4150;

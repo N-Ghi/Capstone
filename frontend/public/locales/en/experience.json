@@ -37,12 +37,13 @@
       "inactive": "Inactive"
     },
     "meta": {
-      "created": "Created {{date}}"
+      "creator": "Created {{date}} by <a href=\"/profile/{{id}}\">{{name}}</a>"
     },
     "sections": {
       "photos": "Photos",
       "location": "Location",
-      "photoAlt": "Photo {{number}}"
+      "photoAlt": "Photo {{number}}",
+      "getDirections": "Get directions"
     },
     "actions": {
       "editExperience": "Edit experience",

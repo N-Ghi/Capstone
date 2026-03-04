@@ -18,9 +18,16 @@
       "subTourist": "Manage your travel preferences and languages",
       "badgeNew": "New"
     },
+    "languages": "Languages",
+    "paymentMethods": "Payment Methods",
+    "experiences": "Experiences",
+    "noExperiences": "No experiences yet",
+    "noBio": "No bio provided",
     "errors": {
       "loadUser": "Failed to load user information.",
-      "loadProfile": "Failed to load profile information."
+      "loadProfile": "Failed to load profile information.",
+      "noUser": "No user found.",
+      "noProfile": "No guide profile found."
     }
   },
   "userInfo": {
@@ -69,5 +76,4 @@
       "disconnect": "Failed to disconnect calendar"
     }
   }
-  
 }

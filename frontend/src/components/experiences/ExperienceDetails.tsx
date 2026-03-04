@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
 import HeaderComponent from '../common/Header';
 import SlotFormModal from './SlotFormModal';
 import ConfirmDialog from '../common/ConfirmDialog';
 import MapPin from '../common/Map';
-import { EditIcon, DeleteIcon, DateIcon, LocationIcon, AddIcon } from '../common/Icons';
+import { EditIcon, DeleteIcon, DateIcon, LocationIcon, AddIcon, UsersIcon } from '../common/Icons';
 import { getExperienceById, updateExperiencePartial, getExperienceSlots, createExperienceSlot, updateExperienceSlotFull, deleteExperienceSlot, } from '../../services/experienceService';
 import type { ExperienceDetail } from '../../@types/experience.types';
 import type { Slot, ExperirnceSlotData } from '../../@types/experience.types';
@@ -16,6 +16,7 @@ import { BackIcon, BookIcon } from '../common/Icons';
 import { createBooking } from '../../services/bookingService';
 import BookingForm from '../booking/BookingForm';
 import type { CreateBooking } from '../../@types/booking.types';
+import ReviewSection from '../reviews/ReviewSection';
 
 
 // Helpers
@@ -24,6 +25,8 @@ const fmt = (iso: string) =>
 
 const fmtTime = (t: string) =>
   new Date(`1970-01-01T${t}`).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+const SLOT_SCROLL_THRESHOLD = 10;
 
 // Page 
 
@@ -187,6 +190,8 @@ const ExperienceDetailComponent: React.FC = () => {
   const lat = location ? parseFloat(location.latitude) : null;
   const lng = location ? parseFloat(location.longitude) : null;
 
+  const slotsScrollable = slots.length > SLOT_SCROLL_THRESHOLD;
+
   return (
     <>
       <HeaderComponent />
@@ -238,9 +243,12 @@ const ExperienceDetailComponent: React.FC = () => {
               )}
               <div className={styles.metaRow}>
                 <span className={styles.metaItem}>
-                  <DateIcon size={12} />
-
-                  {t('experienceDetail.meta.created', { date: fmt(created_at) })}
+                  <Trans
+                    i18nKey="experienceDetail.meta.creator"
+                    ns="experience"
+                    values={{ date: fmt(created_at), id: experience.guide, name: experience.guide }}
+                    components={{ a: <a /> }}
+                  />
                 </span>
               </div>
             </div>
@@ -270,7 +278,17 @@ const ExperienceDetailComponent: React.FC = () => {
 
             {lat !== null && lng !== null && (
               <div className={styles.card}>
-                <h3 className={styles.sectionLabel}>{t('experienceDetail.sections.location')}</h3>
+                <div className={styles.locationCard}>
+                  <h3 className={styles.sectionLabel}>{t('experienceDetail.sections.location')}</h3>
+                  <button className={styles.directionsBtn} onClick={(e) => {
+                      e.preventDefault();
+                      const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+                      window.open(url, '_blank');
+                    }}>
+                    <LocationIcon size={13} />
+                    <p>{t('experienceDetail.sections.getDirections')}</p>
+                  </button>
+                </div>
                 <MapPin lat={lat} lng={lng} label={location!.place_name} />
               </div>
             )}
@@ -300,7 +318,7 @@ const ExperienceDetailComponent: React.FC = () => {
                   <p>{t('experienceDetail.slots.empty')}</p>
                 </div>
               ) : (
-                <div className={styles.tableWrap}>
+                <div className={`${styles.tableWrap} ${slotsScrollable ? styles.tableWrapScrollable : ''}`}>
                   <table className={styles.table}>
                     <thead>
                       <tr>
@@ -375,6 +393,13 @@ const ExperienceDetailComponent: React.FC = () => {
                 </div>
               )}
             </div>
+
+            {/* Reviews */}
+            {id && (
+              <div className={styles.card}>
+                <ReviewSection experienceId={id} />
+              </div>
+            )}
           </div>
         </div>
       </div>

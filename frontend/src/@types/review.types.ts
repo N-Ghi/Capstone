@@ -1,9 +1,7 @@
-import type { User } from "./auth.types";
-
 export interface Review {
-  id: number;
+  id: string;
   experience: string;
-  traveler: User;
+  traveler: string;
   rating: number;
   comment: string;
   created_at: string;
@@ -14,4 +12,16 @@ export interface ReviewFormData {
   experience: string;
   rating: number;
   comment: string;
+}
+
+export interface ReviewPatchData {
+  rating?: number;
+  comment?: string;
+}
+
+export interface FilterQueryParams {
+  ordering?: string;
+  experience?: string;
+  rating?: string;
+  traveler?: string;
 }
