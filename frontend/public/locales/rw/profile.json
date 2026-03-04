@@ -18,9 +18,16 @@
       "subTourist": "Imyirondoro ijyanye n'ibyo ukunda mu bitemberwa",
       "badgeNew": "Gishya"
     },
+    "languages": "Indimi",
+    "paymentMethods": "Uburyo bwo kwishyura",
+    "experiences": "Ibitemberwa",
+    "noExperiences": "Nta bitemberwa",
+    "noBio": "Ntabijyanye nawe",
     "errors": {
       "loadUser": "Kureba imyirondoro biranze.",
-      "loadProfile": "Kureba imyirondoro biranze."
+      "loadProfile": "Kureba imyirondoro biranze.",
+      "noUser": "Umuntu ntago abonetse.",
+      "noProfile": "Nta myirondoro."
     }
   },
   "userInfo": {
@@ -55,5 +62,4 @@
     "errorOptions": "Kureba amahitamo byanze. Ongera ugerageze.",
     "errorSave": "Kwemeza imyirondoro byanze."
   }
-  
 }

@@ -1,0 +1,125 @@
+.section {
+  padding: 2px 0;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(43, 65, 80, 0.4);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.avgRow {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.avgNumber {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #2b4150;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.reviewCount {
+  font-size: 0.78rem;
+  color: rgba(43, 65, 80, 0.4);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.leaveReviewBtn {
+  padding: 7px 14px;
+  background: linear-gradient(135deg, #627f67, #506957);
+  border: none;
+  border-radius: 7px;
+  font-size: 0.78rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(98, 127, 103, 0.22);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Loading */
+.loadingRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 0;
+  color: rgba(43, 65, 80, 0.4);
+}
+
+.spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(43, 65, 80, 0.1);
+  border-top-color: #627f67;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loadingText {
+  font-size: 0.82rem;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* Empty state */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 28px 0;
+  color: rgba(43, 65, 80, 0.3);
+}
+
+.emptyIcon {
+  font-size: 22px;
+}
+
+.emptyText {
+  margin: 0;
+  font-size: 0.84rem;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* List */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+/* Edit wrapper */
+.editingWrap {
+  background: rgba(43, 65, 80, 0.02);
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 4px;
+  border: 1.5px solid rgba(43, 65, 80, 0.08);
+}

@@ -36,11 +36,11 @@ class UserViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         """GET /users/<id>/ — Retrieve a single user."""
         instance = self.get_object()
-        if not self._is_authorized(request, instance.id):
-            return Response(
-                {"detail": "You do not have permission to perform this action."},
-                status=status.HTTP_403_FORBIDDEN
-            )
+        # if not self._is_authorized(request, instance.id):
+        # return Response(
+        #     {"detail": "You do not have permission to perform this action."},
+        #     status=status.HTTP_403_FORBIDDEN
+        # )
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
     

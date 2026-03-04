@@ -5,6 +5,9 @@ from django.shortcuts import get_object_or_404
 from Urugendo.permissions import IsTourist, IsAdmin
 from .serializers import ReviewSerializer
 from .models import Review
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import OrderingFilter
+from .filters import ReviewFilter   
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
@@ -25,6 +28,10 @@ class ReviewViewSet(viewsets.ModelViewSet):
         context = super().get_serializer_context()
         context['traveler'] = self.request.user
         return context
+    
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_class = ReviewFilter
+    ordering_fields = [ 'created_at', 'updated_at', 'rating', 'experience' ]
 
     # POST /reviews/
     def create(self, request, *args, **kwargs):

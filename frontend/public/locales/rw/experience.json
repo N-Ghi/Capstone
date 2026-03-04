@@ -37,12 +37,13 @@
         "inactive": "Cyarangiye"
         },
         "meta": {
-        "created": "Cyakozwe {{date}}"
+            "creator": "Cyakozwe {{date}} na <a href=\"/profile/{{id}}\">{{name}}</a>"
         },
         "sections": {
         "photos": "Amafoto",
         "location": "Ahantu",
-        "photoAlt": "Ifoto ya {{number}}"
+        "photoAlt": "Ifoto ya {{number}}",
+        "getDirections": "Bona aho hantu"
         },
         "actions": {
         "editExperience": "Hindura igitemberwa",
