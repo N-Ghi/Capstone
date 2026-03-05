@@ -81,7 +81,6 @@ function ReviewCard({ review, isOwn, onEdit }: ReviewCardProps) {
             className={styles.editBtn}
             type="button"
             onClick={() => {
-              console.log("edit clicked");
               onEdit();
             }}
           >

@@ -7,19 +7,9 @@ import type { ExperienceQueryParams } from '../../@types/experience.types';
 import TouristExperienceCard from '../experiences/TouristExperienceCard';
 import { useNavigate } from 'react-router-dom';
 import styles from './ExperienceFilterGrid.module.css';
+import type { TravelPreference } from '../../@types/profile.types';
+import type { ExperienceListItem } from '../../@types/experience.types';
 
-interface TravelPreference {
-  id: string;
-  name: string;
-}
-
-interface Experience {
-  id: string;
-  title: string;
-  description: string;
-  photos: string[];
-  language?: string;
-}
 
 interface ExperienceFilterGridProps {
   limit?: number;
@@ -61,14 +51,14 @@ export const ExperienceFilterGrid: React.FC<ExperienceFilterGridProps> = ({
   const navigate = useNavigate();
 
   const [preferences, setPreferences] = useState<TravelPreference[]>([]);
-  const [experiences, setExperiences] = useState<Experience[]>([]);
+  const [experiences, setExperiences] = useState<ExperienceListItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedPreference, setSelectedPreference] = useState<string | null>(null);
 
   const { translated: displayedExperiences, translating } = useTranslatedData(
     experiences,
     ['title', 'description'],
-    experiences[0]?.language ? (item) => item.language as string : undefined
+    experiences[0]?.languages ? (item) => item.languages[0] : undefined
   );
 
   const fetchExperiences = useCallback(
@@ -129,6 +119,7 @@ export const ExperienceFilterGrid: React.FC<ExperienceFilterGridProps> = ({
 
   const isBusy = loading || translating;
 
+
   return (
     <div className={styles.wrapper}>
       {/* Category pills */}
@@ -174,7 +165,7 @@ export const ExperienceFilterGrid: React.FC<ExperienceFilterGridProps> = ({
             {displayedExperiences.map((exp) => (
               <TouristExperienceCard
                 key={exp.id}
-                experience={exp as any}
+                experience={exp}
                 onView={handleView}
               />
             ))}

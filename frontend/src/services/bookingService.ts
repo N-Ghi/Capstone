@@ -5,9 +5,7 @@ import type { Booking, CreateBookingResponse, CreateBooking } from "../@types/bo
 
 export const createBooking = async (bookingData: CreateBooking): Promise<CreateBookingResponse> => {
   try {
-    console.log('Creating booking with data:', bookingData);
     const response = await api.post<CreateBookingResponse>('/bookings/', bookingData);
-    console.log('Booking created:', response.data);
     return response.data;
   } catch (error: any) {
     if (error.response) {

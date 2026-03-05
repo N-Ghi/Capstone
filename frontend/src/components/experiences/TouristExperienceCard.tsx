@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { UsersIcon } from '../common/Icons';
 import { MapPin, Calendar, Images, ImageOff, Eye } from 'lucide-react';
 import type { ExperienceListItem } from '../../@types/experience.types';
 import styles from './TouristExperienceCard.module.css';
@@ -18,7 +19,7 @@ const formatDate = (iso: string) =>
 
 const TouristExperienceCard: React.FC<TouristExperienceCardProps> = ({ experience, onView }) => {
   const { t } = useTranslation('experience');
-  const { id, title, description, photos, location, is_active, created_at } = experience;
+  const { id, title, description, photos, location, is_active, created_at, guide_name } = experience;
   const firstPhoto = photos?.[0];
 
   return (
@@ -68,6 +69,10 @@ const TouristExperienceCard: React.FC<TouristExperienceCardProps> = ({ experienc
           <span className={styles.metaItem}>
             <Calendar size={12} strokeWidth={2} />
             {formatDate(created_at)}
+          </span>
+          <span className={styles.metaItem}>
+            <UsersIcon size={12} strokeWidth={2} />
+            {guide_name }
           </span>
         </div>
       </div>

@@ -16,6 +16,7 @@ A web-based platform that connects tourists with local tourism operators in Rwan
 - [Troubleshooting](#troubleshooting)
 - [Project Structure](#project-structure)
 - [License](#license)
+- [Video](#video)
 
 ## 📖 Project Overview
 
@@ -290,6 +291,7 @@ Once both servers are running:
 The backend uses the following environment variables (defined in `.env`):
 
 ### Django Configuration
+
 | Variable | Purpose | Default |
 |----------|---------|---------|
 | `DEBUG` | Debug mode | `True` |
@@ -297,6 +299,7 @@ The backend uses the following environment variables (defined in `.env`):
 | `FRONTEND_URL` | Frontend URL for CORS | `http://localhost:5173` |
 
 ### Database Configuration
+
 | Variable | Purpose | Default |
 |----------|---------|---------|
 | `DB_NAME` | Database name | `Urugendo` |
@@ -306,6 +309,7 @@ The backend uses the following environment variables (defined in `.env`):
 | `DB_PORT` | Database port | `5432` |
 
 ### Authentication
+
 | Variable | Purpose |
 |----------|---------|
 | `JWT_SECRET_KEY` | Secret key for JWT tokens |
@@ -314,6 +318,7 @@ The backend uses the following environment variables (defined in `.env`):
 | `JWT_REFRESH_TOKEN_LIFETIME` | Refresh token validity (days) |
 
 ### Third-party APIs
+
 | Variable | Purpose |
 |----------|---------|
 | `SUPABASE_URL` | Supabase project URL |
@@ -331,18 +336,21 @@ The backend uses the following environment variables (defined in `.env`):
 ### PostgreSQL Installation
 
 **Windows:**
+
 1. Download PostgreSQL from [postgresql.org](https://www.postgresql.org/download/windows/)
 2. Run the installer and follow the setup wizard
 3. Remember the password you set for the `postgres` user
 4. PostgreSQL typically runs on port 5432
 
 **macOS:**
+
 ```bash
 brew install postgresql
 brew services start postgresql
 ```
 
 **Linux (Ubuntu/Debian):**
+
 ```bash
 sudo apt-get update
 sudo apt-get install postgresql postgresql-contrib
@@ -379,7 +387,9 @@ This should open a connection to your database.
 ### Backend Issues
 
 #### Issue: "ModuleNotFoundError: No module named 'django'"
+
 **Solution:** Make sure your virtual environment is activated and dependencies are installed:
+
 ```bash
 # Activate virtual environment
 .venv\Scripts\activate  # Windows
@@ -390,7 +400,9 @@ pip install -r requirements.txt
 ```
 
 #### Issue: "psycopg2 error" or database connection refused
+
 **Ensure:**
+
 1. PostgreSQL is running:
    - Windows: Check Services (search "Services" in Start menu)
    - macOS: `brew services list | grep postgresql`
@@ -399,13 +411,17 @@ pip install -r requirements.txt
 3. Database exists: `psql -U postgres -l | grep Urugendo`
 
 #### Issue: "No such table" error
+
 **Solution:** Run migrations:
+
 ```bash
 python manage.py migrate
 ```
 
 #### Issue: Port 8000 already in use
+
 **Solution:** Kill the process using port 8000 or run on a different port:
+
 ```bash
 python manage.py runserver 8001
 ```
@@ -415,10 +431,13 @@ Then update `FRONTEND_URL` in `.env` if necessary.
 ### Frontend Issues
 
 #### Issue: "npm command not found"
+
 **Solution:** Reinstall Node.js from [nodejs.org](https://nodejs.org/)
 
 #### Issue: "Cannot find module" error
+
 **Solution:**
+
 ```bash
 # Clear node_modules and reinstall
 rm -rf node_modules package-lock.json
@@ -426,10 +445,13 @@ npm install
 ```
 
 #### Issue: Port 5173 already in use
+
 **Solution:** The dev server will automatically try the next available port. Check the terminal output for the correct URL.
 
 #### Issue: CORS errors when calling backend API
+
 **Solution:**
+
 1. Ensure `FRONTEND_URL` in `.env` matches the frontend URL
 2. Verify backend is running on `http://localhost:8000`
 3. Check that django-cors-headers is installed: `pip list | grep cors`
@@ -437,25 +459,29 @@ npm install
 ### General Issues
 
 #### Issue: Changes not reflecting
+
 **Backend:**
+
 ```bash
 # Restart the Django server (Ctrl+C and run again)
 python manage.py runserver
 ```
 
 **Frontend:**
+
 ```bash
 # Vite usually auto-refreshes, but restart if needed (Ctrl+C and run again)
 npm run dev
 ```
 
 #### Issue: "Command not found" errors on Windows
+
 - Use PowerShell instead of Command Prompt
 - Or use full paths: `python.exe manage.py runserver`
 
 ## 📁 Project Structure
 
-```
+```chart
 Capstone/
 ├── backend/
 │   ├── .venv/                 # Python virtual environment
@@ -551,7 +577,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔗 Additional Resources
 
-- **Figma Design:** [Tunisia Tourism Discovery App](https://www.figma.com/make/LeGLKBlq53YchNMJMscDuC/Tunisia-Tourism-Discovery-App--Community-)
+- **Figma Design:** [Rwanda Tourism Discovery App](https://www.figma.com/make/LeGLKBlq53YchNMJMscDuC/Tunisia-Tourism-Discovery-App--Community-)
 - **Django Documentation:** https://docs.djangoproject.com/
 - **React Documentation:** https://react.dev/
 - **Vite Documentation:** https://vite.dev/
@@ -560,11 +586,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 For issues or questions:
+
 1. Check the [Troubleshooting](#troubleshooting) section
 2. Review error messages carefully
 3. Check that all prerequisites are installed
 4. Verify environment variables are correctly set
 5. Ensure both Django and Node.js servers are running for full functionality
+
+## Video
+
+Link to the video: [See video](https://drive.google.com/file/d/1ABf9yYpko9BhnEIvtihVngv9ChbBwcrU/view?usp=sharing)
 
 ---
 

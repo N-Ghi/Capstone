@@ -3,9 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { CheckIcon, LinkIcon, CloseIcon, LoaderIcon } from './Icons';
 import calendarService, { type CalendarStatus } from '../../services/calendarService';
 import styles from './Calendar.module.css';
+import { useAuth } from '../../context/AuthContext';
+
 
 const Calendar: React.FC = () => {
   const { t } = useTranslation('profile');
+  const { user } = useAuth();
+
+  const userId = user?.id;
+
   
   const [status, setStatus] = useState<CalendarStatus>({ 
     connected: false, 
@@ -42,7 +48,7 @@ const Calendar: React.FC = () => {
   };
 
   const handleConnect = () => {
-    calendarService.connect();
+    calendarService.connect(userId!);
   };
 
   const handleDisconnect = async () => {
