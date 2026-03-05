@@ -58,9 +58,11 @@ export interface ExperienceListItem {
   description: string;
   photos: string[];
   location?: Location;
-  guide_name?: string;
+  guide: string;
   is_active: boolean;
   created_at: string;
+  languages: string[];
+  guide_name?: string;
 }
 
 export interface ExperienceDetail {

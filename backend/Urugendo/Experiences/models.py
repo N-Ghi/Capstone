@@ -63,7 +63,12 @@ class ExperienceSlot(models.Model):
     is_active = models.BooleanField(default=True)
 
     class Meta:
-        unique_together = ("experience", "date")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["experience", "date", "start_time"],
+                name="unique_experience_slot_start"
+            )
+        ]
         indexes = [
             models.Index(fields=["date"]),
             models.Index(fields=["is_active", "date"]),

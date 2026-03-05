@@ -62,6 +62,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience, onEdit, onV
             <DateIcon size={12} />
             {formatDate(created_at)}
           </span>
+
         </div>
 
         <div className={styles.cardActions} onClick={(e) => e.stopPropagation()}>

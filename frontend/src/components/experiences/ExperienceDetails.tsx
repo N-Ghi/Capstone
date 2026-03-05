@@ -117,7 +117,7 @@ const ExperienceDetailComponent: React.FC = () => {
 
   const handleBook = async (data: CreateBooking) => {
     const booking = await createBooking(data);
-    navigate(`/payment/${booking.payment_id}`);
+    navigate(`/bookings/${booking.id}`);
   };
 
   const handleSaveSlot = async (data: ExperirnceSlotData) => {
