@@ -69,6 +69,7 @@ export default function ReviewSection({ experienceId }: ReviewSectionProps) {
   const handleCreate = async (data: ReviewFormData | ReviewPatchData, reviewId?: string) => {
     if (!("experience" in data)) throw new Error("Missing experience ID");
     const created = await createReview(data as ReviewFormData);
+    console.log("Review: ", reviewId)
     setReviews((prev) => [created, ...prev]);
     setShowForm(false);
   };
