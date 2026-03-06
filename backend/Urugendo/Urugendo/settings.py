@@ -30,8 +30,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG')
-
-ALLOWED_HOSTS = []
+RENDER_HOST_URL = os.getenv('RENDER_HOST_URL')
+ALLOWED_HOSTS = [RENDER_HOST_URL, 'localhost', '127.0.0.1']
 
 # Application definition
 
