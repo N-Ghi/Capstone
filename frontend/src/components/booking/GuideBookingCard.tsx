@@ -32,6 +32,7 @@ const GuideBookingCard: React.FC<GuideBookingCardProps> = ({ booking }) => {
     );
   
     const translatedBooking = translatedBookings[0] ?? booking;
+    console.log("Experience title: ", experience_title);
   
     const experienceTitle = translatedBooking?.experience_title ?? booking?.experience_title;
 

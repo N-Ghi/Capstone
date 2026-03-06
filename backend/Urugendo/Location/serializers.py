@@ -15,6 +15,6 @@ class GeocodeRequestSerializer(serializers.Serializer):
 class LocationSaveSerializer(serializers.Serializer):
     """Validates the save-to-DB request (frontend sends back confirmed coordinates)."""
     place_name = serializers.CharField(max_length=255)
-    latitude = serializers.DecimalField(max_digits=15, decimal_places=10)
-    longitude = serializers.DecimalField(max_digits=15, decimal_places=10)
+    latitude = serializers.DecimalField(max_digits=20, decimal_places=15)
+    longitude = serializers.DecimalField(max_digits=20, decimal_places=15)
     place_id = serializers.CharField(max_length=255, required=False, allow_blank=True)
