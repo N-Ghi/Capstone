@@ -16,8 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.http import HttpResponse
+
+def welcome(request):
+    return HttpResponse("Welcome to the Urugendo API!")
 
 urlpatterns = [
+    path('', welcome),
     path('admin/', admin.site.urls),
     path('users/', include('Users.urls')),
     path('profiles/', include('Profile.urls')),
