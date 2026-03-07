@@ -5,6 +5,7 @@ import { ArrowLeftFromLine, Compass, MapPin } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import styles from './RegisterForm.module.css';
 import logo from '../../assets/logo.png';
+import { getApiErrorMessage } from '../../utils/errorUtils';
 
 interface RegisterFormProps { role: 'Tourist' | 'Guide'; }
 
@@ -40,12 +41,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ role }) => {
         role,
       });
       navigate('/verify-email-notice');
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Registration failed:', err);
-      setError(
-        err?.response?.data?.error ||
-        t('register.error.default')
-      );
+      setError(getApiErrorMessage(err, t('register.error.default')));
     } finally {
       setLoading(false);
     }

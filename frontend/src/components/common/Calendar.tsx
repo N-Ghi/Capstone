@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CheckIcon, LinkIcon, CloseIcon, LoaderIcon } from './Icons';
 import calendarService, { type CalendarStatus } from '../../services/calendarService';
@@ -21,35 +21,35 @@ const Calendar: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [disconnecting, setDisconnecting] = useState(false);
 
-  useEffect(() => {
-    fetchStatus();
-    checkAuthCallback();
-  }, []);
-
-  const fetchStatus = async () => {
+  const fetchStatus = useCallback(async () => {
     try {
       setLoading(true);
       const data = await calendarService.getStatus();
       setStatus(data);
       setError(null);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Failed to fetch calendar status:', err);
       setError(t('calendar.errors.loadStatus'));
     } finally {
       setLoading(false);
     }
-  };
+  }, [t]);
 
-  const checkAuthCallback = () => {
+  const checkAuthCallback = useCallback(() => {
     if (calendarService.checkAuthCallback()) {
       calendarService.clearAuthCallback();
       fetchStatus();
     }
-  };
+  }, [fetchStatus]);
 
-  const handleConnect = () => {
-    calendarService.connect(userId!);
-  };
+  useEffect(() => {
+    fetchStatus();
+    checkAuthCallback();
+  }, [fetchStatus, checkAuthCallback]);
+
+    const handleConnect = () => {
+      calendarService.connect(userId!);
+    };
 
   const handleDisconnect = async () => {
     if (!confirm(t('calendar.confirmDisconnect'))) return;
@@ -59,7 +59,7 @@ const Calendar: React.FC = () => {
       await calendarService.disconnect();
       setStatus({ connected: false, connected_at: null });
       setError(null);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Failed to disconnect calendar:', err);
       setError(t('calendar.errors.disconnect'));
     } finally {

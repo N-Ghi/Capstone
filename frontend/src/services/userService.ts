@@ -28,9 +28,5 @@ export const updateUserPartial = async (id: string, data: Partial<User>) => {
 
 export const deleteUser = async (id: string) => {
     // Delete user
-    try {
-        await api.delete(`/users/${id}/`);
-    } catch (error) {
-        throw error;
-    }
+    await api.delete(`/users/${id}/`);
 }

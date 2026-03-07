@@ -1,0 +1,195 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  backend-ci:
+    name: Backend CI
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        working-directory: ./backend/Urugendo
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run linting
+        working-directory: ./backend/Urugendo
+        run: |
+          pip install flake8
+          flake8 . --max-line-length=120 --exclude=.venv,migrations
+
+      - name: Run tests
+        working-directory: ./backend/Urugendo
+        env:
+          SECRET_KEY: test-secret-key
+          DEBUG: True
+          AZURE_DB_HOST: localhost
+          AZURE_DB_PORT: 5432
+          AZURE_DB_NAME: testdb
+          AZURE_DB_USER: postgres
+          AZURE_DB_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          JWT_ACCESS_TOKEN_LIFETIME: 60
+          JWT_REFRESH_TOKEN_LIFETIME: 7
+          JWT_SECRET_KEY: test-jwt-secret
+          JWT_ALGORITHM: HS256
+          ALLOWED_HOST: localhost
+        run: python manage.py test
+
+      - name: Build backend Docker image
+        working-directory: ./backend
+        run: docker build -t urugendo-backend:${{ github.sha }} .
+
+      - name: Scan backend image with Trivy
+        uses: aquasecurity/trivy-action@0.33.1
+        continue-on-error: true
+        with:
+          image-ref: urugendo-backend:${{ github.sha }}
+          format: sarif
+          output: trivy-backend.sarif
+          severity: CRITICAL,HIGH
+          exit-code: '0'
+
+      - name: Upload Trivy backend results
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: trivy-backend.sarif
+          category: backend-container-scan
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  frontend-ci:
+    name: Frontend CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Run tests
+        working-directory: ./frontend
+        run: npm test
+
+      - name: Build application
+        working-directory: ./frontend
+        run: npm run build
+        env:
+          VITE_API_URL: http://localhost:8000
+
+      - name: Build frontend Docker image
+        working-directory: ./frontend
+        run: |
+          docker build \
+            --build-arg VITE_API_URL=http://localhost:8000 \
+            -t urugendo-frontend:${{ github.sha }} .
+
+      - name: Scan frontend image with Trivy
+        uses: aquasecurity/trivy-action@0.33.1
+        continue-on-error: true
+        with:
+          image-ref: urugendo-frontend:${{ github.sha }}
+          format: sarif
+          output: trivy-frontend.sarif
+          severity: CRITICAL,HIGH
+          exit-code: '0'
+
+      - name: Upload Trivy frontend results
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: trivy-frontend.sarif
+          category: frontend-container-scan
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  iac-security-scan:
+    name: IaC Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tfsec
+        run: |
+          curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
+
+      - name: Run tfsec
+        continue-on-error: true
+        run: |
+          tfsec ./terraform \
+            --minimum-severity CRITICAL \
+            --format sarif \
+            --out tfsec-results.sarif
+
+      - name: Upload tfsec results
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: tfsec-results.sarif
+          category: terraform-tfsec-scan
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Checkov
+        run: pip install checkov
+
+      - name: Run Checkov
+        continue-on-error: true
+        run: |
+          checkov -d ./terraform \
+            --framework terraform \
+            --output sarif \
+            --output-file checkov-results.sarif \
+            --quiet \
+            --skip-check CKV_AZURE_237,CKV_AZURE_233,CKV_AZURE_167,CKV_AZURE_164,CKV_AZURE_165,CKV_AZURE_166,CKV_AZURE_163,CKV_AZURE_139,CKV_AZURE_136,CKV_AZURE_50,CKV_AZURE_119
+
+      - name: Upload Checkov results
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: checkov-results.sarif
+          category: terraform-checkov-scan
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,148 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REGISTRY_URL: capstoneacr1234.azurecr.io
+  IMAGE_NAME: urugendo
+
+jobs:
+  build-and-push:
+    name: Build and Push Docker Images
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Log in to ACR
+        run: az acr login --name capstoneacr1234
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}-backend:latest
+            ${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}-backend:${{ github.sha }}
+
+      - name: Build and push frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}-frontend:latest
+            ${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}-frontend:${{ github.sha }}
+          build-args: |
+            VITE_API_URL=${{ secrets.VITE_API_URL }}
+
+  deploy:
+    name: Deploy to Production VM
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Ansible
+        run: pip install ansible
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          cat > ~/.ssh/config <<EOF
+          Host bastion
+            HostName ${{ secrets.BASTION_HOST }}
+            User ${{ secrets.BASTION_USER }}
+            IdentityFile ~/.ssh/id_rsa
+            StrictHostKeyChecking no
+
+          Host app-vm
+            HostName ${{ secrets.VM_HOST }}
+            User ${{ secrets.VM_USER }}
+            IdentityFile ~/.ssh/id_rsa
+            ProxyJump bastion
+            StrictHostKeyChecking no
+          EOF
+
+      - name: Test bastion connectivity
+        run: ssh bastion "echo 'Bastion OK'"
+
+      - name: Test app VM connectivity
+        run: ssh app-vm "echo 'App VM OK'"
+
+      - name: Create Ansible inventory
+        run: |
+          cat > inventory.ini <<EOF
+          [app]
+          ${{ secrets.VM_HOST }} ansible_user=${{ secrets.VM_USER }}
+
+          [app:vars]
+          ansible_ssh_private_key_file=~/.ssh/id_rsa
+          ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ProxyCommand="ssh -W %h:%p -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }}"'
+          EOF
+
+      - name: Test Ansible ping
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: "False"
+        run: ansible app -i inventory.ini -m ping
+
+      - name: Run Ansible deploy playbook
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: "False"
+        run: |
+          ansible-playbook -i inventory.ini ansible/deploy.yml \
+            -e "registry_url=${{ env.REGISTRY_URL }}" \
+            -e "registry_username=${{ secrets.REGISTRY_USERNAME }}" \
+            -e "registry_password=${{ secrets.REGISTRY_PASSWORD }}" \
+            -e "image_name=${{ env.IMAGE_NAME }}" \
+            -e "image_tag=${{ github.sha }}" \
+            -e "secret_key=${{ secrets.DJANGO_SECRET_KEY }}" \
+            -e "allowed_host=urugendo-app.southafricanorth.cloudapp.azure.com" \
+            -e "frontend_url=https://urugendo-app.southafricanorth.cloudapp.azure.com" \
+            -e "db_host=${{ secrets.AZURE_DB_HOST }}" \
+            -e "db_port=5432" \
+            -e "db_name=${{ secrets.AZURE_DB_NAME }}" \
+            -e "db_user=${{ secrets.AZURE_DB_USER }}" \
+            -e "db_password=${{ secrets.AZURE_DB_PASSWORD }}" \
+            -e "jwt_access_lifetime=${{ secrets.JWT_ACCESS_TOKEN_LIFETIME }}" \
+            -e "jwt_refresh_lifetime=${{ secrets.JWT_REFRESH_TOKEN_LIFETIME }}" \
+            -e "jwt_secret=${{ secrets.JWT_SECRET_KEY }}" \
+            -e "google_client_id=${{ secrets.GOOGLE_CLIENT_ID }}" \
+            -e "google_client_secret=${{ secrets.GOOGLE_CLIENT_SECRET }}" \
+            -e "google_refresh_token=${{ secrets.GOOGLE_REFRESH_TOKEN }}" \
+            -e "gmail_sender=${{ secrets.GMAIL_SENDER_EMAIL }}" \
+            -e "google_calendar_client_id=${{ secrets.GOOGLE_CALENDAR_CLIENT_ID }}" \
+            -e "google_calendar_client_secret=${{ secrets.GOOGLE_CALENDAR_CLIENT_SECRET }}" \
+            -e "google_calendar_redirect_uri=${{ secrets.GOOGLE_CALENDAR_REDIRECT_URI }}" \
+            -e "google_maps_api_key=${{ secrets.GOOGLE_MAPS_API_KEY }}" \
+            -e "azure_translator_key=${{ secrets.AZURE_TRANSLATOR_KEY }}" \
+            -e "azure_translator_region=southafricanorth" \
+            -e "azure_translator_endpoint=https://api.cognitive.microsofttranslator.com" \
+            -e "vite_api_base_url=https://urugendo-app.southafricanorth.cloudapp.azure.com/api" \
+            -vv
+
+      - name: Verify deployment
+        run: |
+          ssh app-vm "docker ps --filter 'name=urugendo' --format 'table {{.Names}}\t{{.Status}}'"

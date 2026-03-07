@@ -42,6 +42,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
       });
       setSaved(initialLocation);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialLocation?.id]);
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +60,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
       try {
         const result = await createLocation(value.trim());
         setGeocodeResult(result);
-      } catch (err) {
+      } catch {
         setError(t('location.notFound'));
       } finally {
         setLoading(false);
@@ -75,7 +76,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
       const savedLoc = await saveLocation(geocodeResult);
       setSaved(savedLoc);
       onLocationSaved(savedLoc.id, savedLoc);
-    } catch (err) {
+    } catch {
       setError(t('location.saveFailed'));
     } finally {
       setSaving(false);

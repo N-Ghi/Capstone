@@ -6,7 +6,7 @@ import { DropdownIcon, CheckIcon } from './Icons';
 export interface SelectOption {
   id: string;
   name: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface MultiSelectProps {

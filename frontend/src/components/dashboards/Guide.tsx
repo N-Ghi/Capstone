@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 import { Compass, LayoutList, } from 'lucide-react';
 import { getUpcomingSlotsCount, getAllExperiencesCount, getAllExperienceSlots } from '../../services/experienceService';
 import { useAuth } from '../../context/AuthContext';
@@ -11,7 +10,6 @@ import i18n from '../../i18n';
 
 const GuideDashboard: React.FC = () => {
   const { t } = useTranslation('dashboards');
-  const navigate = useNavigate();
   const { user } = useAuth();
 
   // State

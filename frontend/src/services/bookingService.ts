@@ -1,5 +1,6 @@
 import api from './api';
 import type { Booking, CreateBookingResponse, CreateBooking } from "../@types/booking.types";
+import axios from 'axios';
 
 
 
@@ -7,15 +8,15 @@ export const createBooking = async (bookingData: CreateBooking): Promise<CreateB
   try {
     const response = await api.post<CreateBookingResponse>('/bookings/', bookingData);
     return response.data;
-  } catch (error: any) {
-    if (error.response) {
+  } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
       console.error('Booking failed with status:', error.response.status);
       console.error('Backend response:', error.response.data);
-      throw new Error(error.response.data.detail || JSON.stringify(error.response.data));
-    } else {
-      console.error('Booking error:', error.message);
-      throw error;
+      const data = error.response.data as Record<string, unknown>;
+      throw new Error((data.detail as string) ?? JSON.stringify(data));
     }
+    console.error('Booking error:', error instanceof Error ? error.message : error);
+    throw error;
   }
 };
 

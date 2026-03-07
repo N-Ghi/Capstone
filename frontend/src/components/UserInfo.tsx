@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import type { User } from '../@types/auth.types';
 import styles from './UserInfo.module.css';
 import { uploadProfilePicture } from '../services/pictureService';
+import { getApiErrorMessage } from '../utils/errorUtils';
 
 interface Props {
   user: User;
@@ -62,8 +63,8 @@ const UserInfoForm: React.FC<Props> = ({ user, onSave }) => {
       setFile(null);
       setSaved(true);
       setTimeout(() => setSaved(false), 2500);
-    } catch (err: any) {
-      setError(err?.message ?? t('userInfo.errorSave'));
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err, t('userInfo.errorSave')));
     } finally {
       setSaving(false);
     }

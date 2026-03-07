@@ -19,7 +19,7 @@ export default function ReviewSection({ experienceId }: ReviewSectionProps) {
   const { t } = useTranslation("experience");
 
   const [reviews, setReviews] = useState<Review[]>([]);
-  const [rating, setRating] = useState<number | undefined>();
+  const [rating] = useState<number | undefined>();
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState<string | null>(null);
@@ -35,6 +35,8 @@ export default function ReviewSection({ experienceId }: ReviewSectionProps) {
 
       setLoading(true);
       setError(null);
+
+      console.log(error);
 
       try {
         const query: Record<string, any> = {

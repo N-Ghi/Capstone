@@ -7,15 +7,21 @@ import styles from './LoginForm.module.css';
 import logo from '../../assets/logo.png';
 import { Roles } from '../../@types/auth.types';
 import { useLocation } from 'react-router-dom';
+import { getApiErrorMessage } from '../../utils/errorUtils';
 
+interface LocationState {
+  message?: string;
+  from?: string;
+}
 
 const LoginForm: React.FC = () => {
   const { t } = useTranslation('auth');
   const navigate = useNavigate();
   const { login } = useAuth();
   const location = useLocation();
-  const redirectMessage = (location.state as any)?.message;
-  const from = (location.state as any)?.from;
+  const state = location.state as LocationState | null;
+  const redirectMessage = state?.message;
+  const from = state?.from;
 
   const [identifier, setIdentifier] = React.useState('');
   const [password,   setPassword]   = React.useState('');
@@ -24,13 +30,13 @@ const LoginForm: React.FC = () => {
 
   const goBack = () => navigate(-1);
 
-  const handleLogin = async (event: React.SubmitEvent) => {
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
     setError(null);
 
     try {
-      const user = await login(identifier, password);
+      const user = await login({identifier, password});
 
       // Redirect back to the original page if there was one else go to role-based dashboard
       if (from) {
@@ -41,12 +47,9 @@ const LoginForm: React.FC = () => {
       if (user.role === Roles.Admin) navigate("/admin");
       else if (user.role === Roles.Guide) navigate("/guide");
       else navigate("/tourist");
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Login failed:', err);
-      setError(
-        err?.response?.data?.error ||
-        t('login.error.default')
-      );
+      setError(getApiErrorMessage(err, t('login.error.default')));
     } finally {
       setLoading(false);
     }

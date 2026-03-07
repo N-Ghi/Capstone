@@ -1,0 +1,137 @@
+---
+- name: Deploy application to production
+  hosts: app
+  become: yes
+
+  vars:
+    app_dir: /opt/app
+    registry_url: "{{ registry_url }}"
+    registry_username: "{{ registry_username }}"
+    registry_password: "{{ registry_password }}"
+    image_name: "{{ image_name }}"
+    image_tag: "{{ image_tag | default('latest') }}"
+
+  tasks:
+    - name: Ensure app directory exists
+      file:
+        path: "{{ app_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Login to ACR
+      shell: |
+        echo "{{ registry_password }}" | docker login {{ registry_url }} \
+          -u "{{ registry_username }}" --password-stdin
+      no_log: true
+      changed_when: false
+
+    - name: Write docker-compose file
+      template:
+        src: templates/docker-compose.yml.j2
+        dest: "{{ app_dir }}/docker-compose.yml"
+        mode: '0644'
+
+    - name: Write backend env file
+      copy:
+        content: |
+          SECRET_KEY={{ secret_key }}
+          DEBUG=False
+          ALLOWED_HOST={{ allowed_host }}
+          FRONTEND_URL={{ frontend_url }}
+          AZURE_DB_HOST={{ db_host }}
+          AZURE_DB_PORT={{ db_port }}
+          AZURE_DB_NAME={{ db_name }}
+          AZURE_DB_USER={{ db_user }}
+          AZURE_DB_PASSWORD={{ db_password }}
+          JWT_ACCESS_TOKEN_LIFETIME={{ jwt_access_lifetime }}
+          JWT_REFRESH_TOKEN_LIFETIME={{ jwt_refresh_lifetime }}
+          JWT_SECRET_KEY={{ jwt_secret }}
+          JWT_ALGORITHM=HS256
+          GOOGLE_CLIENT_ID={{ google_client_id }}
+          GOOGLE_CLIENT_SECRET={{ google_client_secret }}
+          GOOGLE_REFRESH_TOKEN={{ google_refresh_token }}
+          GMAIL_SENDER_EMAIL={{ gmail_sender }}
+          GOOGLE_CALENDAR_CLIENT_ID={{ google_calendar_client_id }}
+          GOOGLE_CALENDAR_CLIENT_SECRET={{ google_calendar_client_secret }}
+          GOOGLE_CALENDAR_REDIRECT_URI={{ google_calendar_redirect_uri }}
+          OAUTHLIB_INSECURE_TRANSPORT=1
+          GOOGLE_MAPS_API_KEY={{ google_maps_api_key }}
+          AZURE_TRANSLATOR_KEY={{ azure_translator_key }}
+          AZURE_TRANSLATOR_REGION={{ azure_translator_region }}
+          AZURE_TRANSLATOR_ENDPOINT={{ azure_translator_endpoint }}
+        dest: "{{ app_dir }}/.env.backend"
+        mode: '0600'
+      no_log: true
+
+    - name: Write frontend env file
+      copy:
+        content: |
+          VITE_API_BASE_URL={{ vite_api_base_url }}
+          VITE_GOOGLE_MAPS_API_KEY={{ google_maps_api_key }}
+          VITE_AZURE_TRANSLATOR_KEY={{ azure_translator_key }}
+          VITE_AZURE_TRANSLATOR_REGION={{ azure_translator_region }}
+          VITE_AZURE_TRANSLATOR_ENDPOINT={{ azure_translator_endpoint }}
+        dest: "{{ app_dir }}/.env.frontend"
+        mode: '0600'
+      no_log: true
+
+    - name: Pull backend image
+      command: docker pull {{ registry_url }}/{{ image_name }}-backend:{{ image_tag }}
+
+    - name: Pull frontend image
+      command: docker pull {{ registry_url }}/{{ image_name }}-frontend:{{ image_tag }}
+
+    - name: Stop old containers
+      command: docker compose -f {{ app_dir }}/docker-compose.yml down
+      args:
+        chdir: "{{ app_dir }}"
+      ignore_errors: yes
+
+    - name: Start containers
+      command: docker compose -f {{ app_dir }}/docker-compose.yml up -d
+      args:
+        chdir: "{{ app_dir }}"
+
+    - name: Wait for backend to be healthy
+      uri:
+        url: "http://localhost:8000/"
+        status_code: [200, 404]
+      register: backend_health
+      until: backend_health.status in [200, 404]
+      retries: 15
+      delay: 5
+      ignore_errors: yes
+
+    - name: Wait for frontend to be healthy
+      uri:
+        url: "http://localhost:5173/"
+        status_code: 200
+      register: frontend_health
+      until: frontend_health.status == 200
+      retries: 15
+      delay: 5
+      ignore_errors: yes
+
+    - name: Reload Nginx
+      systemd:
+        name: nginx
+        state: reloaded
+
+    - name: Show running containers
+      command: >
+        docker ps --format "table {% raw %}{{.Names}}\t{{.Status}}\t{{.Ports}}{% endraw %}"
+      register: container_status
+      changed_when: false
+
+    - name: Deployment summary
+      debug:
+        msg:
+          - "Deployment complete!"
+          - "{{ container_status.stdout_lines }}"
+          - "Backend: {{ 'OK' if backend_health.status in [200, 404] else 'FAILED' }}"
+          - "Frontend: {{ 'OK' if frontend_health.status == 200 else 'FAILED' }}"
+          - "App URL: https://urugendo-app.southafricanorth.cloudapp.azure.com"
+
+    - name: Clean up old images
+      shell: docker image prune -af
+      changed_when: false

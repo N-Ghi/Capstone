@@ -2,9 +2,11 @@ export interface SelectOption {
   id: string;
   name: string;
 }
-
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface Language extends SelectOption {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface PaymentMethod extends SelectOption {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface TravelPreference extends SelectOption {}
 
 export interface TouristProfile {

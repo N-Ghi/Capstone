@@ -1,13 +1,14 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import * as authService from "../services/authService";
-import type { User } from "../@types/auth.types";
+import type { User, RegisterData, LoginData } from "../@types/auth.types";
 import { Roles } from "../@types/auth.types";
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (identifier: string, password: string) => Promise<User>;
-  register: (data: any) => Promise<void>;
+
+  login: (data: LoginData) => Promise<User>;
+  register: (data: RegisterData) => Promise<void>;
   logout: () => void;
   refreshUser: () => Promise<void>;
 
@@ -49,8 +50,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   // LOGIN
-  const login = async (identifier: string, password: string) => {
-    const data = await authService.login({ identifier, password });
+  const login = async (inputs: LoginData) => {
+    const data = await authService.login(inputs);
 
     localStorage.setItem("access", data.tokens.access);
     localStorage.setItem("refresh", data.tokens.refresh);
@@ -61,7 +62,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   // REGISTER
-  const register = async (data: any) => {
+  const register = async (data: RegisterData) => {
     await authService.register(data);
   };
 

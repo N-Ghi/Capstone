@@ -1,4 +1,4 @@
-import en from '../i18n/locales/en/translation.json';
+import translation from '../i18n/locales/en/translation.json';
 import auth from '../i18n/locales/en/auth.json';
 import dashboards from '../i18n/locales/en/dashboards.json';
 import experience from '../i18n/locales/en/experience.json';
