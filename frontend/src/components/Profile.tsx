@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { LinkIcon, NextIcon, KeyIcon, LoaderIcon, CheckIcon, CloseIcon } from './common/Icons';
@@ -80,32 +80,32 @@ const ProfileComponent: React.FC = () => {
       .finally(() => setLoadingProfile(false));
   }, [userId, user]);
 
-  // Fetch calendar status
-  useEffect(() => {
-    if (!userId || !user || user.role === Roles.Admin) return;
-    
-    fetchCalendarStatus();
-    checkAuthCallback();
-  }, [userId, user]);
-
-  const fetchCalendarStatus = async () => {
+  // Wrap fetchCalendarStatus and checkAuthCallback in useCallback:
+  const fetchCalendarStatus = useCallback(async () => {
     try {
       setLoadingCalendar(true);
       const data = await calendarService.getStatus();
       setCalendarStatus(data);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Failed to fetch calendar status:', err);
     } finally {
       setLoadingCalendar(false);
     }
-  };
+  }, []);
 
-  const checkAuthCallback = () => {
+  const checkAuthCallback = useCallback(() => {
     if (calendarService.checkAuthCallback()) {
       calendarService.clearAuthCallback();
       fetchCalendarStatus();
     }
-  };
+  }, [fetchCalendarStatus]);
+
+  // Now the effect dep array is satisfied:
+  useEffect(() => {
+    if (!userId || !user || user.role === Roles.Admin) return;
+    fetchCalendarStatus();
+    checkAuthCallback();
+  }, [userId, user, fetchCalendarStatus, checkAuthCallback]);
 
   const handleConnectCalendar = () => {
     if (!userId) {

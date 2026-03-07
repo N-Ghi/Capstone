@@ -6,7 +6,7 @@ import HeaderComponent from '../common/Header';
 import SlotFormModal from './SlotFormModal';
 import ConfirmDialog from '../common/ConfirmDialog';
 import MapPin from '../common/Map';
-import { EditIcon, DeleteIcon, DateIcon, LocationIcon, AddIcon, UsersIcon } from '../common/Icons';
+import { EditIcon, DeleteIcon, DateIcon, LocationIcon, AddIcon } from '../common/Icons';
 import { getExperienceById, updateExperiencePartial, getExperienceSlots, createExperienceSlot, updateExperienceSlotFull, deleteExperienceSlot, } from '../../services/experienceService';
 import type { ExperienceDetail } from '../../@types/experience.types';
 import type { Slot, ExperirnceSlotData } from '../../@types/experience.types';

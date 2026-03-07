@@ -14,7 +14,6 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 from datetime import timedelta
-import dj_database_url 
 
 load_dotenv()  # Load environment variables from .env file
 
@@ -30,8 +29,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG')
-RENDER_HOST_URL = os.getenv('RENDER_HOST_URL')
-ALLOWED_HOSTS = [RENDER_HOST_URL, 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -147,10 +145,14 @@ PASSWORD_RESET_TIMEOUT = 3600  # 1 hour in seconds
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('RENDER_DB_URL'),
-        conn_max_age=600
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': os.getenv('AZURE_DB_HOST'),
+        'PORT': os.getenv('AZURE_DB_PORT'),
+        'NAME': os.getenv('AZURE_DB_NAME'),
+        'USER': os.getenv('AZURE_DB_USER'),
+        'PASSWORD': os.getenv('AZURE_DB_PASSWORD'),
+    }
 }
 
 

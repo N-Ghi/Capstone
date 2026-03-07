@@ -8,22 +8,34 @@ interface Props {
   label: string;
 }
 
+declare global {
+  interface Window {
+    google: {
+      maps: {
+        Map: new (el: HTMLElement, opts: object) => object;
+        Marker: new (opts: object) => object;
+        SymbolPath: { CIRCLE: number };
+      };
+    };
+    initMap?: () => void;
+  }
+}
+
 const MapPin: React.FC<Props> = ({ lat, lng, label }) => {
+  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY; 
   const ref = useRef<HTMLDivElement>(null);
   const [loaded, setLoaded] = useState(false);
-  const [failed, setFailed] = useState(false);
+  const [failed, setFailed] = useState(() => !apiKey);
 
   useEffect(() => {
-    const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-    if (!apiKey) { setFailed(true); return; }
 
     const init = () => {
       if (!ref.current) return;
-      const map = new (window as any).google.maps.Map(ref.current, {
-        center: { lat, lng },
-        zoom: 14,
-        disableDefaultUI: true,
-        zoomControl: true,
+      const map = new window.google.maps.Map(ref.current, {
+      center: { lat, lng },
+      zoom: 14,
+      disableDefaultUI: true,
+      zoomControl: true,
         styles: [
           { featureType: 'poi', stylers: [{ visibility: 'off' }] },
           { featureType: 'transit', stylers: [{ visibility: 'off' }] },
@@ -33,12 +45,12 @@ const MapPin: React.FC<Props> = ({ lat, lng, label }) => {
           { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#d4e5d7' }] },
         ],
       });
-      new (window as any).google.maps.Marker({
+      new window.google.maps.Marker({
         position: { lat, lng },
         map,
         title: label,
         icon: {
-          path: (window as any).google.maps.SymbolPath.CIRCLE,
+          path: window.google.maps.SymbolPath.CIRCLE,
           scale: 10,
           fillColor: '#627F67',
           fillOpacity: 1,
@@ -51,10 +63,10 @@ const MapPin: React.FC<Props> = ({ lat, lng, label }) => {
 
     const scriptId = 'google-maps-script';
 
-    if ((window as any).google?.maps) {
+    if (window.google?.maps) {
       init();
       return;
-    }
+    }    
 
     if (!document.getElementById(scriptId)) {
       const script = document.createElement('script');
@@ -67,8 +79,8 @@ const MapPin: React.FC<Props> = ({ lat, lng, label }) => {
       document.head.appendChild(script);
     } else {
       const poll = setInterval(() => {
-        if ((window as any).google?.maps) { clearInterval(poll); init(); }
-      }, 100);
+        if (window.google?.maps) { clearInterval(poll); init(); }
+      }, 100)
     }
   }, [lat, lng, label]);
 

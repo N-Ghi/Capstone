@@ -1,0 +1,49 @@
+.env
+node_modules
+# Node modules
+node_modules
+npm-debug.log
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Git
+.git
+.gitignore
+
+# Build output
+dist
+build
+
+# Testing
+coverage
+.nyc_output
+
+# Documentation
+*.md
+README.md
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Docker
+dockerfile
+.dockerignore
+
+# Vite cache
+.vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*

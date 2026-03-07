@@ -5,6 +5,7 @@ import { Mail, ArrowLeftFromLine, Compass } from 'lucide-react';
 import { resendVerificationEmail } from '../../services/authService';
 import styles from './ResendEmail.module.css';
 import logo from '../../assets/logo.png';
+import { getApiErrorMessage } from '../../utils/errorUtils';
 
 const ResendEmail: React.FC = () => {
   const { t } = useTranslation('auth');
@@ -25,12 +26,9 @@ const ResendEmail: React.FC = () => {
     try {
       await resendVerificationEmail(identifier);
       setSuccess(true);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Resend verification email failed:', err);
-      setError(
-        err?.response?.data?.error ||
-        t('resendVerification.error.default')
-      );
+      setError(getApiErrorMessage(err, t('resendVerification.error.default')));
     } finally {
       setLoading(false);
     }

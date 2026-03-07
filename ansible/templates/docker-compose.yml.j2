@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  backend:
+    image: {{ registry_url }}/{{ image_name }}-backend:{{ image_tag }}
+    container_name: urugendo-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env.backend
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h $AZURE_DB_HOST -U $AZURE_DB_USER || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  frontend:
+    image: {{ registry_url }}/{{ image_name }}-frontend:{{ image_tag }}
+    container_name: urugendo-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  app-network:
+    driver: bridge

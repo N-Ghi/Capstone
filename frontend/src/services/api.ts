@@ -11,6 +11,10 @@ const api: AxiosInstance = axios.create({
   withCredentials: true,
 });
 
+interface RetryableRequest extends InternalAxiosRequestConfig {
+  _retry?: boolean;
+}
+
 // Attach access token
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const token = localStorage.getItem('access');
@@ -24,7 +28,7 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    const originalRequest = error.config as any;
+    const originalRequest = error.config as RetryableRequest;
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;

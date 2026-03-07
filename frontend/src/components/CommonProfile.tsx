@@ -36,43 +36,67 @@ const CommonProfileComponent: React.FC = () => {
 
   useEffect(() => {
     if (!id) return;
-    setLoadingUser(true);
-    getUserById(id)
-      .then(setUser)
-      .catch((err) => { console.error(err); setUserError(t('errors.loadUser')); })
-      .finally(() => setLoadingUser(false));
-  }, [id]);
-
-  useEffect(() => {
-    if (!id) return;
-    setLoadingProfile(true);
-    getProfileById(id)
-      .then((data) => { if ('expertise' in data) setGuideProfile(data as GuideProfile); })
-      .catch((err) => {
+    let cancelled = false;
+    (async () => {
+      setLoadingUser(true);
+      try {
+        const user = await getUserById(id);
+        if (!cancelled) setUser(user);
+      } catch (err) {
         console.error(err);
-        if (!(axios.isAxiosError(err) && err.response?.status === 404))
-          setProfileError(t('errors.loadProfile'));
-      })
-      .finally(() => setLoadingProfile(false));
-  }, [id]);
+        if (!cancelled) setUserError(t('errors.loadUser'));
+      } finally {
+        if (!cancelled) setLoadingUser(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [id, t]);
 
   useEffect(() => {
     if (!id) return;
-    setLoadingExperiences(true);
-    getAllExperiences({ guide_id: id })
-      .then((data) => setExperiences(data.results || []))
-      .catch(console.error)
-      .finally(() => setLoadingExperiences(false));
+    let cancelled = false;
+    (async () => {
+      setLoadingProfile(true);
+      try {
+        const data = await getProfileById(id);
+        if (!cancelled && 'expertise' in data) setGuideProfile(data as GuideProfile);
+      } catch (err: unknown) {
+        console.error(err);
+        if (!cancelled && !(axios.isAxiosError(err) && err.response?.status === 404))
+          setProfileError(t('errors.loadProfile'));
+      } finally {
+        if (!cancelled) setLoadingProfile(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [id, t]);
+
+  useEffect(() => {
+    if (!id) return;
+    let cancelled = false;
+    (async () => {
+      setLoadingExperiences(true);
+      try {
+        const data = await getAllExperiences({ guide_id: id });
+        if (!cancelled) setExperiences(data.results || []);
+      } catch (err: unknown) {
+        console.error(err);
+      } finally {
+        if (!cancelled) setLoadingExperiences(false);
+      }
+    })();
+    return () => { cancelled = true; };
   }, [id]);
+
 
   useEffect(() => {
     (async () => {
       try {
         const [langs, payments] = await Promise.all([getLanguages(), getPaymentMethods()]);
         const langMap: Record<string, string> = {};
-        langs.forEach((l: any) => (langMap[l.id] = l.name));
+        langs.forEach((l: { id: string; name: string }) => (langMap[l.id] = l.name));
         const payMap: Record<string, string> = {};
-        payments.forEach((p: any) => (payMap[p.id] = p.name));
+        payments.forEach((p: { id: string; name: string }) => (payMap[p.id] = p.name));
         setLanguagesMap(langMap);
         setPaymentMethodsMap(payMap);
       } catch (err) { console.error(err); }
@@ -88,13 +112,12 @@ const CommonProfileComponent: React.FC = () => {
   const languageNames = guideProfile?.languages?.map((lid) => languagesMap[lid]).filter(Boolean) || [];
   const paymentNames = guideProfile?.payment_methods?.map((pid) => paymentMethodsMap[pid]).filter(Boolean) || [];
 
-  const isLoading = loadingUser || loadingProfile;
 
   return (
     <div className={styles.page}>
       <Header />
 
-      {/* ── Unified profile card ─────────────────────────────── */}
+      {/* Unified profile card */}
       <div className={styles.layout}>
         <div className={styles.profileCard}>
 
@@ -169,7 +192,7 @@ const CommonProfileComponent: React.FC = () => {
         </div>
       </div>
 
-      {/* ── Experiences grid ─────────────────────────────────── */}
+      {/* Experiences grid */}
       <div className={styles.experiencesSection}>
         <h3 className={styles.sectionHeading}>{t('profile.experiences')}</h3>
 

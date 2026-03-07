@@ -13,6 +13,8 @@ import type {
   UpdateGuideProfileData,
 } from '../@types/profile.types';
 import styles from './ProfileForm.module.css';
+import { getApiErrorMessage } from '../utils/errorUtils';
+import axios from 'axios';
 
 interface Props {
   role: Role;
@@ -96,21 +98,22 @@ const ProfileForm: React.FC<Props> = ({ role, profile, onSave }) => {
       }
       setSaved(true);
       setTimeout(() => setSaved(false), 2500);
-    } catch (err: any) {
-      const detail = err?.response?.data;
-      if (detail && typeof detail === 'object') {
-        const messages = Object.entries(detail)
-          .map(([field, msgs]) => `${field}: ${Array.isArray(msgs) ? msgs.join(', ') : msgs}`)
-          .join(' | ');
-        setError(messages);
-      } else {
-        setError(err?.message ?? t('profileForm.errorSave'));
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        const detail = err.response?.data;
+        if (detail && typeof detail === 'object') {
+          const messages = Object.entries(detail as Record<string, unknown>)
+            .map(([field, msgs]) =>
+              `${field}: ${Array.isArray(msgs) ? msgs.join(', ') : String(msgs)}`
+            )
+            .join(' | ');
+          setError(messages);
+          return;
+        }
       }
-    } finally {
-      setSaving(false);
+      setError(getApiErrorMessage(err, t('profileForm.errorSave')));
     }
   };
-
   const BIO_MAX = 1000;
   const bioOver = bio.length > BIO_MAX;
 
