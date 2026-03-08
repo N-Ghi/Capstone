@@ -48,7 +48,7 @@ jobs:
             ${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}-frontend:latest
             ${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}-frontend:${{ github.sha }}
           build-args: |
-            VITE_API_URL=${{ secrets.VITE_API_URL }}
+            VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }}
 
   deploy:
     name: Deploy to Production VM
