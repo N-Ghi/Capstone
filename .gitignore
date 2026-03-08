@@ -3,3 +3,6 @@ terraform/.terraform
 terraform/.terraform.lock.hcl
 
 ansible/inventory.ini
+
+CUsersHP.sshid_rsa_deploy
+CUsersHP.sshid_rsa_deploy.pub
