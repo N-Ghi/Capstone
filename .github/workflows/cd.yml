@@ -177,7 +177,7 @@ jobs:
             -e "vite_google_maps_api_key=${{ secrets.GOOGLE_MAPS_API_KEY }}" \
             -e "vite_azure_translator_key=${{ secrets.AZURE_TRANSLATOR_KEY }}" \
             -e "vite_azure_translator_region=southafricanorth" \
-            -e "vite_azure_translator_endpoint=https://api.cognitive.microsofttranslator.com"
+            -e "vite_azure_translator_endpoint=https://api.cognitive.microsofttranslator.com" \
             -vv
 
       - name: Verify deployment
