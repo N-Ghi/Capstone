@@ -59,6 +59,8 @@
           AZURE_TRANSLATOR_KEY={{ azure_translator_key }}
           AZURE_TRANSLATOR_REGION={{ azure_translator_region }}
           AZURE_TRANSLATOR_ENDPOINT={{ azure_translator_endpoint }}
+          SUPABASE_URL={{ supabase_url }}
+          SUPABASE_KEY={{ supabase_key }}
         dest: "{{ app_dir }}/.env.backend"
         mode: '0600'
       no_log: true
