@@ -165,6 +165,8 @@ jobs:
             -e "google_calendar_client_id=${{ secrets.GOOGLE_CALENDAR_CLIENT_ID }}" \
             -e "google_calendar_client_secret=${{ secrets.GOOGLE_CALENDAR_CLIENT_SECRET }}" \
             -e "google_calendar_redirect_uri=${{ secrets.GOOGLE_CALENDAR_REDIRECT_URI }}" \
+            -e "supabase_url=${{ secrets.SUPABASE_URL }}" \
+            -e "supabase_key=${{ secrets.SUPABASE_KEY }}" \
             -e "google_maps_api_key=${{ secrets.GOOGLE_MAPS_API_KEY }}" \
             -e "azure_translator_key=${{ secrets.AZURE_TRANSLATOR_KEY }}" \
             -e "azure_translator_region=southafricanorth" \
