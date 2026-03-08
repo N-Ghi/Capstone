@@ -147,7 +147,7 @@ jobs:
             -e "registry_password=${{ secrets.REGISTRY_PASSWORD }}" \
             -e "image_name=${{ env.IMAGE_NAME }}" \
             -e "image_tag=${{ github.sha }}" \
-            -e "secret_key=${{ secrets.DJANGO_SECRET_KEY }}" \
+            -e "secret_key=${{ secrets.SECRET_KEY }}" \
             -e "allowed_host=urugendo-app.southafricanorth.cloudapp.azure.com" \
             -e "frontend_url=https://urugendo-app.southafricanorth.cloudapp.azure.com" \
             -e "db_host=${{ secrets.AZURE_DB_HOST }}" \

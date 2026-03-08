@@ -22,7 +22,6 @@
       shell: |
         echo "{{ registry_password }}" | docker login {{ registry_url }} \
           -u "{{ registry_username }}" --password-stdin
-      no_log: true
       changed_when: false
 
     - name: Write docker-compose file
