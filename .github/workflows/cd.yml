@@ -112,9 +112,11 @@ jobs:
             --source-address-prefix ${{ steps.runner_ip.outputs.ip }} \
             --access Allow \
             --direction Inbound
+          echo "Waiting for NSG rule to propagate..."
+          sleep 30
       
       - name: Test bastion connectivity
-        run: ssh bastion "echo 'Bastion OK'"
+        run: ssh -v bastion "echo 'Bastion OK'"
 
       - name: Test app VM connectivity
         run: ssh app-vm "echo 'App VM OK'"
