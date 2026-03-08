@@ -90,6 +90,11 @@ jobs:
             ProxyJump bastion
             StrictHostKeyChecking no
           EOF
+          
+      - name: Verify SSH key
+        run: |
+          ssh-keygen -l -f ~/.ssh/id_rsa
+          echo "Key fingerprint shown above"
 
       - name: Get GitHub Actions runner IP
         id: runner_ip
