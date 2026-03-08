@@ -6,6 +6,7 @@ A web-based platform that connects tourists with local tourism operators in Rwan
 
 - [Project Overview](#project-overview)
 - [Tech Stack](#tech-stack)
+- [Deployed App](#deployed-app)
 - [Prerequisites](#prerequisites)
 - [Installation Guide](#installation-guide)
   - [Backend Setup](#backend-setup)
@@ -58,6 +59,10 @@ Urugendo is a comprehensive tourism platform that bridges the gap between intern
 - Supabase (Backend-as-a-Service)
 - Google Cloud APIs
 - Azure Translator API
+
+## Deployed App
+
+This is the link to the deployed app: https://urugendo-app.southafricanorth.cloudapp.azure.com/
 
 ## ✅ Prerequisites
 
