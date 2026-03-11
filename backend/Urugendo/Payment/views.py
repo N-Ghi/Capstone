@@ -2,11 +2,13 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from .models import Payment
-from Choices.models import PaymentMethod, MobileProvider, PaymentStatus
+from .models import Payment, Payout
+from Choices.models import PaymentMethod, MobileProvider, PayoutStatus
 from .services.mock_payment import MockPaymentService
-from .serializers import PaymentSerializer
+from .serializers import PaymentSerializer, PayoutSerializer
 from Booking.utils import send_booking_notifications
+from rest_framework.permissions import IsAuthenticated
+from django.db.models import Sum, Count
 
 
 class PaymentViewSet(viewsets.ModelViewSet):
@@ -52,3 +54,55 @@ class PaymentViewSet(viewsets.ModelViewSet):
             "booking_status": booking.status,
             "transaction_id": payment.provider_payment_id,
         }, status=status.HTTP_200_OK)
+
+class PayoutViewSet(viewsets.ModelViewSet):
+    serializer_class = PayoutSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        qs = Payout.objects.select_related(
+            'guide', 'booking', 'booking__slot', 'status', 'provider'
+        )
+        # Admins see all payouts; guides see only their own
+        if not user.role == 'Admin':
+            qs = qs.filter(guide=user)
+
+        # Optional query param filters
+        status_code = self.request.query_params.get('status')
+        if status_code:
+            qs = qs.filter(status__code=status_code)
+
+        booking_id = self.request.query_params.get('booking')
+        if booking_id:
+            qs = qs.filter(booking_id=booking_id)
+
+        return qs
+
+    def perform_create(self, serializer):
+        # If no guide is specified, default to the requesting user
+        if not serializer.validated_data.get('guide'):
+            serializer.save(guide=self.request.user)
+        else:
+            serializer.save()
+
+    @action(detail=True, methods=['post'], url_path='mark-paid')
+    def mark_paid(self, request, pk=None):
+        """Shortcut action to mark a payout as paid."""
+        payout = self.get_object()
+        paid_status = PayoutStatus.objects.filter(name__iexact='paid').first()
+        if not paid_status:
+            return Response({'detail': 'Paid status not configured.'}, status=status.HTTP_400_BAD_REQUEST)
+        payout.status = paid_status
+        payout.save(update_fields=['status', 'updated_at'])
+        return Response(PayoutSerializer(payout).data)
+
+    @action(detail=False, methods=['get'], url_path='summary')
+    def summary(self, request):
+        """Return total payout amounts grouped by status for the current user."""
+        qs = self.get_queryset()
+        data = qs.values('status__name').annotate(
+            total=Sum('amount'),
+            count=Count('id')
+        ).order_by('status__name')
+        return Response(data)

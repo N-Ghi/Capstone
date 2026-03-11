@@ -1,7 +1,7 @@
 import { 
   Pencil, Trash2, Eye, MapPin, Calendar, Images, ImageOff, Plus, 
   ChevronLeft, AlertCircle, ChevronDown, Check, Home, X, 
-  BookCheckIcon, Link, ChevronRight, KeyRound, Loader2, Clock, Users, Star
+  BookCheckIcon, Link, ChevronRight, KeyRound, Loader2, Clock, Users, Star, Phone
 } from 'lucide-react';
 
 
@@ -28,4 +28,5 @@ export {
   Clock as ClockIcon,
   Users as UsersIcon,
   Star as StarIcon,
+  Phone as PhoneIcon
 };

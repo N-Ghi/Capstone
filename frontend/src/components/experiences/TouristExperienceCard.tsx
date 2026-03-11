@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { UsersIcon } from '../common/Icons';
-import { MapPin, Calendar, Images, ImageOff, Eye } from 'lucide-react';
+import { LocationIcon, DateIcon, PhotoCountIcon, NoPhotoIcon, ViewIcon, UsersIcon } from '../common/Icons';
 import type { ExperienceListItem } from '../../@types/experience.types';
 import styles from './TouristExperienceCard.module.css';
 
@@ -37,14 +36,14 @@ const TouristExperienceCard: React.FC<TouristExperienceCardProps> = ({ experienc
             <img src={firstPhoto} alt={title} className={styles.photo} />
             {photos.length > 1 && (
               <span className={styles.photoCount}>
-                <Images size={11} strokeWidth={2} />
+                <PhotoCountIcon size={11} strokeWidth={2} />
                 {photos.length}
               </span>
             )}
           </>
         ) : (
           <div className={styles.photoPlaceholder}>
-            <ImageOff size={28} strokeWidth={1.25} />
+            <NoPhotoIcon size={28} strokeWidth={1.25} />
           </div>
         )}
 
@@ -62,17 +61,17 @@ const TouristExperienceCard: React.FC<TouristExperienceCardProps> = ({ experienc
         <div className={styles.cardMeta}>
           {location && (
             <span className={styles.metaItem}>
-              <MapPin size={12} strokeWidth={2} />
+              <LocationIcon size={12} strokeWidth={2} />
               {location.place_name}
             </span>
           )}
           <span className={styles.metaItem}>
-            <Calendar size={12} strokeWidth={2} />
+            <DateIcon size={12} strokeWidth={2} />
             {formatDate(created_at)}
           </span>
           <span className={styles.metaItem}>
             <UsersIcon size={12} strokeWidth={2} />
-            {guide_name }
+            {guide_name}
           </span>
         </div>
       </div>
@@ -83,7 +82,7 @@ const TouristExperienceCard: React.FC<TouristExperienceCardProps> = ({ experienc
           onClick={(e) => { e.stopPropagation(); onView(id); }}
           aria-label={`${t('experienceList.card.view')} ${title}`}
         >
-          <Eye size={13} strokeWidth={2} />
+          <ViewIcon size={13} strokeWidth={2} />
           {t('experienceList.card.view')}
         </button>
       </div>

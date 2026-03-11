@@ -17,6 +17,8 @@ from datetime import timedelta
 
 load_dotenv()  # Load environment variables from .env file
 
+DEV = os.getenv('DEV')
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'rest_framework',
+    'django_q',
     'corsheaders',
     'Users',
     'Profile',
@@ -53,7 +56,20 @@ INSTALLED_APPS = [
     'Pictures',
     'Utils',
     'Location',
+    'System',
 ]
+
+Q_CLUSTER = {
+    'name': 'default',
+    'workers': 2,
+    'recycle': 500,
+    'timeout': 60,
+    'retry': 120,
+    'max_attempts': 3,
+    'orm': 'default',
+    'bulk': 10,
+    'catch_up': False,
+}
 
 AUTH_USER_MODEL = 'Users.User'  # Custom user model
 
@@ -91,7 +107,10 @@ MIDDLEWARE = [
 ]
 
 # Frontend URL for CORS and email links
-FRONTEND_URL = os.getenv('FRONTEND_URL')
+if DEV == 'development':
+    FRONTEND_URL = os.getenv('FRONTEND_URL_LOCAL')
+else:
+    FRONTEND_URL = os.getenv('FRONTEND_URL')
 
 # Google - Gmail
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
@@ -144,16 +163,29 @@ PASSWORD_RESET_TIMEOUT = 3600  # 1 hour in seconds
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'HOST': os.getenv('AZURE_DB_HOST'),
-        'PORT': os.getenv('AZURE_DB_PORT'),
-        'NAME': os.getenv('AZURE_DB_NAME'),
-        'USER': os.getenv('AZURE_DB_USER'),
-        'PASSWORD': os.getenv('AZURE_DB_PASSWORD'),
+
+if DEV == 'development':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': os.getenv('DB_HOST'),
+            'PORT': os.getenv('DB_PORT'),
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASSWORD'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': os.getenv('AZURE_DB_HOST'),
+            'PORT': os.getenv('AZURE_DB_PORT'),
+            'NAME': os.getenv('AZURE_DB_NAME'),
+            'USER': os.getenv('AZURE_DB_USER'),
+            'PASSWORD': os.getenv('AZURE_DB_PASSWORD'),
+        }
+    }
 
 
 # Password validation

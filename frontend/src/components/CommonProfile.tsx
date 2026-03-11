@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-
+import { getInitials, getAvatarColor } from '../utils/avatar';
 import Header from './common/Header';
-import { LoaderIcon } from './common/Icons';
+import { LoaderIcon, BackIcon } from './common/Icons';
 
 import { getUserById } from '../services/userService';
 import { getProfileById } from '../services/profileService';
@@ -112,15 +112,23 @@ const CommonProfileComponent: React.FC = () => {
   const languageNames = guideProfile?.languages?.map((lid) => languagesMap[lid]).filter(Boolean) || [];
   const paymentNames = guideProfile?.payment_methods?.map((pid) => paymentMethodsMap[pid]).filter(Boolean) || [];
 
+  const avatarInitials = user ? getInitials(user.first_name, user.last_name, user.username) : "…";
+  const avatarBg = id ? getAvatarColor(id) : "#bbb";
+  const displayName = user
+    ? user.first_name && user.last_name
+      ? `${user.first_name} ${user.last_name}`
+      : user.username
+    : "";
 
   return (
     <div className={styles.page}>
       <Header />
-
       {/* Unified profile card */}
       <div className={styles.layout}>
+        <span className={styles.backBtn} onClick={() => navigate(-1)}>
+          <BackIcon /> {t('profile.back')}
+        </span>
         <div className={styles.profileCard}>
-
           {/* Left: avatar + identity */}
           <div className={styles.profileLeft}>
             {loadingUser ? (
@@ -129,16 +137,18 @@ const CommonProfileComponent: React.FC = () => {
               <p className={styles.error}>{userError}</p>
             ) : user ? (
               <>
-                <img
-                  src={user.profile_picture || '/default-avatar.png'}
-                  className={styles.avatar}
-                  alt={user.username}
-                />
-                <h2 className={styles.displayName}>
-                  {user.first_name && user.last_name
-                    ? `${user.first_name} ${user.last_name}`
-                    : user.username}
-                </h2>
+                {user.profile_picture ? (
+                  <img
+                    src={user.profile_picture}
+                    className={styles.avatar}
+                    alt={displayName}
+                  />
+                ) : (
+                  <div className={styles.avatarFallback} style={{ background: avatarBg }}>
+                    {avatarInitials}
+                  </div>
+                )}
+                <h2 className={styles.displayName}>{displayName}</h2>
                 <p className={styles.username}>@{user.username}</p>
               </>
             ) : (
@@ -185,7 +195,7 @@ const CommonProfileComponent: React.FC = () => {
               </>
             ) : (
               !loadingProfile && (
-                <p className={styles.mutedText}>{t('errors.noProfile')}</p>
+                <p className={styles.mutedText}>{t('profile.errors.noProfile')}</p>
               )
             )}
           </div>

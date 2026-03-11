@@ -22,19 +22,28 @@ const GuideBookingCard: React.FC<GuideBookingCardProps> = ({ booking }) => {
   const { experience_title, booking_date, guests, total_price } = booking;
 
   const bookingArray = useMemo(
-        () => (booking ? [booking] : []),
-        [booking]
-      );
+    () => (booking ? [booking] : []),
+    [booking]
+  );
     
-    const { translated: translatedBookings, translating } = useTranslatedData(
-      bookingArray,
-      ['experience_title']
-    );
+  const { translated: translatedBookings, translating } = useTranslatedData(
+    bookingArray,
+    ['experience_title']
+  );
   
-    const translatedBooking = translatedBookings[0] ?? booking;
-    console.log("Experience title: ", experience_title);
-  
-    const experienceTitle = translatedBooking?.experience_title ?? booking?.experience_title;
+  const translatedBooking = translatedBookings[0] ?? booking;
+  console.log("Experience title: ", experience_title);
+
+  const experienceTitle = translatedBooking?.experience_title ?? booking?.experience_title;
+
+  const statusStyles: Record<string, string> = {
+    confirmed: styles.confirmedBadge,
+    completed: styles.completedBadge,
+    expired:   styles.expiredBadge,
+  };
+
+  const status = booking.status.toLowerCase();
+  const badgeClass = statusStyles[status] ?? styles.confirmedBadge;
 
   return (
     <div className={styles.card} role="article">
@@ -44,9 +53,9 @@ const GuideBookingCard: React.FC<GuideBookingCardProps> = ({ booking }) => {
           <h2 className={`${styles.title} ${translating ? styles.translating : ''}`}>
             {experienceTitle}
           </h2>
-          <span className={styles.confirmedBadge}>
+          <span className={badgeClass}>
             <span className={styles.statusDot} />
-            {t('bookingList.status.confirmed', 'Confirmed')}
+            {t(`bookingList.status.${status}`, status.charAt(0).toUpperCase() + status.slice(1))}
           </span>
         </div>
 

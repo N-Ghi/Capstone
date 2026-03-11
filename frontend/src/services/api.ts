@@ -1,7 +1,14 @@
 import axios, { type AxiosInstance, AxiosError, type InternalAxiosRequestConfig } from 'axios';
 import { logout } from './authService';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/';
+let API_BASE_URL;
+const MODE : string = import.meta.env.MODE;
+if (MODE === 'development') {
+  API_BASE_URL = import.meta.env.VITE_API_BASE_URL_LOCAL;
+} else {
+  API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+}
+
 const timeout = import.meta.env.VITE_API_TIMEOUT;
 
 const api: AxiosInstance = axios.create({

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { use, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
@@ -8,6 +8,7 @@ import ConfirmDialog from '../common/ConfirmDialog';
 import MapPin from '../common/Map';
 import { EditIcon, DeleteIcon, DateIcon, LocationIcon, AddIcon } from '../common/Icons';
 import { getExperienceById, updateExperiencePartial, getExperienceSlots, createExperienceSlot, updateExperienceSlotFull, deleteExperienceSlot, } from '../../services/experienceService';
+import { getUserById } from '../../services/userService';
 import type { ExperienceDetail } from '../../@types/experience.types';
 import type { Slot, ExperirnceSlotData } from '../../@types/experience.types';
 import { useTranslatedData } from '../../hooks/useTranslatedData';
@@ -17,6 +18,7 @@ import { createBooking } from '../../services/bookingService';
 import BookingForm from '../booking/BookingForm';
 import type { CreateBooking } from '../../@types/booking.types';
 import ReviewSection from '../reviews/ReviewSection';
+import type { User } from '../../@types/auth.types';
 
 
 // Helpers
@@ -38,6 +40,7 @@ const ExperienceDetailComponent: React.FC = () => {
 
   const [experience, setExperience] = useState<ExperienceDetail | null>(null);
   const [expLoading, setExpLoading] = useState(true);
+  const [guide, setGuide] = useState<User | null>(null);
   const [expError, setExpError] = useState<string | null>(null);
 
   const [slots, setSlots] = useState<Slot[]>([]);
@@ -51,7 +54,6 @@ const ExperienceDetailComponent: React.FC = () => {
 
   const [activePhoto, setActivePhoto] = useState(0);
   const [bookingSlotId, setBookingSlotId] = useState<string | null>(null);
-
 
   const experienceArray = useMemo(
     () => (experience ? [experience] : []),
@@ -84,6 +86,20 @@ const ExperienceDetailComponent: React.FC = () => {
       }
     })();
   }, [id, t]);
+
+  useEffect(() => {
+    if (!experience?.guide) return;
+    (async () => {
+      try {
+        const data = await getUserById(experience.guide);
+        setGuide(data);
+      } catch {
+        console.warn('Failed to load guide info, showing experience without guide details');
+      }
+    })();
+  }
+
+  );
 
   useEffect(() => {
     if (!id) return;
@@ -246,7 +262,7 @@ const ExperienceDetailComponent: React.FC = () => {
                   <Trans
                     i18nKey="experienceDetail.meta.creator"
                     ns="experience"
-                    values={{ date: fmt(created_at), id: experience.guide, name: experience.guide }}
+                    values={{ date: fmt(created_at), id: experience.guide, name: guide?.username }}
                     components={{ a: <a /> }}
                   />
                 </span>

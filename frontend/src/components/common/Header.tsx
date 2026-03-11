@@ -70,6 +70,10 @@ const HeaderComponent: React.FC = () => {
       <nav className={styles.nav}>
         {/* Guide-specific Experiences dropdown */}
         {role === 'Guide' && (
+          <>
+          <button className={styles.dropdownTrigger} onClick={() => navigate('/guide/payouts')}>
+              {t('header.payouts')}
+            </button>
           <div className={styles.dropdown}>
             <button
               className={styles.dropdownTrigger}
@@ -97,7 +101,9 @@ const HeaderComponent: React.FC = () => {
                 </button>
               </div>
             )}
+            
           </div>
+          </>
         )}
 
         {/* Tourist&Guide-specific link */}

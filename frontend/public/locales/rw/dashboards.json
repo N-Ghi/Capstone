@@ -9,12 +9,15 @@
     "profile": "Imyirondoro",
     "defaultName": "Umuyobozi",
     "logout": "Sohoka",
-    "logoutError": "Gusohoka byanze. Gerageza mukanya."
+    "logoutError": "Gusohoka byanze. Gerageza mukanya.",
+    "payouts": "Ibizishurwa"
   },
   "guide": {
     "stats": {
       "totalExperiences": "Ubutembere bwose",
-      "upcomingSlots": "Amasaha y'ubutembere butegerejwe"
+      "upcomingSlots": "Amasaha y'ubutembere butegerejwe",
+      "viewPayouts": "Reba ayo uzishyurwa",
+      "pendingPayouts": "Bizishyurwa"
     },
     "table": {
       "title": "Ubutembere butegerejwe n'Amasaha",
@@ -22,6 +25,34 @@
       "date": "Itariki",
       "time": "Amasaha",
       "empty": "Nta butembere butegerejwe."
+    },
+    "payouts": {
+      "title": "Ayo uzishyurwa",
+      "experience": "Igitemberwa",
+      "date": "Igihe",
+      "time": "Amasaha",
+      "bookingAmount": "Ateganyijwe",
+      "platformFee": "Gukatwa",
+      "payout": "Ayo Uhabwa",
+      "status": "Icyiciro",
+      "empty": "Ntabwishyu bubonetse."
+    },
+    "payout": {
+      "back": "Subira Inyuma",
+      "loading": "Tegereza...",
+      "notFound": "Imwirondoro w'ubwishyu ntubonetse.",
+      "errorLoad": "Habaye ikibazo. Tegereza wongere mukanya.",
+      "unknownExperience": "Igitemberwa kitazwi",
+      "payoutId": "Umubare uranga ubwishyu",
+      "slotDate": "Amatariki",
+      "slotTime": "Igihe",
+      "payoutDate": "Itariki y'ubwishyu",
+      "provider": "Umufata buguzi",
+      "bookingAmount": "Ayishyuwe",
+      "platformFee": "Ayakaswe",
+      "yourPayout": "Ayo wakiriye",
+      "transactionId": "Umubare uranga ihererekanya",
+      "phoneNumber": "Nimero ya telefoni"
     }
   }
 }

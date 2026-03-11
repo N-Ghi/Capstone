@@ -1,7 +1,4 @@
 from rest_framework import serializers
-
-from Location.models import Location
-from Location.serializers import LocationSerializer
 from .models import Tourist, Guide
 
 
@@ -71,37 +68,25 @@ class TouristSerializer(serializers.ModelSerializer):
         return instance
     
 class GuideSerializer(serializers.ModelSerializer):
-    location = LocationSerializer(required=False)
-
     class Meta:
         model = Guide
         fields = '__all__'
         read_only_fields = ['id', 'user_id']
 
     def create(self, validated_data):
-        location_data = validated_data.pop('location', None)
         languages = validated_data.pop('languages', [])
-        payment_methods = validated_data.pop('payment_methods', [])
-        expertise = validated_data.pop('expertise', [])
+        # payout_provider = validated_data.pop('payout_provider', None)
 
         guide = Guide.objects.create(**validated_data)
 
         guide.languages.set(languages)
-        guide.payment_methods.set(payment_methods)
-        guide.expertise.set(expertise)
-
-        if location_data:
-            location = Location.objects.create(**location_data)
-            guide.location = location
-            guide.save()
+        # guide.payout_provider.set(payout_provider)
 
         return guide
 
     def update(self, instance, validated_data):
-        location_data = validated_data.pop('location', None)
         languages = validated_data.pop('languages', None)
-        payment_methods = validated_data.pop('payment_methods', None)
-        expertise = validated_data.pop('expertise', None)
+        # payout_provider = validated_data.pop('payout_provider', None)
 
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
@@ -109,19 +94,10 @@ class GuideSerializer(serializers.ModelSerializer):
 
         if languages is not None:
             instance.languages.set(languages)
-        if payment_methods is not None:
-            instance.payment_methods.set(payment_methods)
-        if expertise is not None:
-            instance.expertise.set(expertise)
+        
+        # if payout_provider is not None:
+        #     instance.payout_provider.set(payout_provider)
 
-        if location_data:
-            if instance.location:
-                for attr, value in location_data.items():
-                    setattr(instance.location, attr, value)
-                instance.location.save()
-            else:
-                instance.location = Location.objects.create(**location_data)
-                instance.save()
 
         return instance
     

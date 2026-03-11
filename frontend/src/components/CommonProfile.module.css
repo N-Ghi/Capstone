@@ -1,4 +1,4 @@
-/* ===== Page ===== */
+/* Page */
 .page {
   min-height: 100vh;
   background: #f7f4f4;
@@ -12,13 +12,33 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== Wrapper ===== */
+/* Wrapper */
 .layout {
   max-width: 1200px;
   margin: 24px auto 24px;
 }
 
-/* ===== Unified profile card ===== */
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: #ffffff;
+  border: 1.5px solid rgba(43, 65, 80, 0.15);
+  border-radius: 7px;
+  font-size: 0.84rem;
+  font-weight: 400;
+  color: rgba(43, 65, 80, 0.6);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.backBtn:hover {
+  background: rgba(98, 127, 103, 0.07);
+  border-color: #627F67;
+  color: #506957;
+}
+
+/* Unified profile card */
 .profileCard {
   background: #ffffff;
   border: 1px solid rgba(43, 65, 80, 0.08);
@@ -59,15 +79,28 @@
   gap: 0;
 }
 
-/* ===== Identity ===== */
+/* Identity */
 .avatar {
-  width: 88px;
-  height: 88px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #627F67;
   flex-shrink: 0;
-  margin-bottom: 4px;
+  margin-bottom: 10px;
+}
+
+.avatarFallback {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 600;
+  color: #fff;
+  flex-shrink: 0;
+  margin-bottom: 10px;
 }
 
 .displayName {
@@ -85,7 +118,7 @@
   margin: 0;
 }
 
-/* ===== Bio ===== */
+/* Bio */
 .bio {
   font-size: 0.9rem;
   font-weight: 300;
@@ -94,7 +127,7 @@
   margin: 0 0 20px;
 }
 
-/* ===== Tag groups ===== */
+/* Tag groups */
 .tagGroup {
   margin-bottom: 14px;
 }
@@ -130,7 +163,7 @@
   font-weight: 500;
 }
 
-/* ===== Shared helpers ===== */
+/* Shared helpers */
 .mutedText {
   font-size: 0.86rem;
   color: rgba(43, 65, 80, 0.4);
@@ -143,7 +176,7 @@
   margin: 0;
 }
 
-/* ===== Experiences section ===== */
+/* Experiences section */
 .experiencesSection {
   max-width: 1200px;
   margin: 0 auto;
@@ -171,7 +204,7 @@
   margin: 0;
 }
 
-/* ===== Experiences grid ===== */
+/* Experiences grid */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -237,13 +270,13 @@
   overflow: hidden;
 }
 
-/* ===== Translation fade ===== */
+/* Translation fade */
 .translating {
   opacity: 0.55;
   transition: opacity 0.2s;
 }
 
-/* ===== Loader ===== */
+/* Loader */
 .spin {
   animation: spin 1s linear infinite;
 }
@@ -253,7 +286,7 @@
   to   { transform: rotate(360deg); }
 }
 
-/* ===== Responsive ===== */
+/* Responsive */
 @media (max-width: 860px) {
   .profileCard {
     flex-direction: column;

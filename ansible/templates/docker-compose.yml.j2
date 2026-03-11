@@ -23,6 +23,23 @@ services:
         max-size: "10m"
         max-file: "3"
 
+  qcluster:
+    image: {{ registry_url }}/{{ image_name }}-backend:{{ image_tag }}
+    container_name: urugendo-qcluster
+    restart: unless-stopped
+    command: python manage.py qcluster
+    env_file:
+      - .env.backend
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"  
+   
   frontend:
     image: {{ registry_url }}/{{ image_name }}-frontend:{{ image_tag }}
     container_name: urugendo-frontend

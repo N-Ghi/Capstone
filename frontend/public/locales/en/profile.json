@@ -23,6 +23,7 @@
     "experiences": "Experiences",
     "noExperiences": "No experiences yet",
     "noBio": "No bio provided",
+    "back": "Back",
     "errors": {
       "loadUser": "Failed to load user information.",
       "loadProfile": "Failed to load profile information.",
@@ -43,8 +44,8 @@
     "saveChanges": "Save Changes"
   },
   "profileForm": {
-    "displayName": "Display Name",
-    "displayNamePlaceholder": "Your public guide name",
+    "displayName": "Phone Number",
+    "displayNamePlaceholder": "078XXXXXXX",
     "bio": "Bio",
     "bioPlaceholder": "Tell travellers about yourself and your tours...",
     "languages": "Languages",

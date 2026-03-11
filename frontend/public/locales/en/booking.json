@@ -16,7 +16,8 @@
       "confirmed": "Confirmed",
       "pending": "Pending",
       "cancelled": "Cancelled",
-      "completed": "Completed"
+      "completed": "Completed",
+      "expired": "Expired"
     },
     "filter": {
       "all": "All"

@@ -41,10 +41,12 @@ export const BookingList: React.FC<BookingListProps> = ({
   const navigate = useNavigate();
   const { isGuide } = useAuth();
 
-  // Guides only see confirmed bookings
+  // Guides only see confirmed, expired, or completed bookings
   const visibleBookings = isGuide
-    ? bookings.filter((b) => b.status.toLowerCase() === 'confirmed')
+    ? bookings.filter((b) => b.status.toLowerCase() === 'confirmed' || b.status.toLowerCase() === 'completed' || b.status.toLowerCase() === 'expired')
     : bookings;
+
+  console.log('Visible bookings:', visibleBookings);
 
   const showPagination = onPageChange && totalItems > 0;
 

@@ -10,12 +10,15 @@
     "profile": "Profile",
     "defaultName": "Guide",
     "logout": "Logout",
-    "logoutError": "Error during logout. Please try again."
+    "logoutError": "Error during logout. Please try again.",
+    "payouts": "Payouts"
   },
   "guide": {
     "stats": {
       "totalExperiences": "Total experiences",
-      "upcomingSlots": "Upcoming experience slots"
+      "upcomingSlots": "Upcoming experience slots",
+      "viewPayouts": "View Pending Payouts",
+      "pendingPayouts": "Pending payouts"
     },
     "table": {
       "title": "Upcoming Experiences & Slots",
@@ -23,6 +26,34 @@
       "date": "Date",
       "time": "Time",
       "empty": "No upcoming experience slots available."
+    },
+    "payouts": {
+      "title": "My Payouts",
+      "experience": "Experience",
+      "date": "Slot Date",
+      "time": "Time",
+      "bookingAmount": "Booking Amount",
+      "platformFee": "Platform Fee",
+      "payout": "Your Payout",
+      "status": "Status",
+      "empty": "No payouts found."
+    },
+    "payout": {
+      "back": "Back to Payouts",
+      "loading": "Loading payout...",
+      "notFound": "Payout not found.",
+      "errorLoad": "Failed to load payout.",
+      "unknownExperience": "Unknown Experience",
+      "payoutId": "Payout ID",
+      "slotDate": "Slot Date",
+      "slotTime": "Time",
+      "payoutDate": "Payout Date",
+      "provider": "Provider",
+      "bookingAmount": "Booking Amount",
+      "platformFee": "Platform Fee",
+      "yourPayout": "Your Payout",
+      "transactionId": "Transaction ID",
+      "phoneNumber": "Phone number"
     }
   }
 }

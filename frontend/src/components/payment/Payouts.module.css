@@ -1,0 +1,66 @@
+.payoutList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem 1.75rem;
+}
+
+.payoutCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.875rem 1.25rem;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(43, 65, 80, 0.08);
+  cursor: pointer;
+  transition: box-shadow 0.15s;
+}
+
+.payoutCard:hover {
+  box-shadow: 0 2px 8px rgba(43, 65, 80, 0.08);
+}
+
+.payoutCardLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.payoutTitle {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--dark);
+}
+
+.payoutDate {
+  font-size: 0.78rem;
+  color: rgba(43, 65, 80, 0.55);
+}
+
+.payoutCardRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.payoutAmount {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--dark);
+}
+
+/* Status badges */
+.statusBadge {
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--white);
+}
+
+.statusPaid       { background: #627F67; }
+.statusPending    { background: #d97706; }
+.statusProcessing { background: #2563eb; }
+.statusFailed     { background: #dc2626; }
+.statusDefault    { background: #9ca3af; }

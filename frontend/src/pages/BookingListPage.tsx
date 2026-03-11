@@ -12,7 +12,7 @@ import { useAuth } from '../context/AuthContext';
 
 const ITEMS_PER_PAGE = 15;
 
-const STATUS_FILTERS = ['all', 'pending', 'confirmed', 'completed', 'cancelled'] as const;
+const STATUS_FILTERS = ['all', 'pending', 'confirmed', 'completed', 'cancelled', 'expired'] as const;
 type StatusFilter = typeof STATUS_FILTERS[number];
 
 const BookingListPage: React.FC = () => {

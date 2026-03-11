@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Compass, LayoutList, } from 'lucide-react';
+import { Compass, LayoutList, Wallet } from 'lucide-react';
 import { getUpcomingSlotsCount, getAllExperiencesCount, getAllExperienceSlots } from '../../services/experienceService';
 import { useAuth } from '../../context/AuthContext';
 import Header from '../common/Header';
 import styles from './Guide.module.css';
 import type { Slot } from '../../@types/experience.types';
 import i18n from '../../i18n';
+import { getPendingPayoutsCount } from '../../services/payoutService';
+import { useNavigate } from 'react-router-dom';
 
 const GuideDashboard: React.FC = () => {
   const { t } = useTranslation('dashboards');
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   // State
   const [allExperiencesCount, setAllExperiencesCount] = useState<number>(0);
   const [upcomingSlotsCount,  setUpcomingSlotsCount]  = useState<number>(0);
   const [upcomingSlots,       setUpcomingSlots]       = useState<Partial<Slot>[]>([]);
   const [loading,             setLoading]             = useState(true);
+  const [pendingPayoutsCount, setPendingPayoutsCount] = useState<number>(0);
+  
 
   // Data fetch
   useEffect(() => {
@@ -24,14 +29,17 @@ const GuideDashboard: React.FC = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [expCount, slotCount, slots] = await Promise.all([
+        const [expCount, slotCount, slots, payoutCount] = await Promise.all([
           getAllExperiencesCount(user.id),
           getUpcomingSlotsCount(user.id),
-          getAllExperienceSlots({guide_id: user.id, upcoming: true}),
+          getAllExperienceSlots({ guide_id: user.id, upcoming: true }),
+          getPendingPayoutsCount(),
         ]);
+        setPendingPayoutsCount(payoutCount);
         setAllExperiencesCount(expCount);
         setUpcomingSlotsCount(slotCount);
         setUpcomingSlots(slots.results.slice(0, 5));
+        
       } catch (err) {
         console.error('Failed to load dashboard data:', err);
       } finally {
@@ -73,6 +81,20 @@ const GuideDashboard: React.FC = () => {
                 {loading ? '-' : upcomingSlotsCount}
               </span>
               <span className={styles.statLabel}>{t('guide.stats.upcomingSlots')}</span>
+            </div>
+          </div>
+          <div className={styles.statCard}>
+            <div className={styles.statIcon}>
+              <Wallet size={20} strokeWidth={1.5} />
+            </div>
+            <div className={styles.statBody}>
+              <span className={styles.statValue}>
+                {loading ? '—' : pendingPayoutsCount}
+              </span>
+              <span className={styles.statLabel}>{t('guide.stats.pendingPayouts')}</span>
+              <span className={styles.statLink} onClick={() => navigate('/guide/payouts')}>
+                {t('guide.stats.viewPayouts')}
+              </span>
             </div>
           </div>
         </div>

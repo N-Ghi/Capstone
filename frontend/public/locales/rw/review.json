@@ -1,0 +1,38 @@
+{
+  "card": {
+    "you": "Wowe",
+    "edited": "yahinduwe",
+    "edit": "Hindura",
+    "unknownUser": "Umuntu Utazwi",
+    "loading": "Tegereza..."
+    },
+  "form": {
+    "ratingLabels": {
+      "terrible": "Bibi cyane",
+      "poor": "Nabi",
+      "okay": "Ntacyo bitwaye",
+      "great": "Byiza",
+      "excellent": "Byiza cyane"
+    },
+    "starAriaLabel": "Inyenyeri {{count}}",
+    "commentPlaceholder": "Sangiza abandi ibitekerezo byawe...",
+    "charCount": "{{current}} / {{max}}",
+    "cancel": "Hagarika",
+    "saving": "Kwemeza...",
+    "saveChanges": "Emeza Impinduka",
+    "postReview": "Emeza",
+    "errors": {
+      "ratingRequired": "Hitamo inyenyeri.",
+      "commentRequired": "Gira icyo wandika.",
+      "submitFailed": "Kwemeza biranze. Ongera ugerageze."
+    }
+  },
+  "section": {
+    "title": "Ibitekerezo",
+    "leaveReview": "+ Siga igitekerezo",
+    "loading": "Tegereza...",
+    "empty": "Ntabitekerezo. Shyiraho icyawe!",
+    "loadError": "Habaye ikibazo. Ongera ugerageza.",
+    "itemLabel": "ibitekerezo"
+  }
+}

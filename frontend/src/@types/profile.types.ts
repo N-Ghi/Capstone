@@ -20,12 +20,10 @@ export interface TouristProfile {
 export interface GuideProfile {
   id: string;
   user_id: string;
-  name: string;
+  phone_number: string;
   bio: string;
   languages: string[];
-  payment_methods: string[];
-  expertise: string[];
-  location: Location | null;
+  payout_provider: string;
 }
 
 export interface AdminProfile {
@@ -42,12 +40,10 @@ export interface UpdateTouristProfileData {
 }
 
 export interface UpdateGuideProfileData {
-  name?: string;
+  phone_number?: string;
   bio?: string;
   languages?: string[];
-  payment_methods?: string[];
-  expertise?: string[];
-  location?: string | null;
+  payout_provider?: string | null;
 }
 
 export interface UpdateAdminProfileData {}

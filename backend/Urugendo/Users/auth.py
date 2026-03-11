@@ -15,6 +15,7 @@ from Utils.email import send_verification_email
 
 User = get_user_model()
 
+
 def generate_verification_link(user, request):
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     token = default_token_generator.make_token(user)

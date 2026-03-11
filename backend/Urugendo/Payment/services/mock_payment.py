@@ -1,4 +1,3 @@
-# payments/services/mock_payment.py
 import uuid
 from Choices.models import PaymentStatus, PaymentMethod, MobileProvider
 from Payment.models import Payment

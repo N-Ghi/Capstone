@@ -46,6 +46,34 @@
   color: #506957;
 }
 
+.completedBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.73rem;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+  background: rgba(98, 127, 103, 0.12);
+  color: #3e5022;
+}
+
+.expiredBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.73rem;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+  background: rgba(98, 127, 103, 0.12);
+  color: #ed8279;
+}
+
 .statusDot {
   width: 6px;
   height: 6px;

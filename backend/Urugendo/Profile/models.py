@@ -1,9 +1,7 @@
 import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
-from Choices.models import PaymentMethod, TravelPreference, Language
-from Location.models import Location
-
+from Choices.models import PaymentMethod, TravelPreference, Language, MobileProvider
 
 User = get_user_model()
 
@@ -32,20 +30,13 @@ class Guide(models.Model):
 
     user_id = models.OneToOneField(User, on_delete=models.CASCADE,  related_name='guide_profile')
 
-    name = models.CharField(max_length=100, blank=False, default='Guide Name')
+    phone_number = models.CharField(max_length=10, blank=False, null=False, default='0780000002')
+
+    payout_provider = models.ForeignKey(MobileProvider, on_delete=models.SET_NULL, null=True, blank=True, related_name='guide_payout_provider')
 
     bio = models.TextField(blank=False, max_length=1000, default='')
 
     languages = models.ManyToManyField( Language, blank=True )
-
-    payment_methods = models.ManyToManyField( PaymentMethod, blank=True )
-
-    expertise = models.ManyToManyField( TravelPreference, blank=True )
-    
-    location = models.OneToOneField( Location, on_delete=models.SET_NULL, null=True,
-        blank=True, related_name='guide_location'
-    )
-
 
     class Meta:
         ordering = ['-id']

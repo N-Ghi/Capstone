@@ -1,0 +1,38 @@
+{
+  "card": {
+    "you": "You",
+    "edited": "edited",
+    "edit": "Edit",
+    "unknownUser": "Unknown user",
+    "loading": "Loading…"
+    },
+  "form": {
+    "ratingLabels": {
+      "terrible": "Terrible",
+      "poor": "Poor",
+      "okay": "Okay",
+      "great": "Great",
+      "excellent": "Excellent"
+    },
+    "starAriaLabel": "Rate {{count}} stars",
+    "commentPlaceholder": "Share your experience…",
+    "charCount": "{{current}} / {{max}}",
+    "cancel": "Cancel",
+    "saving": "Saving…",
+    "saveChanges": "Save Changes",
+    "postReview": "Post Review",
+    "errors": {
+      "ratingRequired": "Please select a rating.",
+      "commentRequired": "Please write something.",
+      "submitFailed": "Something went wrong. Please try again."
+    }
+  },
+  "section": {
+    "title": "Reviews",
+    "leaveReview": "+ Leave a Review",
+    "loading": "Loading reviews…",
+    "empty": "No reviews yet. Be the first!",
+    "loadError": "Failed to load reviews.",
+    "itemLabel": "reviews"
+  }
+}

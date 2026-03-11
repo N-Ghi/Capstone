@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import type { Review } from "../../@types/review.types";
 import { Stars } from "../common/Stars";
-import { getCurrentUser } from "../../services/authService";
+import { getUserById } from "../../services/userService";
 import styles from "./ReviewCard.module.css";
+import { useTranslation } from "react-i18next";
+import { getInitials, getAvatarColor } from "../../utils/avatar";
+
 
 interface ReviewCardProps {
   review: Review;
@@ -12,79 +15,72 @@ interface ReviewCardProps {
 
 const isoToSec = (iso: string) => iso.slice(0, 19);
 
-function getInitials(first?: string, last?: string, username?: string): string {
-  if (first && last) return `${first[0]}${last[0]}`.toUpperCase();
-  if (first) return first[0].toUpperCase();
-  if (username) return username[0].toUpperCase();
-  return "?";
-}
-
-function getAvatarColor(id: string): string {
-  const colors = [
-    "#627F67", "#7a6a8a", "#7a8a6a", "#6a7a8a",
-    "#8a6a6a", "#6a8a7a", "#8a7a6a", "#6a6a8a",
-  ];
-  const sum = id.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
-  return colors[sum % colors.length];
-}
-
-const fmt = (iso: string) =>
-  new Date(iso).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
 
 function ReviewCard({ review, isOwn, onEdit }: ReviewCardProps) {
-  const [user, setUser] = useState<any>(null);
+  const { t, i18n } = useTranslation("review");
+  const [author, setAuthor] = useState<any>(null);
+  const [authorError, setAuthorError] = useState(false);
 
   useEffect(() => {
-    getCurrentUser().then(setUser).catch(() => setUser(null));
-  }, []);
+    setAuthor(null);
+    setAuthorError(false);
+    getUserById(review.traveler)
+      .then(setAuthor)
+      .catch(() => setAuthorError(true));
+  }, [review.traveler]);
 
-  if (!user) return <div className={styles.reviewCard}>Loading...</div>;
+  const fmt = (iso: string) =>
+    new Date(iso).toLocaleDateString(i18n.language, {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
 
-  const initials = getInitials(user.first_name, user.last_name, user.username);
+  const initials = getInitials(author?.first_name, author?.last_name, author?.username);
   const avatarBg = getAvatarColor(review.id);
-  const displayName = user.first_name
-    ? `${user.first_name} ${user.last_name ?? ""}`.trim()
-    : user.username ?? user.email;
+  const displayName = author?.first_name
+    ? `${author.first_name} ${author.last_name ?? ""}`.trim()
+    : author?.username ?? author?.email ?? t("card.unknownUser");
 
   return (
     <div className={`${styles.reviewCard} ${isOwn ? styles.reviewCardOwn : ""}`}>
       <div className={styles.reviewTop}>
         <div className={styles.authorRow}>
-          {user.profile_picture ? (
-            <img src={user.profile_picture} alt={displayName} className={styles.avatar} />
+          {/* Avatar */}
+          {author?.profile_picture ? (
+            <img src={author.profile_picture} alt={displayName} className={styles.avatar} />
           ) : (
-            <div className={styles.avatarFallback} style={{ background: avatarBg }}>
-              {initials}
+            <div
+              className={styles.avatarFallback}
+              style={{ background: authorError ? "#bbb" : avatarBg }}
+            >
+              {authorError ? "?" : author ? initials : "…"}
             </div>
           )}
+
           <div>
             <div className={styles.authorName}>
-              {displayName}
-              {isOwn && <span className={styles.youBadge}>You</span>}
+              {authorError
+                ? t("card.unknownUser")
+                : author
+                ? displayName
+                : t("card.loading")}
+              {isOwn && <span className={styles.youBadge}>{t("card.you")}</span>}
             </div>
             <div className={styles.reviewMeta}>
               <Stars rating={review.rating} size={12} />
               <span className={styles.metaDot}>·</span>
               <span className={styles.reviewDate}>{fmt(review.created_at)}</span>
               {isoToSec(review.updated_at) !== isoToSec(review.created_at) && (
-                <span className={styles.editedTag}>edited</span>
+                <span className={styles.editedTag}>{t("card.edited")}</span>
               )}
             </div>
           </div>
         </div>
+
         {isOwn && (
-          <button
-            className={styles.editBtn}
-            type="button"
-            onClick={() => {
-              onEdit();
-            }}
-          >
-            Edit
+          <button className={styles.editBtn} type="button" onClick={onEdit}>
+            {t("card.edit")}
           </button>
         )}
       </div>

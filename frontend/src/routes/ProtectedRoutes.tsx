@@ -11,6 +11,8 @@ import ProfilePage from "../pages/ProfilePage";
 import BookingListPage from "../pages/BookingListPage";
 import BookingDetailsPage from "../pages/BookingDetailsPage";
 import CommonProfilePage from "../pages/CommonProfilePage";
+import PayoutsPage from "../pages/Payouts";
+import PayoutsDetailsPage from "../pages/PayoutDetailsPage";
 
 export const protectedRoutes = [
   {
@@ -26,6 +28,22 @@ export const protectedRoutes = [
     element: (
       <ProtectedRoute allowedRoles={[Roles.Guide]}>
         <GuideDashboardPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/guide/payouts",
+    element: (
+      <ProtectedRoute allowedRoles={[Roles.Guide]}>
+        <PayoutsPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/guide/payouts/:id",
+    element: (
+      <ProtectedRoute allowedRoles={[Roles.Guide]}>
+        <PayoutsDetailsPage />
       </ProtectedRoute>
     ),
   },

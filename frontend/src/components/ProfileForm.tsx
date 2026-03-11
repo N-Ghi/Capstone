@@ -3,15 +3,9 @@ import { Check, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import MultiSelect from './common/MultiSelect';
 import type { SelectOption } from './common/MultiSelect';
-import { getLanguages, getPaymentMethods, getTravelPreferences } from '../services/choiceService';
+import { getLanguages, getPaymentMethods, getTravelPreferences, getMobileProviders } from '../services/choiceService';
 import { Roles, type Role } from '../@types/auth.types';
-import type {
-  TouristProfile,
-  GuideProfile,
-  AnyProfile,
-  UpdateTouristProfileData,
-  UpdateGuideProfileData,
-} from '../@types/profile.types';
+import type { TouristProfile, GuideProfile, AnyProfile, UpdateTouristProfileData, UpdateGuideProfileData, } from '../@types/profile.types';
 import styles from './ProfileForm.module.css';
 import { getApiErrorMessage } from '../utils/errorUtils';
 import axios from 'axios';
@@ -27,12 +21,14 @@ const ProfileForm: React.FC<Props> = ({ role, profile, onSave }) => {
 
   const [languageOptions,   setLanguageOptions]   = useState<SelectOption[]>([]);
   const [paymentOptions,    setPaymentOptions]    = useState<SelectOption[]>([]);
-  const [preferenceOptions, setPreferenceOptions] = useState<SelectOption[]>([]);
+  const [payoutOptions,    setPayoutOptions]    = useState<SelectOption[]>([]);
+  
   const [optionsLoading,    setOptionsLoading]    = useState(true);
 
-  const [name,           setName]           = useState('');
+  const [phone_number,           setNumber]           = useState('');
   const [bio,            setBio]            = useState('');
   const [languages,      setLanguages]      = useState<string[]>([]);
+  const [payoutProvider, setPayoutProvider] = useState<string | null>(null);
   const [paymentMethods, setPaymentMethods] = useState<string[]>([]);
   const [preferences,    setPreferences]    = useState<string[]>([]);
 
@@ -43,29 +39,30 @@ const ProfileForm: React.FC<Props> = ({ role, profile, onSave }) => {
   useEffect(() => {
     (async () => {
       try {
-        const [langs, payments, prefs] = await Promise.all([
+        const [langs, payments, prefs, mobile] = await Promise.all([
           getLanguages(),
           getPaymentMethods(),
           getTravelPreferences(),
+          getMobileProviders(),
         ]);
         setLanguageOptions(langs ?? []);
         setPaymentOptions(payments ?? []);
-        setPreferenceOptions(prefs ?? []);
+        setPreferences(prefs ?? [])
+        setPayoutOptions(mobile ?? [])
 
         if (profile) {
           if (role === Roles.Tourist) {
             const p = profile as TouristProfile;
             setLanguages(p.languages ?? []);
             setPaymentMethods(p.payment_methods ?? []);
-            setPreferences(p.travel_preferences ?? []);
+            setPreferences(p.travel_preferences ?? [])
           }
           if (role === Roles.Guide) {
             const p = profile as GuideProfile;
-            setName(p.name ?? '');
+            setNumber(p.phone_number ?? '');
             setBio(p.bio ?? '');
             setLanguages(p.languages ?? []);
-            setPaymentMethods(p.payment_methods ?? []);
-            setPreferences(p.expertise ?? []);
+            setPayoutProvider(p.payout_provider ?? '');
           }
         }
       } catch {
@@ -89,11 +86,10 @@ const ProfileForm: React.FC<Props> = ({ role, profile, onSave }) => {
         } satisfies UpdateTouristProfileData);
       } else if (role === Roles.Guide) {
         await onSave({
-          name,
+          phone_number,
           bio,
           languages,
-          payment_methods: paymentMethods,
-          expertise: preferences,
+          payout_provider: payoutProvider,
         } satisfies UpdateGuideProfileData);
       }
       setSaved(true);
@@ -112,6 +108,8 @@ const ProfileForm: React.FC<Props> = ({ role, profile, onSave }) => {
         }
       }
       setError(getApiErrorMessage(err, t('profileForm.errorSave')));
+    } finally {
+      setSaving(false);
     }
   };
   const BIO_MAX = 1000;
@@ -122,20 +120,6 @@ const ProfileForm: React.FC<Props> = ({ role, profile, onSave }) => {
 
       {role === Roles.Guide && (
         <>
-          <div className={styles.field}>
-            <label className={styles.label} htmlFor="pf-name">
-              {t('profileForm.displayName')}
-            </label>
-            <input
-              id="pf-name"
-              className={styles.input}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder={t('profileForm.displayNamePlaceholder')}
-              required
-            />
-          </div>
-
           <div className={styles.field}>
             <label className={styles.label} htmlFor="pf-bio">
               {t('profileForm.bio')}
@@ -153,6 +137,28 @@ const ProfileForm: React.FC<Props> = ({ role, profile, onSave }) => {
               maxLength={BIO_MAX}
             />
           </div>
+          <MultiSelect
+            label={t('profileForm.payoutProvider')}
+            options={payoutOptions}
+           selected={payoutProvider ? [payoutProvider] : []}
+            onChange={(selected) => setPayoutProvider(selected[0] ?? null)}
+            placeholder={t('profileForm.payoutProviderPlaceholder')}
+            loading={optionsLoading}
+            disabled={optionsLoading}
+          />
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="pf-phone_number">
+              {t('profileForm.displayName')}
+            </label>
+            <input
+              id="pf-phone_number"
+              className={styles.input}
+              value={phone_number}
+              onChange={(e) => setNumber(e.target.value)}
+              placeholder={t('profileForm.displayNamePlaceholder')}
+              required
+            />
+          </div>
         </>
       )}
 
@@ -168,29 +174,17 @@ const ProfileForm: React.FC<Props> = ({ role, profile, onSave }) => {
         disabled={optionsLoading}
       />
 
-      <MultiSelect
-        label={role === Roles.Guide
-          ? t('profileForm.expertise')
-          : t('profileForm.travelPreferences')}
-        options={preferenceOptions}
-        selected={preferences}
-        onChange={setPreferences}
-        placeholder={role === Roles.Guide
-          ? t('profileForm.expertisePlaceholder')
-          : t('profileForm.travelPreferencesPlaceholder')}
-        loading={optionsLoading}
-        disabled={optionsLoading}
-      />
-
-      <MultiSelect
-        label={t('profileForm.paymentMethods')}
-        options={paymentOptions}
-        selected={paymentMethods}
-        onChange={setPaymentMethods}
-        placeholder={t('profileForm.paymentMethodsPlaceholder')}
-        loading={optionsLoading}
-        disabled={optionsLoading}
-      />
+      {role === Roles.Tourist && (
+        <MultiSelect
+          label={t('profileForm.paymentMethods')}
+          options={paymentOptions}
+          selected={paymentMethods}
+          onChange={setPaymentMethods}
+          placeholder={t('profileForm.paymentMethodsPlaceholder')}
+          loading={optionsLoading}
+          disabled={optionsLoading}
+        />
+      )}
 
       {error && <p className={styles.error}>{error}</p>}
 

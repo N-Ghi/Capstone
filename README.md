@@ -17,12 +17,14 @@ A web-based platform that connects tourists with local tourism operators in Rwan
 - [Project Structure](#project-structure)
 - [License](#license)
 - [Video](#video)
+- [Repo Zip File](#repo-zip-file)
 
 ## 📖 Project Overview
 
 Urugendo is a comprehensive tourism platform that bridges the gap between international tourists and local Rwandan tourism operators. The platform leverages modern web technologies to provide a seamless booking and experience management system.
 
 **Key Features:**
+
 - User authentication with JWT tokens
 - Experience browsing, booking, and review system
 - Real-time calendar availability
@@ -35,6 +37,7 @@ Urugendo is a comprehensive tourism platform that bridges the gap between intern
 ## 🛠 Tech Stack
 
 ### Backend
+
 - **Framework:** Django 6.0.2 with Django REST Framework 3.16.1
 - **Authentication:** JWT (djangorestframework-simplejwt)
 - **Database:** PostgreSQL with psycopg2
@@ -43,6 +46,7 @@ Urugendo is a comprehensive tourism platform that bridges the gap between intern
 - **Additional:** Python 3.x, pip
 
 ### Frontend
+
 - **Framework:** React 19.2.0 with TypeScript 5.9.3
 - **Build Tool:** Vite 7.2.4
 - **Styling:** CSS, React Bootstrap
@@ -54,6 +58,7 @@ Urugendo is a comprehensive tourism platform that bridges the gap between intern
 - **UI Components:** Lucide React Icons
 
 ### Infrastructure
+
 - PostgreSQL Database
 - Supabase (Backend-as-a-Service)
 - Google Cloud APIs
@@ -64,12 +69,14 @@ Urugendo is a comprehensive tourism platform that bridges the gap between intern
 Before you begin, ensure you have the following installed on your system:
 
 ### Required
+
 - **Python 3.8+** - [Download](https://www.python.org/downloads/)
 - **Node.js 18+** and **npm 9+** - [Download](https://nodejs.org/)
 - **PostgreSQL 12+** - [Download](https://www.postgresql.org/download/)
 - **Git** - [Download](https://git-scm.com/)
 
 ### Optional but Recommended
+
 - **Visual Studio Code** - Code editor
 - **Postman** - For API testing
 - **pgAdmin** - PostgreSQL management tool
@@ -104,16 +111,19 @@ python -m venv .venv
 #### Step 3: Activate Virtual Environment
 
 **On Windows (PowerShell):**
+
 ```bash
 .\.venv\Scripts\Activate.ps1
 ```
 
 **On Windows (Command Prompt):**
+
 ```bash
 .venv\Scripts\activate.bat
 ```
 
 **On macOS/Linux:**
+
 ```bash
 source .venv/bin/activate
 ```
@@ -129,6 +139,7 @@ This will install all required Python packages including Django, DRF, Supabase c
 #### Step 5: Database Configuration
 
 Ensure PostgreSQL is running on your system. The default configuration expects:
+
 - **Host:** localhost
 - **Port:** 5432
 - **Database:** Urugendo
@@ -145,7 +156,7 @@ psql -U postgres -c "CREATE DATABASE Urugendo;"
 
 The `.env` file is already present in the backend directory. It contains:
 
-```
+```text
 # Django settings
 DEBUG = True
 FRONTEND_URL = http://localhost:5173
@@ -178,6 +189,7 @@ python manage.py migrate
 ```
 
 This command:
+
 - Creates all necessary database tables
 - Sets up the database schema
 - Runs all migration files
@@ -189,6 +201,7 @@ python manage.py createsuperuser
 ```
 
 Follow the prompts to create an admin account. You'll need:
+
 - Username
 - Email
 - Password
@@ -247,12 +260,14 @@ python manage.py runserver
 The backend will start on `http://localhost:8000/`
 
 You'll see output similar to:
-```
+
+```text
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CTRL-BREAK.
 ```
 
 **Available Backend URLs:**
+
 - API Root: `http://localhost:8000/`
 - Admin Panel: `http://localhost:8000/admin/`
 - API Documentation: Check your urls.py configuration
@@ -272,7 +287,8 @@ npm run dev
 The frontend will start on `http://localhost:5173/`
 
 You'll see output similar to:
-```
+
+```text
 VITE v7.2.4  ready in 234 ms
 
 ➜  Local:   http://localhost:5173/
@@ -292,44 +308,44 @@ The backend uses the following environment variables (defined in `.env`):
 
 ### Django Configuration
 
-| Variable | Purpose | Default |
-|----------|---------|---------|
-| `DEBUG` | Debug mode | `True` |
-| `SECRET_KEY` | Django secret key | Pre-configured |
+| Variable       | Purpose               | Default                 |
+|----------------|-----------------------|-------------------------|
+| `DEBUG`        | Debug mode            | `True`                  |
+| `SECRET_KEY`   | Django secret key     | Pre-configured          |
 | `FRONTEND_URL` | Frontend URL for CORS | `http://localhost:5173` |
 
 ### Database Configuration
 
-| Variable | Purpose | Default |
-|----------|---------|---------|
-| `DB_NAME` | Database name | `Urugendo` |
-| `DB_USER` | Database user | `postgres` |
+| Variable      | Purpose           | Default        |
+|---------------|-------------------|----------------|
+| `DB_NAME`     | Database name     | `Urugendo`     |
+| `DB_USER`     | Database user     | `postgres`     |
 | `DB_PASSWORD` | Database password | Pre-configured |
-| `DB_HOST` | Database host | `localhost` |
-| `DB_PORT` | Database port | `5432` |
+| `DB_HOST`     | Database host     | `localhost`    |
+| `DB_PORT`     | Database port     | `5432`         |
 
 ### Authentication
 
-| Variable | Purpose |
-|----------|---------|
-| `JWT_SECRET_KEY` | Secret key for JWT tokens |
-| `JWT_ALGORITHM` | JWT algorithm |
-| `JWT_ACCESS_TOKEN_LIFETIME` | Token validity (minutes) |
+| Variable                     | Purpose                       |
+|------------------------------|-------------------------------|
+| `JWT_SECRET_KEY`             | Secret key for JWT tokens     |
+| `JWT_ALGORITHM`              | JWT algorithm                 |
+| `JWT_ACCESS_TOKEN_LIFETIME`  | Token validity (minutes)      |
 | `JWT_REFRESH_TOKEN_LIFETIME` | Refresh token validity (days) |
 
 ### Third-party APIs
 
-| Variable | Purpose |
-|----------|---------|
-| `SUPABASE_URL` | Supabase project URL |
-| `SUPABASE_KEY` | Supabase API key |
-| `GOOGLE_MAPS_API_KEY` | Google Maps API key |
-| `GOOGLE_CLIENT_ID` | Gmail OAuth client ID |
-| `GOOGLE_CLIENT_SECRET` | Gmail OAuth client secret |
-| `GOOGLE_CALENDAR_CLIENT_ID` | Google Calendar OAuth ID |
-| `GOOGLE_CALENDAR_REDIRECT_URI` | Calendar OAuth redirect |
-| `AZURE_TRANSLATOR_KEY` | Azure Translator API key |
-| `AZURE_TRANSLATOR_REGION` | Azure region |
+| Variable                       | Purpose                   |
+|--------------------------------|---------------------------|
+| `SUPABASE_URL`                 | Supabase project URL      |
+| `SUPABASE_KEY`                 | Supabase API key          |
+| `GOOGLE_MAPS_API_KEY`          | Google Maps API key       |
+| `GOOGLE_CLIENT_ID`             | Gmail OAuth client ID     |
+| `GOOGLE_CLIENT_SECRET`         | Gmail OAuth client secret |
+| `GOOGLE_CALENDAR_CLIENT_ID`    | Google Calendar OAuth ID  |
+| `GOOGLE_CALENDAR_REDIRECT_URI` | Calendar OAuth redirect   |
+| `AZURE_TRANSLATOR_KEY`         | Azure Translator API key  |
+| `AZURE_TRANSLATOR_REGION`      | Azure region              |
 
 ## 🗄 Database Setup
 
@@ -489,6 +505,7 @@ Capstone/
 │   ├── requirements.txt        # Python dependencies
 │   └── Urugendo/              # Django project root
 │       ├── manage.py          # Django management script
+│       ├── scheduler.py       # Django scheduler for auto updates
 │       ├── Booking/           # Booking management app
 │       ├── Choices/           # Choices/options app
 │       ├── Experiences/       # Experience listings app
@@ -578,10 +595,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🔗 Additional Resources
 
 - **Figma Design:** [Rwanda Tourism Discovery App](https://www.figma.com/make/LeGLKBlq53YchNMJMscDuC/Tunisia-Tourism-Discovery-App--Community-)
-- **Django Documentation:** https://docs.djangoproject.com/
-- **React Documentation:** https://react.dev/
-- **Vite Documentation:** https://vite.dev/
-- **PostgreSQL Documentation:** https://www.postgresql.org/docs/
+- **Django Documentation:** <https://docs.djangoproject.com/>
+- **React Documentation:** <https://react.dev/>
+- **Vite Documentation:** <https://vite.dev/>
+- **PostgreSQL Documentation:** <https://www.postgresql.org/docs/>
 
 ## 📞 Support
 
@@ -596,6 +613,10 @@ For issues or questions:
 ## Video
 
 Link to the video: [See video](https://drive.google.com/file/d/1ABf9yYpko9BhnEIvtihVngv9ChbBwcrU/view?usp=sharing)
+
+## Repo Zip File
+
+The zip file for final submission attempt two. [See File](documents\Capstone.zip)
 
 ---
 

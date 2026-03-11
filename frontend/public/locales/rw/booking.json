@@ -19,7 +19,8 @@
       "confirmed": "Byemejwe",
       "pending": "Birategereje",
       "cancelled": "Byahagaritswe",
-      "completed": "Byararangiye"
+      "completed": "Byarabaye",
+      "expired": "Byarenze igihe"
     },
     "card": {
       "view": "Reba",

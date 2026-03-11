@@ -22,6 +22,7 @@
     "paymentMethods": "Uburyo bwo kwishyura",
     "experiences": "Ibitemberwa",
     "noExperiences": "Nta bitemberwa",
+    "back": "Subira inyuma",
     "noBio": "Ntabijyanye nawe",
     "errors": {
       "loadUser": "Kureba imyirondoro biranze.",
@@ -43,8 +44,8 @@
     "saveChanges": "Emeza Impinduka"
   },
   "profileForm": {
-    "displayName": "Izina rikuranga",
-    "displayNamePlaceholder": "Izina rikuranga",
+    "displayName": "Nimero wishyurwaho",
+    "displayNamePlaceholder": "078XXXXXXXX",
     "bio": "Ubusobanuro",
     "bioPlaceholder": "Bwira abakerarugendo ibijyanye nawe...",
     "languages": "Indimi",
