@@ -27,7 +27,7 @@ const CommonProfileComponent: React.FC = () => {
   const [guideProfile, setGuideProfile] = useState<GuideProfile | null>(null);
   const [experiences, setExperiences] = useState<ExperienceListItem[]>([]);
   const [languagesMap, setLanguagesMap] = useState<Record<string, string>>({});
-  const [paymentMethodsMap, setPaymentMethodsMap] = useState<Record<string, string>>({});
+  const [_paymentMethodsMap, setPaymentMethodsMap] = useState<Record<string, string>>({});
   const [loadingUser, setLoadingUser] = useState(true);
   const [loadingProfile, setLoadingProfile] = useState(true);
   const [loadingExperiences, setLoadingExperiences] = useState(true);
@@ -40,8 +40,8 @@ const CommonProfileComponent: React.FC = () => {
     (async () => {
       setLoadingUser(true);
       try {
-        const user = await getUserById(id);
-        if (!cancelled) setUser(user);
+        const fetched = await getUserById(id);
+        if (!cancelled) setUser(fetched);
       } catch (err) {
         console.error(err);
         if (!cancelled) setUserError(t('errors.loadUser'));
@@ -59,7 +59,8 @@ const CommonProfileComponent: React.FC = () => {
       setLoadingProfile(true);
       try {
         const data = await getProfileById(id);
-        if (!cancelled && 'expertise' in data) setGuideProfile(data as GuideProfile);
+        console.log('Raw profile data:', data);
+        if (!cancelled && 'payout_provider' in data) setGuideProfile(data as GuideProfile);
       } catch (err: unknown) {
         console.error(err);
         if (!cancelled && !(axios.isAxiosError(err) && err.response?.status === 404))
@@ -177,6 +178,15 @@ const CommonProfileComponent: React.FC = () => {
                       {languageNames.map((l) => (
                         <span key={l} className={styles.tag}>{l}</span>
                       ))}
+                    </div>
+                  </div>
+                )}
+
+                {guideProfile.phone_number && (
+                  <div className={styles.tagGroup}>
+                    <span className={styles.tagLabel}>{t('profile.phone')}</span>
+                    <div className={styles.tagRow}>
+                      <span className={styles.tag}>{guideProfile.phone_number}</span>
                     </div>
                   </div>
                 )}

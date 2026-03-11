@@ -61,7 +61,8 @@
     "saved": "Saved!",
     "saveProfile": "Save Profile",
     "errorOptions": "Failed to load form options.",
-    "errorSave": "Failed to save profile."
+    "errorSave": "Failed to save profile.",
+    "payoutProvider": "Payout Provider"
   },
   "calendar": {
     "loading": "Loading...",
