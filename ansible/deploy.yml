@@ -98,7 +98,7 @@
 
     - name: Run migrations
       command: >
-        docker exec urugendo-backend python manage.py migrate --noinput
+        docker exec urugendo-backend python Urugendo/manage.py migrate --noinput
       register: migrate_result
       retries: 3
       delay: 5
