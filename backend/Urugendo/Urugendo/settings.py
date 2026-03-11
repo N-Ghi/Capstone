@@ -17,8 +17,11 @@ from datetime import timedelta
 
 load_dotenv()  # Load environment variables from .env file
 
+<<<<<<< HEAD
 DEV = os.getenv('DEV')
 
+=======
+>>>>>>> 8d95f5a241a8917c32d895b97ecf9cab96ab2d23
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -44,7 +47,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'rest_framework',
+<<<<<<< HEAD
     'django_q',
+=======
+>>>>>>> 8d95f5a241a8917c32d895b97ecf9cab96ab2d23
     'corsheaders',
     'Users',
     'Profile',
@@ -56,6 +62,7 @@ INSTALLED_APPS = [
     'Pictures',
     'Utils',
     'Location',
+<<<<<<< HEAD
     'System',
 ]
 
@@ -71,6 +78,10 @@ Q_CLUSTER = {
     'catch_up': False,
 }
 
+=======
+]
+
+>>>>>>> 8d95f5a241a8917c32d895b97ecf9cab96ab2d23
 AUTH_USER_MODEL = 'Users.User'  # Custom user model
 
 REST_FRAMEWORK = {
@@ -107,10 +118,14 @@ MIDDLEWARE = [
 ]
 
 # Frontend URL for CORS and email links
+<<<<<<< HEAD
 if DEV == 'development':
     FRONTEND_URL = os.getenv('FRONTEND_URL_LOCAL')
 else:
     FRONTEND_URL = os.getenv('FRONTEND_URL')
+=======
+FRONTEND_URL = os.getenv('FRONTEND_URL')
+>>>>>>> 8d95f5a241a8917c32d895b97ecf9cab96ab2d23
 
 # Google - Gmail
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
@@ -163,6 +178,7 @@ PASSWORD_RESET_TIMEOUT = 3600  # 1 hour in seconds
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+<<<<<<< HEAD
 
 if DEV == 'development':
     DATABASES = {
@@ -186,6 +202,18 @@ else:
             'PASSWORD': os.getenv('AZURE_DB_PASSWORD'),
         }
     }
+=======
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': os.getenv('AZURE_DB_HOST'),
+        'PORT': os.getenv('AZURE_DB_PORT'),
+        'NAME': os.getenv('AZURE_DB_NAME'),
+        'USER': os.getenv('AZURE_DB_USER'),
+        'PASSWORD': os.getenv('AZURE_DB_PASSWORD'),
+    }
+}
+>>>>>>> 8d95f5a241a8917c32d895b97ecf9cab96ab2d23
 
 
 # Password validation
