@@ -110,7 +110,6 @@ const CommonProfileComponent: React.FC = () => {
   );
 
   const languageNames = guideProfile?.languages?.map((lid) => languagesMap[lid]).filter(Boolean) || [];
-  const paymentNames = guideProfile?.payment_methods?.map((pid) => paymentMethodsMap[pid]).filter(Boolean) || [];
 
   const avatarInitials = user ? getInitials(user.first_name, user.last_name, user.username) : "…";
   const avatarBg = id ? getAvatarColor(id) : "#bbb";
@@ -182,16 +181,6 @@ const CommonProfileComponent: React.FC = () => {
                   </div>
                 )}
 
-                {paymentNames.length > 0 && (
-                  <div className={styles.tagGroup}>
-                    <span className={styles.tagLabel}>{t('profile.paymentMethods')}</span>
-                    <div className={styles.tagRow}>
-                      {paymentNames.map((p) => (
-                        <span key={p} className={styles.tag}>{p}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </>
             ) : (
               !loadingProfile && (
