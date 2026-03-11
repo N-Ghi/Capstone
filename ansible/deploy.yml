@@ -105,7 +105,7 @@
 
     - name: Create superuser
       command: >
-        docker exec urugendo-backend python manage.py shell -c
+        docker exec urugendo-backend python Urugendo/manage.py shell -c
         "from Users.models import User;
         User.objects.filter(username='{{ superuser_username }}').exists() or
         User.objects.create_superuser(
@@ -117,7 +117,7 @@
 
     - name: Set up django-q2 schedules
       command: >
-        docker exec urugendo-backend python manage.py shell -c
+        docker exec urugendo-backend python Urugendo/manage.py shell -c
         "from scheduler import setup_schedules; setup_schedules()"
 
     - name: Wait for backend to be healthy
