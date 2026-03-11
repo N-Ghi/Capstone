@@ -621,7 +621,7 @@ Link to the video: [See video](https://drive.google.com/file/d/1ABf9yYpko9BhnEIv
 
 ## Repo Zip File
 
-The zip file for final submission attempt two. [See File](documents\Capstone.zip)
+The zip file for final submission attempt two. [See File](https://drive.google.com/file/d/1QV8LzYvaEaMP6dXQMDF-oTUoQtlLap14/view?usp=sharing)
 
 ---
 
