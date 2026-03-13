@@ -59,7 +59,6 @@ class Payout(models.Model):
 
     account_name = models.CharField(max_length=100, blank=True, null=True)
 
-
     # Third-party provider integration
     provider = models.ForeignKey(MobileProvider, on_delete=models.PROTECT, related_name='payout_providers', null=True, blank=True)
     

@@ -4,7 +4,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from Choices.models import PaymentMethod, TravelPreference, Language
 from Location.models import Location
-
 User = get_user_model()
 
 

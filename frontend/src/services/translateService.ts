@@ -29,10 +29,7 @@ export async function detectLanguage(text: string): Promise<string> {
 }
 
 // Translate
-export async function translateBatch(
-  texts: string[],
-  toLang: string,
-  fromLang?: string   // if omitted, Azure auto-detects per item
+export async function translateBatch( texts: string[], toLang: string, fromLang?: string
 ): Promise<string[]> {
   if (!texts.length) return texts;
 
@@ -75,4 +72,9 @@ export async function translateBatch(
   });
 
   return results;
+}
+
+export function clearCaches() {
+  translateCache.clear();
+  detectCache.clear();
 }

@@ -175,6 +175,17 @@ if DEV == 'development':
             'PASSWORD': os.getenv('DB_PASSWORD'),
         }
     }
+elif DEV == 'testing':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': os.getenv('DB_HOST'),
+            'PORT': os.getenv('DB_PORT'),
+            'NAME': os.getenv('DB_TEST_NAME'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASSWORD'),
+        }
+    }
 else:
     DATABASES = {
         'default': {
