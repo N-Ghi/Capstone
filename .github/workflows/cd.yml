@@ -128,8 +128,13 @@ jobs:
       - name: Test bastion connectivity
         run: ssh -v bastion "echo 'Bastion OK'"
 
+      - name: Check app VM from bastion
+        run: ssh bastion "nc -zv ${{ secrets.VM_HOST }} 22 2>&1 || echo 'Cannot reach app VM on port 22'"
+  
       - name: Test app VM connectivity
-        run: ssh app-vm "echo 'App VM OK'"
+        run: |
+          echo "Attempting to reach ${{ secrets.VM_HOST }} via bastion..."
+          ssh app-vm "echo 'App VM OK'"
 
       - name: Create Ansible inventory
         run: |
