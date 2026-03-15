@@ -100,10 +100,11 @@
       uri:
         url: "http://localhost:8000/"
         status_code: [200, 404]
+        timeout: 30
       register: backend_health
       until: backend_health.status in [200, 404]
-      retries: 15
-      delay: 5
+      retries: 20
+      delay: 15
       ignore_errors: yes
 
     - name: Create superuser
