@@ -71,7 +71,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.14'
+          python-version: '3.11'
 
       - name: Install Ansible
         run: pip install ansible
@@ -134,7 +134,13 @@ jobs:
       - name: Test app VM connectivity
         run: |
           echo "Attempting to reach ${{ secrets.VM_HOST }} via bastion..."
-          ssh app-vm "echo 'App VM OK'"
+          ssh -v -o ConnectTimeout=30 \
+            -o StrictHostKeyChecking=no \
+            -o PasswordAuthentication=no \
+            -i ~/.ssh/id_rsa \
+            -J ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }} \
+            ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} \
+            "echo 'App VM OK'"
 
       - name: Create Ansible inventory
         run: |
