@@ -93,8 +93,7 @@ def login(request):
 
     try:
         # Try email, then username
-        user = User.objects.filter(email=identifier).first() or \
-               User.objects.filter(username=identifier).first()
+        user = User.objects.filter(email=identifier).first() or User.objects.filter(username=identifier).first()
 
         if not user:
             raise User.DoesNotExist

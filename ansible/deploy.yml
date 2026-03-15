@@ -95,17 +95,20 @@
       command: docker compose -f {{ app_dir }}/docker-compose.yml up -d
       args:
         chdir: "{{ app_dir }}"
-
-    - name: Run migrations
-      command: >
-        docker exec urugendo-backend python Urugendo/manage.py migrate --noinput
-      register: migrate_result
-      retries: 3
+ 
+    - name: Wait for backend to be healthy
+      uri:
+        url: "http://localhost:8000/"
+        status_code: [200, 404]
+      register: backend_health
+      until: backend_health.status in [200, 404]
+      retries: 15
       delay: 5
+      ignore_errors: yes
 
     - name: Create superuser
       command: >
-        docker exec urugendo-backend python Urugendo/manage.py shell -c
+        docker exec urugendo-backend python /app/Urugendo/manage.py shell -c
         "from Users.models import User;
         User.objects.filter(username='{{ superuser_username }}').exists() or
         User.objects.create_superuser(
@@ -117,18 +120,9 @@
 
     - name: Set up django-q2 schedules
       command: >
-        docker exec urugendo-backend python Urugendo/manage.py shell -c
+        docker exec urugendo-backend python /app/Urugendo/manage.py shell -c
         "from scheduler import setup_schedules; setup_schedules()"
 
-    - name: Wait for backend to be healthy
-      uri:
-        url: "http://localhost:8000/"
-        status_code: [200, 404]
-      register: backend_health
-      until: backend_health.status in [200, 404]
-      retries: 15
-      delay: 5
-      ignore_errors: yes
 
     - name: Wait for frontend to be healthy
       uri:

@@ -67,12 +67,6 @@
         state: started
         enabled: true
 
-    - name: Start and enable Docker
-      systemd:
-        name: docker
-        state: started
-        enabled: true
-
     - name: Add azureuser to docker group
       user:
         name: azureuser

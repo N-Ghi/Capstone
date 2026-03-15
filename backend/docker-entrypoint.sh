@@ -10,11 +10,16 @@ done
 
 echo "PostgreSQL is ready!"
 
-echo "Running database migrations..."
-python /app/Urugendo/manage.py migrate --noinput
+if [ "$1" = "gunicorn" ]; then
+  echo "Running database migrations..."
+  python /app/Urugendo/manage.py migrate --noinput
 
-echo "Seeding database..."
-python /app/Urugendo/manage.py seed_reference_data
+  echo "Collecting static files..."
+  python /app/Urugendo/manage.py collectstatic --noinput
+
+  echo "Seeding database..."
+  python /app/Urugendo/manage.py seed_reference_data
+fi
 
 echo "Starting application..."
 exec "$@"
