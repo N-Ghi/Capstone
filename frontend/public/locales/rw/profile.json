@@ -62,6 +62,7 @@
     "saveProfile": "Emeza Imyirondoro",
     "errorOptions": "Kureba amahitamo byanze. Ongera ugerageze.",
     "errorSave": "Kwemeza imyirondoro byanze.",
-    "payoutProvider": "Umufatabuguzi wo kwishyurirwaho"
+    "payoutProvider": "Umufatabuguzi wo kwishyurirwaho",
+    "payoutProviderPlaceholder": "Hitamo Umufatabuguzi..."
   }
 }

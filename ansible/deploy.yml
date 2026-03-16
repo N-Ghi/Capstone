@@ -10,6 +10,8 @@
     registry_password: "{{ registry_password }}"
     image_name: "{{ image_name }}"
     image_tag: "{{ image_tag | default('latest') }}"
+    deploy_backend: "{{ deploy_backend | default('true') }}"
+    deploy_frontend: "{{ deploy_frontend | default('true') }}"
 
   tasks:
     - name: Ensure app directory exists
@@ -32,6 +34,7 @@
         mode: '0644'
 
     - name: Write backend env file
+      when: deploy_backend | bool
       copy:
         content: |
           SECRET_KEY={{ secret_key }}
@@ -66,6 +69,7 @@
       no_log: true
 
     - name: Write frontend env file
+      when: deploy_frontend | bool
       copy:
         content: |
           VITE_API_BASE_URL={{ vite_api_base_url }}
@@ -80,23 +84,43 @@
       no_log: true
 
     - name: Pull backend image
+      when: deploy_backend | bool
       command: docker pull {{ registry_url }}/{{ image_name }}-backend:{{ image_tag }}
 
     - name: Pull frontend image
+      when: deploy_frontend | bool
       command: docker pull {{ registry_url }}/{{ image_name }}-frontend:{{ image_tag }}
 
-    - name: Stop old containers
-      command: docker compose -f {{ app_dir }}/docker-compose.yml down
+    # Selective restart: only restart the changed service(s) without
+    # taking down the other. Falls back to a full restart if both changed.
+    - name: Restart backend container only
+      when: (deploy_backend | bool) and not (deploy_frontend | bool)
+      command: docker compose -f {{ app_dir }}/docker-compose.yml up -d --no-deps backend
       args:
         chdir: "{{ app_dir }}"
-      ignore_errors: yes
 
-    - name: Start containers
-      command: docker compose -f {{ app_dir }}/docker-compose.yml up -d
+    - name: Restart frontend container only
+      when: (deploy_frontend | bool) and not (deploy_backend | bool)
+      command: docker compose -f {{ app_dir }}/docker-compose.yml up -d --no-deps frontend
       args:
         chdir: "{{ app_dir }}"
- 
+
+    - name: Full restart (both changed)
+      when: (deploy_backend | bool) and (deploy_frontend | bool)
+      block:
+        - name: Stop all containers
+          command: docker compose -f {{ app_dir }}/docker-compose.yml down
+          args:
+            chdir: "{{ app_dir }}"
+          ignore_errors: yes
+
+        - name: Start all containers
+          command: docker compose -f {{ app_dir }}/docker-compose.yml up -d
+          args:
+            chdir: "{{ app_dir }}"
+
     - name: Wait for backend to be healthy
+      when: deploy_backend | bool
       uri:
         url: "http://localhost:8000/"
         status_code: [200, 404]
@@ -108,6 +132,7 @@
       ignore_errors: yes
 
     - name: Create superuser
+      when: deploy_backend | bool
       command: >
         docker exec urugendo-backend python /app/Urugendo/manage.py shell -c
         "from Users.models import User;
@@ -120,12 +145,13 @@
       no_log: true
 
     - name: Set up django-q2 schedules
+      when: deploy_backend | bool
       command: >
         docker exec urugendo-backend python /app/Urugendo/manage.py shell -c
         "from scheduler import setup_schedules; setup_schedules()"
 
-
     - name: Wait for frontend to be healthy
+      when: deploy_frontend | bool
       uri:
         url: "http://localhost:5173/"
         status_code: 200
@@ -150,9 +176,10 @@
       debug:
         msg:
           - "Deployment complete!"
+          - "Components deployed: {{ 'backend ' if deploy_backend | bool else '' }}{{ 'frontend' if deploy_frontend | bool else '' }}"
           - "{{ container_status.stdout_lines }}"
-          - "Backend: {{ 'OK' if backend_health.status in [200, 404] else 'FAILED' }}"
-          - "Frontend: {{ 'OK' if frontend_health.status == 200 else 'FAILED' }}"
+          - "Backend: {{ 'OK' if (not deploy_backend | bool) else ('OK' if backend_health.status in [200, 404] else 'FAILED') }}"
+          - "Frontend: {{ 'OK' if (not deploy_frontend | bool) else ('OK' if frontend_health.status == 200 else 'FAILED') }}"
           - "App URL: https://urugendo-app.southafricanorth.cloudapp.azure.com"
 
     - name: Clean up old images

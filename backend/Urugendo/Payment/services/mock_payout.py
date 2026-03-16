@@ -5,11 +5,11 @@ from Payment.models import Payout
 # Mock responses by mobile number
 PAYOUT_STATUS_MAP = {
     # MTN
-    "0780000001": "PENDING",
+    "0780000001": "FAILED",
     "0780000002": "PAID",
     "0780000003": "FAILED",
     # Airtel
-    "0730000001": "PENDING",
+    "0730000001": "FAILED",
     "0730000002": "PAID",
     "0730000003": "FAILED",
 }

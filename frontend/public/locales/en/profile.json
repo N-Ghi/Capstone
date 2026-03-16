@@ -62,7 +62,8 @@
     "saveProfile": "Save Profile",
     "errorOptions": "Failed to load form options.",
     "errorSave": "Failed to save profile.",
-    "payoutProvider": "Payout Provider"
+    "payoutProvider": "Payout Provider",
+    "payoutProviderPlaceholder": "Select your payout provider..."
   },
   "calendar": {
     "loading": "Loading...",

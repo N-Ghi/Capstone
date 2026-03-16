@@ -39,20 +39,24 @@ def create_payouts_for_completed_bookings():
 def process_pending_payouts():
     pending_status = PayoutStatus.objects.get(code='PENDING')
     processing_status = PayoutStatus.objects.get(code='PROCESSING')
+    failed_status = PayoutStatus.objects.get(code='FAILED')
 
     payouts = Payout.objects.filter(status=pending_status).select_related('guide')
-    profile = PayoutSerializer().get_guide_detail(payouts.first()) if payouts.exists() else None
-    print("Processing payouts for guide:", profile)
-    phone_number = profile.phone_number if profile else None
 
     for payout in payouts:
-        # Lock it immediately to prevent double processing
+        profile = PayoutSerializer().get_guide_detail(payout)
+        phone_number = profile.phone_number if profile else None
+
+        if not phone_number:
+            # Leave as PENDING until the guide adds a phone number
+            continue
+
+        # Only lock once we know we can actually process it
         payout.status = processing_status
         payout.save(update_fields=['status', 'updated_at'])
 
         try:
             MockPayoutService.process_payout(payout, phone_number)
         except Exception:
-            failed_status = PayoutStatus.objects.get(code='FAILED')
             payout.status = failed_status
             payout.save(update_fields=['status', 'updated_at'])
