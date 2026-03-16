@@ -23,7 +23,7 @@ def welcome(request):
 
 urlpatterns = [
     path('', welcome),
-    path('admin/', admin.site.urls),
+    path('django-admin/', admin.site.urls),
     path('users/', include('Users.urls')),
     path('profiles/', include('Profile.urls')),
     path('pictures/', include('Pictures.urls')),
