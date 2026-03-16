@@ -14,7 +14,7 @@ resource "azurerm_linux_virtual_machine" "private_vm" {
   name                            = var.vm_name
   resource_group_name             = var.resource_group_name
   location                        = var.location
-  size                            = "Standard_B1s"
+  size                            = "Standard_B2s"
   admin_username                  = var.admin_username
   disable_password_authentication = true # Require SSH keys (CKV_AZURE_149, CKV_AZURE_1, CKV_AZURE_178)
 

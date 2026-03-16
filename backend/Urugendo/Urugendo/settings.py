@@ -62,7 +62,7 @@ INSTALLED_APPS = [
 
 Q_CLUSTER = {
     'name': 'default',
-    'workers': 2,
+    'workers': 1,
     'recycle': 500,
     'timeout': 60,
     'retry': 120,

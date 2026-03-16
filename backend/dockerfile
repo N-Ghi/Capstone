@@ -23,4 +23,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
   CMD pg_isready -h $AZURE_DB_HOST -U $AZURE_DB_USER || exit 1
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "--chdir", "/app/Urugendo", "Urugendo.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "1", "--chdir", "/app/Urugendo", "Urugendo.wsgi:application"]
