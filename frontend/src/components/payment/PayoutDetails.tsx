@@ -126,14 +126,14 @@ const PayoutDetails: React.FC = () => {
                     {t('guide.payout.provider')}
                   </div>
                   <div className={styles.metaValue}>
-                    {payout.guide_profile.payout_provider.name ?? '—'}
+                    {payout.guide_profile?.payout_provider?.name ?? '—'}
                   </div>
                   <div className={styles.metaLabel}>
                     <PhoneIcon size={14} /> 
                     {t('guide.payout.phoneNumber')}
                   </div>
                   <div className={styles.metaValue}>
-                    {payout.guide_profile.phone_number?? '—'}
+                    {payout.guide_profile?.phone_number?? '—'}
                   </div>
                 </div>
               </div>
