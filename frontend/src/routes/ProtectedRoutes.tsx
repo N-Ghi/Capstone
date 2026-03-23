@@ -13,6 +13,7 @@ import BookingDetailsPage from "../pages/BookingDetailsPage";
 import CommonProfilePage from "../pages/CommonProfilePage";
 import PayoutsPage from "../pages/Payouts";
 import PayoutsDetailsPage from "../pages/PayoutDetailsPage";
+import AllUsersPage from "../pages/AllUsers";
 
 export const protectedRoutes = [
   {
@@ -20,6 +21,14 @@ export const protectedRoutes = [
     element: (
       <ProtectedRoute allowedRoles={[Roles.Admin]}>
         <AdminDashboardPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/users",
+    element: (
+      <ProtectedRoute allowedRoles={[Roles.Admin]}>
+        <AllUsersPage />
       </ProtectedRoute>
     ),
   },

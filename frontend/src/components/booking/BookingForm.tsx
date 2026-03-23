@@ -47,23 +47,44 @@ const flattenErrors = (obj: any): string => {
 const BookingForm: React.FC<Props> = ({ slotId, maxGuests = 20, onBook }) => {
   const { t } = useTranslation('booking');
 
-  const [guest,  setGuests] = useState(1);
+  const [guestInput, setGuestInput] = useState('1');
   const [saving, setSaving] = useState(false);
   const [saved,  setSaved]  = useState(false);
   const [error,  setError]  = useState<string | null>(null);
 
   useEffect(() => {
-    setGuests(1);
+    setGuestInput('1');
     setSaved(false);
     setError(null);
   }, [slotId]);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value;
+    // Allow empty string so the user can delete and retype
+    if (raw === '' || raw === '-') {
+      setGuestInput(raw);
+      return;
+    }
+    const num = Number(raw);
+    if (!isNaN(num)) {
+      // Clamp upper bound immediately; lower bound is deferred to onBlur
+      setGuestInput(String(Math.min(maxGuests, num)));
+    }
+  };
+
+  // Snap to valid range when the user leaves the field
+  const handleBlur = () => {
+    const clamped = Math.max(1, Math.min(maxGuests, Number(guestInput) || 1));
+    setGuestInput(String(clamped));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const guests = Math.max(1, Math.min(maxGuests, Number(guestInput) || 1));
     setSaving(true);
     setError(null);
     try {
-      await onBook({ slot_id: slotId, guests: guest });
+      await onBook({ slot_id: slotId, guests });
       setSaved(true);
       setTimeout(() => setSaved(false), 2500);
     } catch (err: any) {
@@ -85,10 +106,11 @@ const BookingForm: React.FC<Props> = ({ slotId, maxGuests = 20, onBook }) => {
             id="bf-guests"
             type="number"
             className={`${styles.input} ${error ? styles.inputError : ''}`}
-            value={guest}
+            value={guestInput}
             min={1}
             max={maxGuests}
-            onChange={(e) => setGuests(Math.max(1, Math.min(maxGuests, Number(e.target.value))))}
+            onChange={handleChange}
+            onBlur={handleBlur}
             required
           />
         </div>

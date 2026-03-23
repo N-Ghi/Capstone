@@ -1,12 +1,25 @@
-/**
- * Admin dashboard component; provides an overview of the application and its features,
-
- */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../common/Header';
-
+import { listUsers } from '../../services/userService';
 
 const AdminDashboard: React.FC = () => {
+
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const data = await listUsers();
+                console.log("Fetched users:", data);
+                setUsers(data);
+            } catch (error) {
+                console.error("Error fetching users:", error);
+            }
+        };
+        fetchUsers();
+    }, []);
+
+
     return (
         
         <div>

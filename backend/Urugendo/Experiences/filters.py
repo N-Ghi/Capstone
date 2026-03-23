@@ -18,7 +18,13 @@ class ExperienceFilter(django_filters.FilterSet):
         field_name='guide__id'
     )
 
+    # Filter by guide username
+    guide_username = django_filters.CharFilter(
+        field_name='guide__username',
+        lookup_expr='iexact'
+    )
+
 
     class Meta:
         model = Experience
-        fields = ['expertise', 'expertise_name', 'guide_id']
+        fields = ['expertise', 'expertise_name', 'guide_id', 'guide_username']

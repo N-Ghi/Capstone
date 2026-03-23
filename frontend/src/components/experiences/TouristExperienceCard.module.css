@@ -1,4 +1,4 @@
-/* ── Card shell ─────────────────────────────────────────────── */
+/* Card shell */
 .card {
   display: flex;
   flex-direction: column;          /* key: lets footer stick to bottom */
@@ -23,7 +23,7 @@
   outline-offset: 2px;
 }
 
-/* ── Photo strip ────────────────────────────────────────────── */
+/* Photo strip */
 .photoStrip {
   position: relative;
   width: 100%;
@@ -64,7 +64,7 @@
   backdrop-filter: blur(4px);
 }
 
-/* ── Status badge (overlaid on photo) ───────────────────────── */
+/* Status badge (overlaid on photo) */
 .statusBadge {
   position: absolute;
   top: 8px;
@@ -98,7 +98,7 @@
   flex-shrink: 0;
 }
 
-/* ── Card body ──────────────────────────────────────────────── */
+/* Card body */
 .cardBody {
   display: flex;
   flex-direction: column;
@@ -120,6 +120,25 @@
   overflow: hidden;
 }
 
+.ratingRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0;
+  font-size: 0.85rem;
+}
+
+.ratingCount {
+  color: #777;
+  font-size: 0.85rem;
+}
+
+.noReviews {
+  color: #999;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
 .cardDescription {
   margin: 0;
   font-size: 0.8125rem;
@@ -132,7 +151,7 @@
   overflow: hidden;
 }
 
-/* ── Meta row ───────────────────────────────────────────────── */
+/* Meta row */
 .cardMeta {
   display: flex;
   flex-wrap: wrap;
@@ -158,7 +177,7 @@
   max-width: 160px;
 }
 
-/* ── Card footer ────────────────────────────────────────────── */
+/* Card footer */
 .cardFooter {
   padding: 0.625rem 1rem 0.875rem;
   border-top: 1px solid var(--color-border, #f3f4f6);

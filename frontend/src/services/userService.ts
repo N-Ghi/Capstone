@@ -4,7 +4,7 @@ import type { User } from "../@types/auth.types";
 
 export const listUsers = async () => {
     // List all users
-    const response = await api.get("/users/all/");
+    const response = await api.get("/users/");
     return response.data;
 }
 

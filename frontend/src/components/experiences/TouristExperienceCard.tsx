@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { LocationIcon, DateIcon, PhotoCountIcon, NoPhotoIcon, ViewIcon, UsersIcon } from '../common/Icons';
 import type { ExperienceListItem } from '../../@types/experience.types';
 import styles from './TouristExperienceCard.module.css';
+import { Stars } from '../common/Stars';
 
 interface TouristExperienceCardProps {
   experience: ExperienceListItem;
@@ -18,7 +19,7 @@ const formatDate = (iso: string) =>
 
 const TouristExperienceCard: React.FC<TouristExperienceCardProps> = ({ experience, onView }) => {
   const { t } = useTranslation('experience');
-  const { id, title, description, photos, location, is_active, created_at, guide_name } = experience;
+  const { id, title, description, photos, location, is_active,  created_at, guide_name, average_rating, reviews_count } = experience;
   const firstPhoto = photos?.[0];
 
   return (
@@ -56,6 +57,16 @@ const TouristExperienceCard: React.FC<TouristExperienceCardProps> = ({ experienc
 
       <div className={styles.cardBody}>
         <h3 className={styles.cardTitle}>{title}</h3>
+        <div className={styles.ratingRow}>
+          {reviews_count > 0 ? (
+            <>
+              <Stars rating={Math.round(average_rating ?? 0)} size={14} />
+              <span className={styles.ratingCount}>({reviews_count})</span>
+            </>
+          ) : (
+            <span className={styles.noReviews}>No reviews yet</span>
+          )}
+        </div>
         <p className={styles.cardDescription}>{description}</p>
 
         <div className={styles.cardMeta}>

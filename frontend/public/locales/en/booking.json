@@ -56,6 +56,8 @@
     "currency": "RWF",
     "payNow": "Pay Now",
     "close": "Close",
+    "cancel": "Cancel Booking",
+    "confirmCancel": "Are you sure you want to cancel this booking?",
     "error": {
       "load": "Failed to load booking details.",
       "noPayment": "Payment not found."

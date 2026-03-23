@@ -15,11 +15,17 @@ from Utils.calendar import add_event
 from datetime import datetime
 from django.utils import timezone
 User = get_user_model()
+from django.db.models import Avg, Count
 
 
 class ExperienceViewSet(ModelViewSet):
-    queryset = Experience.objects.select_related( "guide", "location"
-    ).prefetch_related( "expertise", "languages", "payment_methods"
+    queryset = Experience.objects.select_related(
+        "guide", "location"
+    ).prefetch_related(
+        "expertise", "languages", "payment_methods"
+    ).annotate(
+        average_rating=Avg('experience_reviews__rating'),
+        reviews_count=Count('experience_reviews')
     ).filter(is_active=True).distinct()
 
     permission_classes = [IsAuthenticated]

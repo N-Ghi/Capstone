@@ -200,7 +200,6 @@
   color: #ffffff;
   border: none;
   border-radius: 7px;
-  font-family: 'DM Sans', sans-serif;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
@@ -210,6 +209,25 @@
   justify-content: center;
 }
 .payBtn:hover { opacity: 0.88; }
+
+.cancelBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 22px;
+  background: linear-gradient(135deg, #7b0616, #640a1f);
+  color: #ffffff;
+  border: none;
+  border-radius: 7px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(98, 127, 103, 0.25);
+  transition: opacity 0.15s;
+  width: 100%;
+  justify-content: center;
+}
+.cancelBtn:hover { opacity: 0.88; }
 
 /* Payment result */
 .paymentResult {

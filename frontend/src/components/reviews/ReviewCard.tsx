@@ -5,6 +5,7 @@ import { getUserById } from "../../services/userService";
 import styles from "./ReviewCard.module.css";
 import { useTranslation } from "react-i18next";
 import { getInitials, getAvatarColor } from "../../utils/avatar";
+import { useTranslatedData } from "../../hooks/useTranslatedData";
 
 
 interface ReviewCardProps {
@@ -41,6 +42,7 @@ function ReviewCard({ review, isOwn, onEdit }: ReviewCardProps) {
   const displayName = author?.first_name
     ? `${author.first_name} ${author.last_name ?? ""}`.trim()
     : author?.username ?? author?.email ?? t("card.unknownUser");
+
 
   return (
     <div className={`${styles.reviewCard} ${isOwn ? styles.reviewCardOwn : ""}`}>

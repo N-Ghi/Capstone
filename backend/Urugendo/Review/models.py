@@ -30,3 +30,6 @@ class Review(models.Model):
     
     def __str__(self):
         return f"Review {self.id} by {self.traveler} for {self.experience} - Rating: {self.rating if self.rating else 'N/A'}"
+    
+    def getRatingDisplay(self):
+        return dict(self._meta.get_field('rating').choices).get(self.rating, "N/A")

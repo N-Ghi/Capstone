@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { getBookingById } from '../../services/bookingService';
+import { getBookingById, deleteBooking } from '../../services/bookingService';
 import { submitPayment } from '../../services/paymentService';
 import type { CreateBookingResponse } from '../../@types/booking.types';
 import styles from './BookingDetails.module.css';
@@ -87,6 +87,18 @@ const BookingDetails: React.FC = () => {
     } finally {
       setPaymentLoading(false);
       setShowPaymentModal(false);
+    }
+  };
+
+  const handleCancelBooking = async () => {
+    if (!booking) return;
+    if (!window.confirm(t('bookingDetails.confirmCancel'))) return;
+
+    try {
+      await deleteBooking(booking.id);
+      navigate('/bookings');
+    } catch {
+      setError(t('bookingDetails.error.cancel'));
     }
   };
 
@@ -193,6 +205,15 @@ const BookingDetails: React.FC = () => {
                 <button className={styles.payBtn} onClick={() => setShowPaymentModal(true)}>
                   {t('bookingDetails.payNow')}
                 </button>
+              </>
+            )}
+
+            {booking.status === 'PENDING' && (
+              <>
+                <div className={styles.divider} />
+                  <button className={styles.cancelBtn} onClick={handleCancelBooking}>
+                    {t('bookingDetails.cancel')}
+                  </button>
               </>
             )}
 

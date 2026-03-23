@@ -29,7 +29,8 @@
       "loadProfile": "Failed to load profile information.",
       "noUser": "No user found.",
       "noProfile": "No guide profile found."
-    }
+    },
+    "phone": "Phone Number"
   },
   "userInfo": {
     "changePhoto": "Change photo",

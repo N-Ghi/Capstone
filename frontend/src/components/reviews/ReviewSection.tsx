@@ -9,6 +9,8 @@ import { Stars } from "../common/Stars";
 import PaginationControl from "../common/PaginationControl";
 import styles from "./ReviewSection.module.css";
 import { StarIcon } from "../common/Icons";
+import { useTranslatedData } from "../../hooks/useTranslatedData";
+
 
 interface ReviewSectionProps {
   experienceId: string;
@@ -61,6 +63,8 @@ export default function ReviewSection({ experienceId }: ReviewSectionProps) {
   useEffect(() => {
     fetchReviews(currentPage);
   }, [experienceId, fetchReviews]);
+
+  const { translated: translatedReviews, translating } = useTranslatedData(reviews, ['comment']);
 
   const handlePageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -127,7 +131,7 @@ export default function ReviewSection({ experienceId }: ReviewSectionProps) {
           <div className={styles.spinner} />
           <span className={styles.loadingText}>{t("section.loading")}</span>
         </div>
-      ) : reviews.length === 0 ? (
+      ) : translatedReviews.length === 0 ? (
         <div className={styles.empty}>
           <span className={styles.emptyIcon}>
             <StarIcon size={14}/>
@@ -137,7 +141,7 @@ export default function ReviewSection({ experienceId }: ReviewSectionProps) {
       ) : (
         <>
           <div className={styles.list}>
-            {reviews.map((review) => {
+            {translatedReviews.map((review) => {
               const isOwn = review.traveler === user?.id;
               const isEditing = editingId === review.id;
 

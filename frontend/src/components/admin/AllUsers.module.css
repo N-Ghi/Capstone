@@ -1,0 +1,174 @@
+/* Page Layout */
+.allusersPage {
+    min-height: 100vh;
+    background-color: #f8f9fb;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.allusersMain {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* Header Row */
+.allusersHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.allusersTitle {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+
+.allusersCount {
+    background-color: #e5e7eb;
+    color: #6b7280;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+}
+
+/* Loading / Error States */
+.allusersState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 4rem 0;
+    color: #6b7280;
+}
+
+.allusersError {
+    color: #dc2626;
+}
+
+.allusersSpinner {
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid #e5e7eb;
+    border-top-color: #4f46e5;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* User Grid */
+.allusersGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+/* User Card */
+.userCard {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    cursor: default;
+}
+
+.userCard:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+/* Avatar */
+.userCardAvatarWrap {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.userCardAvatar,
+.userCardAvatarFallback {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.userCardAvatarFallback {
+    background-color: #4f46e5;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.userCardStatus {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+}
+
+.active {
+    background-color: #22c55e;
+}
+
+.inactive {
+    background-color: #9ca3af;
+}
+
+/* Info */
+.userCardInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.userCardName {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 0.15rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.userCardUsername {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin: 0 0 0.15rem;
+}
+
+.userCardEmail {
+    font-size: 0.78rem;
+    color: #9ca3af;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Role Badge */
+.userCardRole {
+    flex-shrink: 0;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    background-color: #ede9fe;
+    color: #5b21b6;
+}

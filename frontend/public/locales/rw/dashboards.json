@@ -10,7 +10,8 @@
     "defaultName": "Umuyobozi",
     "logout": "Sohoka",
     "logoutError": "Gusohoka byanze. Gerageza mukanya.",
-    "payouts": "Ibizishurwa"
+    "payouts": "Ibizishurwa",
+    "language": "Ururimi"
   },
   "guide": {
     "stats": {

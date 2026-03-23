@@ -11,7 +11,8 @@
     "defaultName": "Guide",
     "logout": "Logout",
     "logoutError": "Error during logout. Please try again.",
-    "payouts": "Payouts"
+    "payouts": "Payouts",
+    "language": "Language"
   },
   "guide": {
     "stats": {

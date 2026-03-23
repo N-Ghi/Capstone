@@ -15,6 +15,7 @@ export interface User {
   last_name: string;
   role: string;
   profile_picture: string | null;
+  is_active?: boolean;
 }
 
 export interface Tokens {
@@ -39,3 +40,10 @@ export const Roles = {
 }
 
 export type Role = typeof Roles[keyof typeof Roles];
+
+export interface AllUsersResponse {
+  results: User[];
+  count: number;
+  next: string | null;
+  previous: string | null;
+}

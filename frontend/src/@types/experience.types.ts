@@ -63,6 +63,8 @@ export interface ExperienceListItem {
   created_at: string;
   languages: string[];
   guide_name?: string;
+  average_rating: number | null;
+  reviews_count: number;
 }
 
 export interface ExperienceDetail {

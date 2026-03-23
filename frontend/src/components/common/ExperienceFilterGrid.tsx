@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './ExperienceFilterGrid.module.css';
 import type { TravelPreference } from '../../@types/profile.types';
 import type { ExperienceListItem } from '../../@types/experience.types';
+import { PaginationControl } from '../common/PaginationControl';
 
 
 interface ExperienceFilterGridProps {
@@ -25,6 +26,7 @@ interface ExperienceFilterGridProps {
 }
 
 const SKELETON_COUNT = 6;
+const ITEMS_PER_PAGE = 15;
 
 const Skeleton: React.FC<{ columns: ExperienceFilterGridProps['columns'] }> = ({ columns }) => (
   <div className={styles.grid} data-columns={columns}>
@@ -54,6 +56,7 @@ export const ExperienceFilterGrid: React.FC<ExperienceFilterGridProps> = ({
   const [experiences, setExperiences] = useState<ExperienceListItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedPreference, setSelectedPreference] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { translated: displayedExperiences, translating } = useTranslatedData(
     experiences,
@@ -71,6 +74,7 @@ export const ExperienceFilterGrid: React.FC<ExperienceFilterGridProps> = ({
           ...params,
         });
         setExperiences((res.results ?? res).slice(0, limit));
+        setCurrentPage(1);
       } catch (err) {
         console.error('ExperienceFilterGrid: failed to fetch experiences', err);
       } finally {
@@ -81,7 +85,6 @@ export const ExperienceFilterGrid: React.FC<ExperienceFilterGridProps> = ({
     [limit]
   );
 
-  // Initial load: preferences + experiences in parallel
   useEffect(() => {
     const init = async () => {
       try {
@@ -117,17 +120,28 @@ export const ExperienceFilterGrid: React.FC<ExperienceFilterGridProps> = ({
 
   const handleView = onView ?? ((id: string) => navigate(`/experience/${id}`));
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const isBusy = loading || translating;
 
+  const paginatedExperiences = displayedExperiences.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
 
   return (
     <div className={styles.wrapper}>
-      {/* Category pills */}
-      {preferences.length > 0 && (
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>
-            {labels.categories ?? t('explore.title')}
-          </h2>
+      {/* Search bar here  */}
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>
+          {t('experiences.title')}
+        </h2>
+
+        {/* Category pills */}
+        {preferences.length > 0 && (
           <div className={styles.pillStrip}>
             {preferences.map((pref) => (
               <button
@@ -145,14 +159,7 @@ export const ExperienceFilterGrid: React.FC<ExperienceFilterGridProps> = ({
               </button>
             )}
           </div>
-        </section>
-      )}
-
-      {/* Experience grid */}
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>
-          { t('experiences.title') }
-        </h2>
+        )}
 
         {isBusy ? (
           <Skeleton columns={columns} />
@@ -161,15 +168,25 @@ export const ExperienceFilterGrid: React.FC<ExperienceFilterGridProps> = ({
             {labels.empty ?? t('experiences.empty')}
           </p>
         ) : (
-          <div className={styles.grid} data-columns={columns}>
-            {displayedExperiences.map((exp) => (
-              <TouristExperienceCard
-                key={exp.id}
-                experience={exp}
-                onView={handleView}
-              />
-            ))}
-          </div>
+          <>
+            <div className={styles.grid} data-columns={columns}>
+              {paginatedExperiences.map((exp) => (
+                <TouristExperienceCard
+                  key={exp.id}
+                  experience={exp}
+                  onView={handleView}
+                />
+              ))}
+            </div>
+
+            <PaginationControl
+              currentPage={currentPage}
+              totalItems={displayedExperiences.length}
+              itemsPerPage={ITEMS_PER_PAGE}
+              onPageChange={handlePageChange}
+              itemLabel="experiences"
+            />
+          </>
         )}
       </section>
     </div>

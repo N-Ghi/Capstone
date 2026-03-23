@@ -2,6 +2,7 @@ from rest_framework import serializers
 from Location.models import Location
 from Location.serializers import LocationSerializer
 from .models import Experience, ExperienceSlot
+from django.db.models import Avg, Count
 
 
 class ExperienceSerializer(serializers.ModelSerializer):
@@ -78,15 +79,18 @@ class ExperienceSlotSerializer(serializers.ModelSerializer):
         return value
 
 class ExperienceListSerializer(serializers.ModelSerializer):
-    """
-    Lighter serializer for list views — no nested many-to-many data.
-    """
     location = LocationSerializer(read_only=True)
-    guide_name = serializers.CharField(source='guide.get_full_name', read_only=True)
-    
+    guide_name = serializers.CharField(source='guide.username', read_only=True)
+
+    average_rating = serializers.SerializerMethodField()
+    reviews_count = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = Experience
         fields = [
-            'id', 'title', 'description', 'location',
-            'guide_name', 'photos', 'is_active', 'created_at'
+            'id', 'title', 'description', 'location', 'guide_name', 'photos',
+            'average_rating', 'reviews_count', 'is_active', 'created_at'
         ]
+
+    def get_average_rating(self, obj):
+        return round(obj.average_rating or 0, 1)
