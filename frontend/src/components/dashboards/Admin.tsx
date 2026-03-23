@@ -4,7 +4,7 @@ import { listUsers } from '../../services/userService';
 
 const AdminDashboard: React.FC = () => {
 
-    const [users, setUsers] = useState([]);
+    const [_users, setUsers] = useState([]);
 
     useEffect(() => {
         const fetchUsers = async () => {

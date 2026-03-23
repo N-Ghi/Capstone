@@ -64,7 +64,7 @@ export default function ReviewSection({ experienceId }: ReviewSectionProps) {
     fetchReviews(currentPage);
   }, [experienceId, fetchReviews]);
 
-  const { translated: translatedReviews, translating } = useTranslatedData(reviews, ['comment']);
+  const { translated: translatedReviews } = useTranslatedData(reviews, ['comment']);
 
   const handlePageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: "smooth" });

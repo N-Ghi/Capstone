@@ -5,7 +5,6 @@ import { getUserById } from "../../services/userService";
 import styles from "./ReviewCard.module.css";
 import { useTranslation } from "react-i18next";
 import { getInitials, getAvatarColor } from "../../utils/avatar";
-import { useTranslatedData } from "../../hooks/useTranslatedData";
 
 
 interface ReviewCardProps {
