@@ -1,0 +1,14 @@
+{
+  "loading": "Loading EULA...",
+  "error": "Error loading EULA",
+  "title": "End User License Agreement",
+  "intro": "Welcome to our platform. Please read this End User License Agreement carefully before using our services.",
+  "locationTitle": "Location Data",
+  "locationText": "Our platform uses location services to share directions with tourists. We only capture stationary coordinates during experience creation and do not track your movement continuously.",
+  "translationTitle": "Translation Services",
+  "translationText": "We use machine translation to help guides present their content to more travelers. Please note that translations may not always be perfect.",
+  "privacyTitle": "Sensitive Data",
+  "privacyText": "Do not share sensitive information such as passwords, personal identification numbers, or payment details anywhere.",
+  "dataSharingTitle": "Data Sharing",
+  "dataSharingText": "Your personal and booking data are not shared with third parties outside the platform. Only authorized providers will see relevant booking information."
+}

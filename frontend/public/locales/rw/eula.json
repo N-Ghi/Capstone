@@ -1,0 +1,14 @@
+{
+  "loading": "Tegereza...",
+  "error": "Habaye ikibazo mu kwerekana Amasezerano",
+  "title": "Amasezerano y'ikoreshwa",
+  "intro": "Murakaza neza ku rubuga rwacu. Nyamuneka soma Amasezerano y'ikoreshwa neza mbere yo gukoresha serivisi zacu.",
+  "locationTitle": "Ibijyanye n'ahantu",
+  "locationText": "Urubuga rwacu rukoresha ibiranga ahantu mugutanga ibyerekezo ku bakerarugendo. Dufata ibiranga ahantu mugihe umuyobozi ari kwandikisha ibitemberwa, ntago duhora tureba aho waba uherereye.",
+  "translationTitle": "Ibijyanye no guhindura indimi",
+  "translationText": "Urubuga rwacu rukoresha gahunda yo guhindura indimi kugirango umuyobozi yegereze ibitemberwa abantu benshi. Uramenyeshwa ko hari igihe haba amakosa muguhindura indimi.",
+  "privacyTitle": "Ibijyanye n'amakuru yihariye",
+  "privacyText": "Nyamuneka ntihagire ahantu nahamwe uzatanga  Do not share sensitive information such as passwords, personal identification numbers, or payment details anywhere.",
+  "dataSharingTitle": "Gusangiza amakuru ajyanye nawe",
+  "dataSharingText": "Amakuru ajyanye nawe ntaho tuzayatanga. Abayobozi babugenewe nibo bonyine bazabona amakuru ajyanye n'ibitemberwa wishimiye."
+}

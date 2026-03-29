@@ -45,12 +45,9 @@ class Experience(models.Model):
 class ExperienceSlot(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
-    experience = models.ForeignKey( Experience, on_delete=models.CASCADE,
-        related_name="slots"
-    )
+    experience = models.ForeignKey( Experience, on_delete=models.CASCADE, related_name="slots" )
 
     date = models.DateField()
-
     start_time = models.TimeField(default="09:00:00")
     end_time = models.TimeField(default="12:00:00")
 

@@ -27,5 +27,16 @@
     "experiences":{
         "title": "Ibitemberwa",
         "empty": "Ntagitemberwa kibonetse. Gerageza guhindura ibyiciro ukoresheje."
+    },
+    "search": {
+        "active": "Gifunguye",
+        "experience": "Igitemberwa",
+        "guide": "Umuyobozi",
+        "hint": "Kanda Enter ushakishe",
+        "back": "Subira inyuma",
+        "guidePlaceholder": "Shaka umuyobozi ukoresheje izina...",
+        "experiencePlaceholder": "Shaka igitemberwa...",
+        "noItemsFound": "Igishakishwa gihuye na \"{{query}}\" cy'{{label}} nti kibonetse.",
+        "results": "Ibisubizo: {{label}}"
     }
 }

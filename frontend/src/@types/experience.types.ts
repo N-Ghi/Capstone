@@ -5,7 +5,6 @@ export interface CreateExperienceData {
   description: string;
   expertise: string[];
   photos: string[];
-  date: string;
   languages: string[];
   payment_methods: string[];
   location_id?: string;
@@ -37,6 +36,9 @@ export interface ExperienceQueryParams {
   expertise?: string;
   expertise_name?: string;
   guide_id?: string;
+  guide_username?: string;
+  title?: string;
+  description?: string;
 }
 
 export interface GetAllSlotsParams {

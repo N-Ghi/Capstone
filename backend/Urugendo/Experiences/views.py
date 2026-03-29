@@ -16,6 +16,7 @@ from datetime import datetime
 from django.utils import timezone
 User = get_user_model()
 from django.db.models import Avg, Count
+from rest_framework.pagination import PageNumberPagination
 
 
 class ExperienceViewSet(ModelViewSet):
@@ -27,6 +28,7 @@ class ExperienceViewSet(ModelViewSet):
         average_rating=Avg('experience_reviews__rating'),
         reviews_count=Count('experience_reviews')
     ).filter(is_active=True).distinct()
+
 
     permission_classes = [IsAuthenticated]
 

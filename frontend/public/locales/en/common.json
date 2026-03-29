@@ -27,5 +27,16 @@
     "experiences":{
         "title": "Experiences",
         "empty": "No experiences found. Try adjusting your filters."
+    },
+    "search": {
+        "active": "Active",
+        "experience": "Experience",
+        "guide": "Guide",
+        "hint": "Press Enter to search",
+        "back": "Back to results",
+        "guidePlaceholder": "Search by guide username...",
+        "experiencePlaceholder": "Search experiences...",
+        "noItemsFound": "No {{label}}s found matching \"{{query}}\".",
+        "results": "Search results: {{label}}"
     }
 }

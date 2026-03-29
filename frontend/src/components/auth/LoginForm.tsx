@@ -132,6 +132,10 @@ const LoginForm: React.FC = () => {
             {t('login.noAccount')}{' '}
             <button onClick={() => navigate('/register')}>{t('login.register')}</button>
           </div>
+          <div className={styles.formFooter}>
+            {t('login.eula')}{' '}
+            <button onClick={() => navigate('/eula')}>{t('login.eulaLink')}</button>
+          </div>
         </div>
       </div>
     </div>

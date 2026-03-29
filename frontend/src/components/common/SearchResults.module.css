@@ -1,0 +1,92 @@
+/* ─── Page wrapper ────────────────────────────────────────── */
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* ─── Header row ──────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.heading {
+  margin: 0 0 4px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.meta {
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  color: rgba(43, 65, 80, 0.55);
+}
+
+/* ─── Back button ─────────────────────────────────────────── */
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.855rem;
+  font-weight: 500;
+  color: var(--dark);
+  background: var(--white);
+  border: 1.5px solid rgba(43, 65, 80, 0.15);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.back:hover {
+  background: var(--primary-light);
+  border-color: rgba(98, 127, 103, 0.4);
+  color: var(--primary-dark);
+}
+
+/* ─── Results grid ────────────────────────────────────────── */
+.grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+/* ─── Empty state ─────────────────────────────────────────── */
+.empty {
+  padding: 3.5rem 0;
+  text-align: center;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9375rem;
+  color: rgba(43, 65, 80, 0.45);
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .wrapper { padding: 1.5rem 1.25rem 2.5rem; }
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .wrapper { padding: 1.25rem 1rem 2rem; }
+  .grid { grid-template-columns: 1fr; }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .back { align-self: flex-start; }
+}

@@ -9,11 +9,13 @@ import RegisterPage from '../pages/RegisterPage';
 import VerifyEmail from '../pages/VerifyEmail';
 import ResendEmail from '../pages/ResendEmail';
 import VerifyEmailNotice from '../pages/VerifyEmailNotice';
+import EULA from '../pages/EULA';
 
 export const authRoutes = [
     { path: '/login', element: <Login /> },
     { path: '/register', element: <RegisterPage /> },
     { path: '/verify-email/:uid/:token', element: <VerifyEmail /> },
     { path: '/verify-email-notice', element: <VerifyEmailNotice /> },
-    { path: '/resend-email', element: <ResendEmail /> }
+    { path: '/resend-email', element: <ResendEmail /> },
+    { path: '/eula', element: <EULA /> }
 ];

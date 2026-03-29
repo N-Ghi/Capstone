@@ -1,43 +1,45 @@
 import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import {
-  UserRound, PlusCircle, LayoutList, ChevronDown,
-  Users, LogOut, Globe, Menu, X,
-} from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { SearchIcon, CloseIcon, MenuIcon, UserIcon, GlobeIcon, LogoutIcon, DropdownIcon, ListIcon, PlusCircleIcon, UsersIcon } from './Icons';
 import { useAuth } from '../../context/AuthContext';
 import logo from '../../assets/logo.png';
 import styles from './Header.module.css';
 import { logout } from '../../services/authService';
-import { getLanguages } from '../../services/choiceService';
-
-interface Language { id: string; name: string; code: string; }
+import { fetchLanguages } from '../../store/slices/languagesSlice';
+import type { RootState, AppDispatch } from '../../store';
+import SearchTrigger from './SearchTrigger';
 
 const HeaderComponent: React.FC = () => {
   const { t, i18n } = useTranslation('dashboards');
-  const navigate   = useNavigate();
-  const location   = useLocation();
-  const { user }   = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useAuth();
 
-  const [expMenuOpen,    setExpMenuOpen]    = useState(false);
-  const [langOpen,       setLangOpen]       = useState(false);
-  const [mobileNavOpen,  setMobileNavOpen]  = useState(false);
-  const [languages,      setLanguages]      = useState<Language[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const languages = useSelector((state: RootState) => state.languages.items);
 
-  const langRef   = useRef<HTMLDivElement>(null);
+  const [expMenuOpen, setExpMenuOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  const langRef = useRef<HTMLDivElement>(null);
   const mobileRef = useRef<HTMLDivElement>(null);
 
   const activeLang = languages.find((l) => l.code === i18n.language) ?? languages[0] ?? null;
-  const role       = user?.role;
+  const role = user?.role;
+
+  // Fetch languages from Redux (skips if already loaded)
+  useEffect(() => {
+    if (languages.length === 0) dispatch(fetchLanguages());
+  }, []);
 
   // Close mobile nav on route change
-  useEffect(() => { setMobileNavOpen(false); setExpMenuOpen(false); }, [location.pathname]);
-
   useEffect(() => {
-    getLanguages()
-      .then((res) => setLanguages(res.results ?? res))
-      .catch((err) => console.error('Failed to load languages:', err));
-  }, []);
+    setMobileNavOpen(false);
+    setExpMenuOpen(false);
+  }, [location.pathname]);
 
   // Close dropdowns on outside click
   useEffect(() => {
@@ -51,11 +53,18 @@ const HeaderComponent: React.FC = () => {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  const selectLang = (lang: Language) => { i18n.changeLanguage(lang.code); setLangOpen(false); };
+  const selectLang = (lang: { id: string; name: string; code: string }) => {
+    i18n.changeLanguage(lang.code);
+    setLangOpen(false);
+  };
 
   const handleLogout = async () => {
-    try { await logout(); navigate('/'); }
-    catch (err) { console.error('Logout error:', err); }
+    try {
+      await logout();
+      navigate('/');
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
   };
 
   const isActive = (path: string) => location.pathname === path;
@@ -78,15 +87,21 @@ const HeaderComponent: React.FC = () => {
               onClick={() => setExpMenuOpen((v) => !v)}
             >
               {t('header.experiences')}
-              <ChevronDown size={13} className={`${styles.chevron} ${expMenuOpen ? styles.chevronOpen : ''}`} />
+              <DropdownIcon size={13} className={`${styles.chevron} ${expMenuOpen ? styles.chevronOpen : ''}`} />
             </button>
             {expMenuOpen && (
               <div className={`${styles.dropdownMenu} ${mobile ? styles.mobileDropdownMenu : ''}`}>
-                <button className={styles.dropdownItem} onClick={() => { navigate('/guide/experiences/create'); setExpMenuOpen(false); }}>
-                  <PlusCircle size={13} /> {t('header.createExperience')}
+                <button
+                  className={styles.dropdownItem}
+                  onClick={() => { navigate('/guide/experiences/create'); setExpMenuOpen(false); }}
+                >
+                  <PlusCircleIcon size={13} /> {t('header.createExperience')}
                 </button>
-                <button className={styles.dropdownItem} onClick={() => { navigate('/guide/experiences'); setExpMenuOpen(false); }}>
-                  <LayoutList size={13} /> {t('header.allExperiences')}
+                <button
+                  className={styles.dropdownItem}
+                  onClick={() => { navigate('/guide/experiences'); setExpMenuOpen(false); }}
+                >
+                  <ListIcon size={13} /> {t('header.allExperiences')}
                 </button>
               </div>
             )}
@@ -108,7 +123,7 @@ const HeaderComponent: React.FC = () => {
           className={`${styles.navBtn} ${isActive('/admin/users') ? styles.navBtnActive : ''} ${mobile ? styles.mobileNavBtn : ''}`}
           onClick={() => navigate('/admin/users')}
         >
-          <Users size={13} /> {t('header.users')}
+          <UsersIcon size={13} /> {t('header.users')}
         </button>
       )}
     </>
@@ -127,12 +142,18 @@ const HeaderComponent: React.FC = () => {
         <NavLinks />
 
         <div className={styles.navActions}>
+          <SearchTrigger />
+
           {/* Language selector */}
           <div className={styles.langWrapper} ref={langRef}>
-            <button className={styles.langTrigger} onClick={() => setLangOpen((v) => !v)} aria-label="Select language">
-              <Globe size={15} />
+            <button
+              className={styles.langTrigger}
+              onClick={() => setLangOpen((v) => !v)}
+              aria-label="Select language"
+            >
+              <GlobeIcon size={15} />
               <span className={styles.langLabel}>{activeLang?.name ?? t('header.language')}</span>
-              <ChevronDown size={12} className={`${styles.chevron} ${langOpen ? styles.chevronOpen : ''}`} />
+              <DropdownIcon size={12} className={`${styles.chevron} ${langOpen ? styles.chevronOpen : ''}`} />
             </button>
             {langOpen && (
               <div className={styles.dropdownMenu} style={{ minWidth: 168, right: 0, left: 'auto' }}>
@@ -142,7 +163,7 @@ const HeaderComponent: React.FC = () => {
                     className={`${styles.dropdownItem} ${activeLang?.id === lang.id ? styles.dropdownItemActive : ''}`}
                     onClick={() => selectLang(lang)}
                   >
-                    <Globe size={13} style={{ opacity: 0.5 }} />
+                    <GlobeIcon size={13} style={{ opacity: 0.5 }} />
                     <span>{lang.name}</span>
                   </button>
                 ))}
@@ -155,20 +176,24 @@ const HeaderComponent: React.FC = () => {
             title={t('header.profile')}
             onClick={() => navigate(`/${role?.toLowerCase()}/profile/${user?.id}`)}
           >
-            <UserRound size={16} />
+            <UserIcon size={16} />
             <span>{user?.username || t('header.defaultName')}</span>
           </button>
 
           <button className={styles.iconBtn} title={t('header.logout')} onClick={handleLogout}>
-            <LogOut size={16} />
+            <LogoutIcon size={16} />
           </button>
         </div>
       </nav>
 
       {/* Mobile hamburger */}
       <div className={styles.mobileActions}>
-        <button className={styles.iconBtn} onClick={() => setMobileNavOpen((v) => !v)} aria-label="Toggle menu">
-          {mobileNavOpen ? <X size={20} /> : <Menu size={20} />}
+        <button
+          className={styles.iconBtn}
+          onClick={() => setMobileNavOpen((v) => !v)}
+          aria-label="Toggle menu"
+        >
+          {mobileNavOpen ? <CloseIcon size={20} /> : <MenuIcon size={20} />}
         </button>
       </div>
 
@@ -178,9 +203,19 @@ const HeaderComponent: React.FC = () => {
           <NavLinks mobile />
           <div className={styles.mobileDivider} />
 
+          {/* Search in mobile */}
+          <div className={styles.mobileSearchRow}>
+            <SearchIcon size={14} style={{ opacity: 0.5, flexShrink: 0 }} />
+            {/* <span className={styles.mobileLangLabel}>Search</span> */}
+            <div style={{ marginLeft: 'auto' }}>
+              <SearchTrigger />
+            </div>
+          </div>
+          <div className={styles.mobileDivider} />
+
           {/* Language in mobile */}
           <div className={styles.mobileLangRow}>
-            <Globe size={14} />
+            <GlobeIcon size={14} />
             <span className={styles.mobileLangLabel}>{t('header.language')}</span>
             <div className={styles.mobileLangOptions}>
               {languages.map((lang) => (
@@ -201,12 +236,15 @@ const HeaderComponent: React.FC = () => {
             className={`${styles.mobileNavBtn} ${styles.mobileNavBtnProfile}`}
             onClick={() => navigate(`/${role?.toLowerCase()}/profile/${user?.id}`)}
           >
-            <UserRound size={15} />
+            <UserIcon size={15} />
             <span>{user?.username || t('header.defaultName')}</span>
           </button>
 
-          <button className={`${styles.mobileNavBtn} ${styles.mobileNavBtnLogout}`} onClick={handleLogout}>
-            <LogOut size={15} />
+          <button
+            className={`${styles.mobileNavBtn} ${styles.mobileNavBtnLogout}`}
+            onClick={handleLogout}
+          >
+            <LogoutIcon size={15} />
             <span>{t('header.logout')}</span>
           </button>
         </div>

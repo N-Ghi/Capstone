@@ -24,7 +24,6 @@ const ExperienceForm: React.FC = () => {
   const [description, setDescription] = useState('');
   const [expertise, setExpertise] = useState<string[]>([]);
   const [photos, setPhotos] = useState<string[]>([]);
-  const [date, setDate] = useState('');
   const [languages, setLanguages] = useState<string[]>([]);
   const [paymentMethods, setPaymentMethods] = useState<string[]>([]);
   const [locationId, setLocationId] = useState('');
@@ -65,7 +64,6 @@ const ExperienceForm: React.FC = () => {
         setDescription(exp.description ?? '');
         setExpertise(exp.expertise ?? []);
         setPhotos(exp.photos ?? []);
-        setDate(exp.date ?? '');
         setLanguages(exp.languages ?? []);
         setPaymentMethods(exp.payment_methods ?? []);
         if (exp.location) {
@@ -90,7 +88,6 @@ const ExperienceForm: React.FC = () => {
       description,
       expertise,
       photos,
-      date,
       languages,
       payment_methods: paymentMethods,
       location_id: locationId || undefined,
@@ -189,20 +186,6 @@ const ExperienceForm: React.FC = () => {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   rows={5}
-                  required
-                />
-              </div>
-
-              <div className={styles.field}>
-                <label className={styles.fieldLabel} htmlFor="ef-date">
-                  {t('experienceForm.fields.date')}
-                </label>
-                <input
-                  id="ef-date"
-                  type="date"
-                  className={styles.fieldInput}
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
                   required
                 />
               </div>
