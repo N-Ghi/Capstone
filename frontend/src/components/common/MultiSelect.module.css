@@ -1,4 +1,4 @@
-/* ── MultiSelect.module.css ─────────────────────────────────────── */
+/* MultiSelect.module.css */
 
 .wrapper {
   position: relative;
@@ -15,7 +15,7 @@
   margin-bottom: 7px;
 }
 
-/* ── Control (trigger) ───────────────────────────────────────── */
+/* Control (trigger) */
 .control {
   display: flex;
   align-items: center;
@@ -44,7 +44,7 @@
   background: rgba(43, 65, 80, 0.03);
 }
 
-/* ── Pills area ──────────────────────────────────────────────── */
+/* Pills area */
 .pills {
   flex: 1;
   display: flex;
@@ -91,7 +91,7 @@
 }
 .pillRemove:hover { background: rgba(98, 127, 103, 0.2); }
 
-/* ── Chevron ─────────────────────────────────────────────────── */
+/* Chevron */
 .chevron {
   display: flex;
   align-items: center;
@@ -101,7 +101,7 @@
 }
 .chevronUp { transform: rotate(180deg); }
 
-/* ── Dropdown ────────────────────────────────────────────────── */
+/* Dropdown */
 .dropdown {
   position: absolute;
   top: 100%;
@@ -129,7 +129,7 @@
   font-style: italic;
 }
 
-/* ── Options ─────────────────────────────────────────────────── */
+/* Options */
 .option {
   display: flex;
   align-items: center;

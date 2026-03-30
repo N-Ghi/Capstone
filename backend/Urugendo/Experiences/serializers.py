@@ -1,14 +1,22 @@
 from rest_framework import serializers
 from Location.models import Location
 from Location.serializers import LocationSerializer
+from Choices.serializers import LanguageSerializer
+from Choices.models import Language
 from .models import Experience, ExperienceSlot
 from django.db.models import Avg, Count
 
 
 class ExperienceSerializer(serializers.ModelSerializer):
     location = LocationSerializer(read_only=True)
-    location_id = serializers.PrimaryKeyRelatedField( queryset=Location.objects.all(),
+    location_id = serializers.PrimaryKeyRelatedField(
+        queryset=Location.objects.all(),
         write_only=True, required=False, allow_null=True, source='location'
+    )
+    origin_lang = LanguageSerializer(read_only=True)
+    origin_lang_id = serializers.PrimaryKeyRelatedField(
+        queryset=Language.objects.all(),
+        write_only=True, required=False, allow_null=True, source='origin_lang'
     )
 
     class Meta:
@@ -16,7 +24,8 @@ class ExperienceSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'guide', 'title', 'description', 'expertise',
             'location', 'location_id', 'photos', 'languages',
-            'payment_methods', 'is_active', 'created_at', 'updated_at'
+            'payment_methods', 'is_active', 'created_at', 'updated_at',
+            'origin_lang', 'origin_lang_id',
         ]
         read_only_fields = ['id', 'guide', 'created_at', 'updated_at']
 
@@ -82,6 +91,8 @@ class ExperienceListSerializer(serializers.ModelSerializer):
     location = LocationSerializer(read_only=True)
     guide_name = serializers.CharField(source='guide.username', read_only=True)
 
+    origin_lang = LanguageSerializer(read_only=True)
+
     average_rating = serializers.SerializerMethodField()
     reviews_count = serializers.IntegerField(read_only=True)
 
@@ -89,7 +100,7 @@ class ExperienceListSerializer(serializers.ModelSerializer):
         model = Experience
         fields = [
             'id', 'title', 'description', 'location', 'guide_name', 'photos',
-            'average_rating', 'reviews_count', 'is_active', 'created_at'
+            'average_rating', 'reviews_count', 'is_active', 'created_at', 'origin_lang'
         ]
 
     def get_average_rating(self, obj):

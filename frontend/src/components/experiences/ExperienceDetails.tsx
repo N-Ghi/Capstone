@@ -61,7 +61,8 @@ const ExperienceDetailComponent: React.FC = () => {
   );
   const { translated: translatedExperiences, translating } = useTranslatedData(
     experienceArray,
-    ['title', 'description']
+    ['title', 'description'],
+    (item) => item.origin_lang.code
   );
   const translatedExperience = translatedExperiences[0] ?? experience;
 
@@ -97,9 +98,7 @@ const ExperienceDetailComponent: React.FC = () => {
         console.warn('Failed to load guide info, showing experience without guide details');
       }
     })();
-  }
-
-  );
+  }, [experience?.guide]);
 
   useEffect(() => {
     if (!id) return;

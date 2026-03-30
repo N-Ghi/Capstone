@@ -21,7 +21,7 @@ from rest_framework.pagination import PageNumberPagination
 
 class ExperienceViewSet(ModelViewSet):
     queryset = Experience.objects.select_related(
-        "guide", "location"
+        "guide", "location", "origin_lang"
     ).prefetch_related(
         "expertise", "languages", "payment_methods"
     ).annotate(

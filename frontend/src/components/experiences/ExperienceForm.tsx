@@ -12,6 +12,7 @@ import { getLanguages, getPaymentMethods, getTravelPreferences } from '../../ser
 import type { CreateExperienceData } from '../../@types/experience.types';
 import styles from './ExperienceForm.module.css';
 import {BackIcon, ErrorIcon} from "../common/Icons";
+import SingleSelect from '../common/SingleSelect';
 
 const ExperienceForm: React.FC = () => {
   const { t } = useTranslation('experience');
@@ -28,6 +29,7 @@ const ExperienceForm: React.FC = () => {
   const [paymentMethods, setPaymentMethods] = useState<string[]>([]);
   const [locationId, setLocationId] = useState('');
   const [locationData, setLocationData] = useState<Location | null>(null);
+  const [originLangId, setOriginLangId] = useState('');
 
   const [languageOptions, setLanguageOptions] = useState<SelectOption[]>([]);
   const [paymentOptions, setPaymentOptions] = useState<SelectOption[]>([]);
@@ -47,6 +49,7 @@ const ExperienceForm: React.FC = () => {
           getTravelPreferences(),
         ]);
         setLanguageOptions(langs);
+        console.log("Languages: ", langs )
         setPaymentOptions(payments);
         setExpertiseOptions(prefs);
       } finally {
@@ -54,6 +57,8 @@ const ExperienceForm: React.FC = () => {
       }
     })();
   }, []);
+
+  
 
   useEffect(() => {
     if (!isEdit || !id) return;
@@ -69,6 +74,9 @@ const ExperienceForm: React.FC = () => {
         if (exp.location) {
           setLocationId(exp.location.id);
           setLocationData(exp.location);
+        }
+        if (exp.origin_lang) {
+          setOriginLangId(exp.origin_lang.id);
         }
       } catch {
         setError(t('experienceForm.errors.loadFailed'));
@@ -92,6 +100,7 @@ const ExperienceForm: React.FC = () => {
       payment_methods: paymentMethods,
       location_id: locationId || undefined,
       guide_id: user?.role === 'Guide' ? user.id : undefined,
+      origin_lang_id: originLangId,
     };
 
     try {
@@ -212,6 +221,17 @@ const ExperienceForm: React.FC = () => {
                   selected={languages}
                   onChange={setLanguages}
                   placeholder={t('experienceForm.fields.languages.placeholder')}
+                  loading={optionsLoading}
+                />
+              </div>
+
+              <div className={styles.field}>
+                <SingleSelect
+                  label={t('experienceForm.fields.originLang.label')}
+                  options={languageOptions}
+                  value={originLangId}
+                  onChange={setOriginLangId}
+                  placeholder={t('experienceForm.fields.originLang.placeholder')}
                   loading={optionsLoading}
                 />
               </div>

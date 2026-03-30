@@ -1,56 +1,60 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translateBatch, detectLanguage } from '../services/translateService';
 
-/**
- * Generic translation hook.
- *
- * @param items    - Array of any objects
- * @param fields   - Which string fields to translate (e.g. ['title', 'description'])
- *
- * @example
- * // Experiences
- * const { translated } = useTranslatedData(experiences, ['title', 'description']);
- *
- * @example
- * // Reviews
- * const { translated } = useTranslatedData(reviews, ['comment']);
- *
- * @example
- * // Profiles
- * const { translated } = useTranslatedData(profiles, ['bio']);
- */
 export function useTranslatedData<T extends object>(
   items: T[],
   fields: (keyof T)[],
-  getSourceLang?: (item: T) => string
+  getSourceLang?: (item: T) => string,
 ) {
   const { i18n } = useTranslation();
   const [translated, setTranslated] = useState<T[]>([]);
   const [translating, setTranslating] = useState(false);
+  const runIdRef = useRef(0);
+  // Track the last input we processed so we don't re-run for the same data
+  const lastRunKey = useRef<string>('');
+
+  const itemsKey = useMemo(() => JSON.stringify(items), [items]);
+  const stableItems = useMemo(() => items, [itemsKey]);
 
   useEffect(() => {
-    if (!items.length) { setTranslated([]); return; }
+    if (!stableItems.length) {
+      setTranslated([]);
+      return;
+    }
+
+    const runKey = `${itemsKey}:${i18n.language}`;
+    if (lastRunKey.current === runKey) return; // already processed this exact input
+    lastRunKey.current = runKey;
+
+    const runId = ++runIdRef.current;
 
     const run = async () => {
       setTranslating(true);
       try {
-        // Detect source language 
-        const sourceLang = getSourceLang
-        ? getSourceLang(items[0])
-        : await detectLanguage(items[0][fields[0]] as string);
+        const sampleText = stableItems
+          .flatMap((item) => fields.map((f) => item[f] as string))
+          .find((v) => v?.trim());
 
-        // Already in the right language — pass through
+        const sourceLang = getSourceLang
+          ? getSourceLang(stableItems[0])
+          : await detectLanguage(sampleText ?? '');
+
+        if (runId !== runIdRef.current) return;
+
         if (sourceLang === i18n.language) {
-          setTranslated(items);
+          setTranslated(stableItems);
           return;
         }
 
-        // Translate each requested field in a single batch per field
-        const translatedItems = [...items];
+        const translatedItems = stableItems.map((item) => ({ ...item }));
+
         for (const field of fields) {
-          const texts = items.map((item) => (item[field] as string) ?? '');
+          const texts   = stableItems.map((item) => (item[field] as string) ?? '');
           const results = await translateBatch(texts, i18n.language, sourceLang);
+
+          if (runId !== runIdRef.current) return;
+
           results.forEach((text, i) => {
             translatedItems[i] = { ...translatedItems[i], [field]: text };
           });
@@ -59,14 +63,14 @@ export function useTranslatedData<T extends object>(
         setTranslated(translatedItems);
       } catch (err) {
         console.error('Translation failed, falling back to originals:', err);
-        setTranslated(items);
+        if (runId === runIdRef.current) setTranslated(stableItems);
       } finally {
-        setTranslating(false);
+        if (runId === runIdRef.current) setTranslating(false);
       }
     };
 
     run();
-  }, [items, i18n.language]);
+  }, [stableItems, i18n.language, getSourceLang]);
 
   return { translated, translating };
 }

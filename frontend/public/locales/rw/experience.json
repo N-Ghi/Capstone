@@ -148,7 +148,11 @@
             "placeholder": "Hitamo uburyo bwo kwishyura…"
         },
         "location": "Aho igitemberwa kizabera",
-        "photos": "Amafoto y'igitemberwa (byibuze 1, ntarengwa 10)"
+        "photos": "Amafoto y'igitemberwa (byibuze 1, ntarengwa 10)",
+        "originLang": {
+            "label": "Ururimi rw'ibikubiye",
+            "placeholder": "Hitamo ururimi rw'ibikubiye"
+        }
         },
         "actions": {
         "cancel": "Bireke",

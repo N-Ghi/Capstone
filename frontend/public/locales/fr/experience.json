@@ -148,7 +148,11 @@
                 "placeholder": "Sélectionner des moyens de paiement…"
             },
             "location": "Point de rendez-vous",
-            "photos": "Photos de l'expérience (au moins 1, max 10)"
+            "photos": "Photos de l'expérience (au moins 1, max 10)",
+            "originLang": {
+                "label": "Langue du contenu",
+                "placeholder": "Sélectionner la langue du contenu"
+            }
         },
         "actions": {
             "cancel": "Annuler",

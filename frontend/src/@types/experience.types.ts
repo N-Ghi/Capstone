@@ -1,4 +1,10 @@
-import type{ Location } from './location.types';
+import type { Location } from './location.types';
+
+export interface Language {
+  id: string;
+  name: string;
+  code: string;
+}
 
 export interface CreateExperienceData {
   title: string;
@@ -9,26 +15,27 @@ export interface CreateExperienceData {
   payment_methods: string[];
   location_id?: string;
   guide_id?: string;
+  origin_lang_id: string;
 }
 
 export interface ExperirnceSlotData {
-  date: string,
-  capacity: number,
-  price: number,
-  start_time: string,
-  end_time: string
+  date: string;
+  capacity: number;
+  price: number;
+  start_time: string;
+  end_time: string;
 }
 
 export interface Slot {
-    id: string;
-    date: string;
-    start_time: string;
-    end_time: string;
-    capacity: number;
-    remaining_slots: number;
-    price: number;
-    is_active: boolean;
-    experience: string;
+  id: string;
+  date: string;
+  start_time: string;
+  end_time: string;
+  capacity: number;
+  remaining_slots: number;
+  price: number;
+  is_active: boolean;
+  experience: string;
 }
 
 export interface ExperienceQueryParams {
@@ -67,6 +74,7 @@ export interface ExperienceListItem {
   guide_name?: string;
   average_rating: number | null;
   reviews_count: number;
+  origin_lang: Language;
 }
 
 export interface ExperienceDetail {
@@ -82,4 +90,5 @@ export interface ExperienceDetail {
   is_active: boolean;
   created_at: string;
   updated_at: string;
+  origin_lang: Language;
 }

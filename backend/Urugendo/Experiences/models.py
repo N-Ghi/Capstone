@@ -36,6 +36,8 @@ class Experience(models.Model):
 
     updated_at = models.DateTimeField(auto_now=True)
 
+    origin_lang = models.ForeignKey(Language, blank=True, null=True, on_delete=models.PROTECT, related_name='experiences')
+
     class Meta:
         ordering = ['-created_at']
     

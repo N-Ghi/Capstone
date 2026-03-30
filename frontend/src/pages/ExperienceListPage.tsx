@@ -25,10 +25,17 @@ const ExperienceListPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   // Translation
+  const getSourceLang = useCallback(
+    (item: ExperienceListItem) => item.origin_lang?.code,
+    []
+  );
+
   const { translated, translating } = useTranslatedData(
     experiences,
-    ['title', 'description']
+    ['title', 'description'],
+    getSourceLang
   );
+  
   const displayedExperiences = translating || translated.length === 0
     ? experiences
     : translated;
@@ -56,6 +63,7 @@ const ExperienceListPage: React.FC = () => {
   useEffect(() => {
     fetchExperiences(currentPage);
   }, [user?.id, fetchExperiences]);
+
 
   const handlePageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });

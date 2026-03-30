@@ -126,29 +126,33 @@
         "photos": "Photos"
         },
         "fields": {
-        "title": {
-            "label": "Title",
-            "placeholder": "e.g. Morning Hike Through Nyungwe Forest"
-        },
-        "description": {
-            "label": "Description",
-            "placeholder": "Describe what travellers will experience, what to bring, and why it's special…"
-        },
-        "date": "Date",
-        "expertise": {
-            "label": "Expertise / Travel Preferences",
-            "placeholder": "Select categories…"
-        },
-        "languages": {
-            "label": "Languages Spoken",
-            "placeholder": "Select languages…"
-        },
-        "paymentMethods": {
-            "label": "Accepted Payment Methods",
-            "placeholder": "Select payment methods…"
-        },
-        "location": "Meeting Point",
-        "photos": "Experience Photos(at least 1, max 10)"
+          "title": {
+              "label": "Title",
+              "placeholder": "e.g. Morning Hike Through Nyungwe Forest"
+          },
+          "description": {
+              "label": "Description",
+              "placeholder": "Describe what travellers will experience, what to bring, and why it's special…"
+          },
+          "date": "Date",
+          "expertise": {
+              "label": "Expertise / Travel Preferences",
+              "placeholder": "Select categories…"
+          },
+          "languages": {
+              "label": "Languages Spoken",
+              "placeholder": "Select languages…"
+          },
+          "paymentMethods": {
+              "label": "Accepted Payment Methods",
+              "placeholder": "Select payment methods…"
+          },
+          "location": "Meeting Point",
+          "photos": "Experience Photos(at least 1, max 10)",
+          "originLang": {
+            "label": "Content Language",
+            "placeholder": "Select content language"
+          }
         },
         "actions": {
         "cancel": "Cancel",

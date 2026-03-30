@@ -61,7 +61,7 @@ export const ExperienceFilterGrid: React.FC<ExperienceFilterGridProps> = ({
   const { translated: displayedExperiences, translating } = useTranslatedData(
     experiences,
     ['title', 'description'],
-    experiences[0]?.languages ? (item) => item.languages[0] : undefined
+    (item) => item.origin_lang.code
   );
 
   const fetchExperiences = useCallback(
