@@ -37,24 +37,23 @@ def create_payouts_for_completed_bookings():
                 }
             )
 
-def process_pending_payouts(profile_id):
-    profile = Guide.objects.get(id=profile_id)
-    phone_number = profile.phone_number
+def process_pending_payouts():
     pending_status = PayoutStatus.objects.get(code='PENDING')
     processing_status = PayoutStatus.objects.get(code='PROCESSING')
     failed_status = PayoutStatus.objects.get(code='FAILED')
 
+    # Fetch all pending payouts
     payouts = Payout.objects.filter(status=pending_status).select_related('guide')
 
     for payout in payouts:
-        profile = PayoutSerializer().get_guide_detail(payout)
-        phone_number = profile.phone_number if profile else None
+        guide = payout.guide
+        guide_profile = Guide.objects.filter(user_id=guide.id).first()
+        phone_number = guide_profile.phone_number if guide_profile else None
 
         if not phone_number:
-            # Leave as PENDING until the guide adds a phone number
             continue
 
-        # Only lock once we know we can actually process it
+        # Lock and process
         payout.status = processing_status
         payout.save(update_fields=['status', 'updated_at'])
 
@@ -63,3 +62,22 @@ def process_pending_payouts(profile_id):
         except Exception:
             payout.status = failed_status
             payout.save(update_fields=['status', 'updated_at'])
+
+def retry_failed_payouts():
+    failed_status = PayoutStatus.objects.get(code='FAILED')
+    pending_status = PayoutStatus.objects.get(code='PENDING')
+
+    # Fetch failed payouts with guide in one query
+    failed_payouts = Payout.objects.filter(status=failed_status).select_related('guide')
+
+    for payout in failed_payouts:
+        guide = payout.guide
+        phone_number = guide.phone_number if guide else None
+
+        if not phone_number:
+            # Skip until the guide has a phone number
+            continue
+
+        # Reset status to PENDING so it can be processed again
+        payout.status = pending_status
+        payout.save(update_fields=['status', 'updated_at'])

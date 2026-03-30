@@ -21,17 +21,22 @@ class Command(BaseCommand):
             {
                 'name': 'Deactivate past slots',
                 'func': 'Booking.tasks.deactivate_past_slots',
-                'minutes': 60,
+                'minutes': 5,
             },
             {
                 'name': 'Create payouts for completed bookings',
                 'func': 'Payment.tasks.create_payouts_for_completed_bookings',
-                'minutes': 10,
+                'minutes': 5,
             },
             {
                 'name': 'Process pending payouts',
                 'func': 'Payment.tasks.process_pending_payouts',
-                'minutes': 15,
+                'minutes': 5,
+            },
+            {
+                'name': 'Retry failed payouts',
+                'func': 'Payment.tasks.retry_failed_payouts',
+                'minutes': 7,
             },
         ]
 
