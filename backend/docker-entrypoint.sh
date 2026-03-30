@@ -14,6 +14,9 @@ if [ "$1" = "gunicorn" ]; then
   echo "Running database migrations..."
   python /app/Urugendo/manage.py migrate --noinput
 
+  echo "Setting up schedules..."
+  python /app/Urugendo/manage.py setup_schedules
+
   echo "Collecting static files..."
   python /app/Urugendo/manage.py collectstatic --noinput
 

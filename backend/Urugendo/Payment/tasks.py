@@ -1,5 +1,6 @@
 from django.db import transaction
 from Booking.models import Booking
+from Profile.models import Guide
 from .models import Payout
 from Choices.models import PayoutStatus
 from Profile.models import Guide
@@ -36,7 +37,9 @@ def create_payouts_for_completed_bookings():
                 }
             )
 
-def process_pending_payouts():
+def process_pending_payouts(profile_id):
+    profile = Guide.objects.get(id=profile_id)
+    phone_number = profile.phone_number
     pending_status = PayoutStatus.objects.get(code='PENDING')
     processing_status = PayoutStatus.objects.get(code='PROCESSING')
     failed_status = PayoutStatus.objects.get(code='FAILED')
