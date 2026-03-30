@@ -33,6 +33,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG')
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['https://urugendo-app.southafricanorth.cloudapp.azure.com']
+DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024
+FILE_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024
 
 # Application definition
 

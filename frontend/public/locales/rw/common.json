@@ -22,7 +22,8 @@
         "browse": "ushakishe",
         "hint": "Amafoto {{current}}/{{max}} · JPG, PNG, WEBP",
         "errorMax": "Amafoto {{max}} ntarengwa.",
-        "errorUpload": "Hakenewe nibura ifoto imwe. Ongera ugerageze."
+        "errorUpload": "Hakenewe nibura ifoto imwe. Ongera ugerageze.",
+        "errorSize": "Buri foto igomba kuba ntoya kurusha {{max}} MB."
     },
     "experiences":{
         "title": "Ibitemberwa",

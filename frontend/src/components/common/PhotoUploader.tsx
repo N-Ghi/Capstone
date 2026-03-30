@@ -27,7 +27,14 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({
       return;
     }
 
-    const toUpload = Array.from(files).slice(0, remaining);
+    const MAX_SIZE_MB = 10;
+    const toUpload = Array.from(files).slice(0, remaining).filter(file => {
+      if (file.size > MAX_SIZE_MB * 1024 * 1024) {
+        setError(t('photoUploader.errorSize', { max: MAX_SIZE_MB }));
+        return false;
+      }
+      return true;
+    });
     setUploading(true);
     setError(null);
 

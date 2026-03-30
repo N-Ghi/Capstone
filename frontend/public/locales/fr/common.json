@@ -22,7 +22,8 @@
         "browse": "parcourir",
         "hint": "{{current}}/{{max}} photos · JPG, PNG, WEBP",
         "errorMax": "Maximum {{max}} photos autorisées.",
-        "errorUpload": "Une ou plusieurs photos n'ont pas pu être téléversées. Veuillez réessayer."
+        "errorUpload": "Une ou plusieurs photos n'ont pas pu être téléversées. Veuillez réessayer.",
+        "errorSize": "Chaque photo doit être inférieure à {{max}} Mo."
     },
     "experiences": {
         "title": "Expériences",
