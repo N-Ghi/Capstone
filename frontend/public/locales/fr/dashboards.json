@@ -1,0 +1,60 @@
+{
+  "header": {
+    "experiences": "Expériences",
+    "createExperience": "Créer une expérience",
+    "allExperiences": "Voir toutes les expériences",
+    "myBookings": "Mes réservations",
+    "dashboard": "Tableau de bord",
+    "users": "Utilisateurs",
+    "settings": "Paramètres",
+    "profile": "Profil",
+    "defaultName": "Guide",
+    "logout": "Se déconnecter",
+    "logoutError": "Erreur lors de la déconnexion. Veuillez réessayer.",
+    "payouts": "Versements",
+    "language": "Langue"
+  },
+  "guide": {
+    "stats": {
+      "totalExperiences": "Total des expériences",
+      "upcomingSlots": "Créneaux d'expériences à venir",
+      "viewPayouts": "Voir les versements en attente",
+      "pendingPayouts": "Versements en attente"
+    },
+    "table": {
+      "title": "Expériences et créneaux à venir",
+      "experienceId": "ID de l'expérience",
+      "date": "Date",
+      "time": "Heure",
+      "empty": "Aucun créneau d'expérience à venir."
+    },
+    "payouts": {
+      "title": "Mes versements",
+      "experience": "Expérience",
+      "date": "Date du créneau",
+      "time": "Heure",
+      "bookingAmount": "Montant de la réservation",
+      "platformFee": "Frais de plateforme",
+      "payout": "Votre versement",
+      "status": "Statut",
+      "empty": "Aucun versement trouvé."
+    },
+    "payout": {
+      "back": "Retour aux versements",
+      "loading": "Chargement du versement...",
+      "notFound": "Versement introuvable.",
+      "errorLoad": "Échec du chargement du versement.",
+      "unknownExperience": "Expérience inconnue",
+      "payoutId": "ID du versement",
+      "slotDate": "Date du créneau",
+      "slotTime": "Heure",
+      "payoutDate": "Date du versement",
+      "provider": "Prestataire",
+      "bookingAmount": "Montant de la réservation",
+      "platformFee": "Frais de plateforme",
+      "yourPayout": "Votre versement",
+      "transactionId": "ID de transaction",
+      "phoneNumber": "Numéro de téléphone"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "loading": "Chargement du CLUF...",
+  "error": "Erreur lors du chargement du CLUF",
+  "title": "Contrat de licence utilisateur final",
+  "intro": "Bienvenue sur notre plateforme. Veuillez lire attentivement ce Contrat de licence utilisateur final avant d'utiliser nos services.",
+  "locationTitle": "Données de localisation",
+  "locationText": "Notre plateforme utilise les services de localisation pour partager des itinéraires avec les touristes. Nous ne capturons que les coordonnées stationnaires lors de la création d'une expérience et ne suivons pas vos déplacements en continu.",
+  "translationTitle": "Services de traduction",
+  "translationText": "Nous utilisons la traduction automatique pour aider les guides à présenter leur contenu à un plus grand nombre de voyageurs. Veuillez noter que les traductions peuvent ne pas toujours être parfaites.",
+  "privacyTitle": "Données sensibles",
+  "privacyText": "Ne partagez aucune information sensible telle que des mots de passe, des numéros d'identification personnels ou des coordonnées bancaires, où que ce soit.",
+  "dataSharingTitle": "Partage des données",
+  "dataSharingText": "Vos données personnelles et de réservation ne sont pas partagées avec des tiers extérieurs à la plateforme. Seuls les prestataires autorisés auront accès aux informations de réservation les concernant."
+}

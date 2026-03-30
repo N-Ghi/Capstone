@@ -1,0 +1,38 @@
+{
+  "card": {
+    "you": "Vous",
+    "edited": "modifié",
+    "edit": "Modifier",
+    "unknownUser": "Utilisateur inconnu",
+    "loading": "Chargement…"
+  },
+  "form": {
+    "ratingLabels": {
+      "terrible": "Terrible",
+      "poor": "Médiocre",
+      "okay": "Correct",
+      "great": "Bien",
+      "excellent": "Excellent"
+    },
+    "starAriaLabel": "Noter {{count}} étoile(s)",
+    "commentPlaceholder": "Partagez votre expérience…",
+    "charCount": "{{current}} / {{max}}",
+    "cancel": "Annuler",
+    "saving": "Enregistrement…",
+    "saveChanges": "Enregistrer les modifications",
+    "postReview": "Publier l'avis",
+    "errors": {
+      "ratingRequired": "Veuillez sélectionner une note.",
+      "commentRequired": "Veuillez écrire quelque chose.",
+      "submitFailed": "Une erreur s'est produite. Veuillez réessayer."
+    }
+  },
+  "section": {
+    "title": "Avis",
+    "leaveReview": "+ Laisser un avis",
+    "loading": "Chargement des avis…",
+    "empty": "Aucun avis pour l'instant. Soyez le premier !",
+    "loadError": "Échec du chargement des avis.",
+    "itemLabel": "avis"
+  }
+}

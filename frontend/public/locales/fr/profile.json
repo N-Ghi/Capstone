@@ -1,0 +1,83 @@
+{
+  "profile": {
+    "roleBadges": {
+      "Tourist": "Touriste",
+      "Guide": "Guide",
+      "Admin": "Administrateur"
+    },
+    "account": {
+      "title": "Informations du compte",
+      "sub": "Mettez à jour votre nom d'utilisateur, votre nom et votre photo de profil",
+      "resetPassword": "Réinitialiser le mot de passe",
+      "linkGoogleCalendar": "Lier Google Agenda"
+    },
+    "roleProfile": {
+      "title": "Profil {{role}}",
+      "titleFallback": "Profil",
+      "subGuide": "Gérez votre profil de guide public visible par les voyageurs",
+      "subTourist": "Gérez vos préférences de voyage et vos langues",
+      "badgeNew": "Nouveau"
+    },
+    "languages": "Langues",
+    "paymentMethods": "Moyens de paiement",
+    "experiences": "Expériences",
+    "noExperiences": "Aucune expérience pour l'instant",
+    "noBio": "Aucune biographie renseignée",
+    "back": "Retour",
+    "errors": {
+      "loadUser": "Échec du chargement des informations utilisateur.",
+      "loadProfile": "Échec du chargement des informations du profil.",
+      "noUser": "Aucun utilisateur trouvé.",
+      "noProfile": "Aucun profil de guide trouvé."
+    },
+    "phone": "Numéro de téléphone"
+  },
+  "userInfo": {
+    "changePhoto": "Changer la photo",
+    "removePhoto": "Supprimer la photo",
+    "username": "Nom d'utilisateur",
+    "email": "E-mail",
+    "firstName": "Prénom",
+    "lastName": "Nom de famille",
+    "errorSave": "Échec de l'enregistrement des modifications.",
+    "saving": "Enregistrement…",
+    "saved": "Enregistré !",
+    "saveChanges": "Enregistrer les modifications"
+  },
+  "profileForm": {
+    "displayName": "Numéro de téléphone",
+    "displayNamePlaceholder": "078XXXXXXX",
+    "bio": "Biographie",
+    "bioPlaceholder": "Parlez aux voyageurs de vous-même et de vos circuits...",
+    "languages": "Langues",
+    "languagesPlaceholderGuide": "Langues dans lesquelles vous guidez...",
+    "languagesPlaceholderTourist": "Langues que vous parlez...",
+    "expertise": "Domaines d'expertise",
+    "expertisePlaceholder": "Sélectionnez vos spécialisations...",
+    "travelPreferences": "Préférences de voyage",
+    "travelPreferencesPlaceholder": "Sélectionnez votre style de voyage...",
+    "paymentMethods": "Moyens de paiement",
+    "paymentMethodsPlaceholder": "Moyens de paiement acceptés...",
+    "saving": "Enregistrement...",
+    "saved": "Enregistré !",
+    "saveProfile": "Enregistrer le profil",
+    "errorOptions": "Échec du chargement des options du formulaire.",
+    "errorSave": "Échec de l'enregistrement du profil.",
+    "payoutProvider": "Prestataire de versement",
+    "payoutProviderPlaceholder": "Sélectionnez votre prestataire de versement..."
+  },
+  "calendar": {
+    "loading": "Chargement...",
+    "connected": "Agenda connecté",
+    "connectedOn": "Connecté le {{date}}",
+    "description": "Ajoutez automatiquement vos réservations à votre Google Agenda",
+    "connect": "Connecter Google Agenda",
+    "disconnect": "Déconnecter",
+    "disconnecting": "Déconnexion en cours...",
+    "confirmDisconnect": "Êtes-vous sûr de vouloir déconnecter Google Agenda ?",
+    "errors": {
+      "loadStatus": "Échec du chargement du statut de l'agenda.",
+      "disconnect": "Échec de la déconnexion de l'agenda."
+    }
+  }
+}

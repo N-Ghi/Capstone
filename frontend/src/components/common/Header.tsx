@@ -142,7 +142,9 @@ const HeaderComponent: React.FC = () => {
         <NavLinks />
 
         <div className={styles.navActions}>
-          <SearchTrigger />
+          { role === 'Tourist' && (
+            <SearchTrigger />
+          )}
 
           {/* Language selector */}
           <div className={styles.langWrapper} ref={langRef}>

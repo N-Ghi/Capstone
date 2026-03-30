@@ -1,0 +1,174 @@
+{
+    "experienceList": {
+        "page": {
+            "title": "Mes expériences",
+            "subtitle": "{{count}} expérience répertoriée",
+            "subtitle_plural": "{{count}} expériences répertoriées",
+            "subtitle_loading": "Chargement…",
+            "newExperience": "Nouvelle expérience"
+        },
+        "status": {
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "card": {
+            "edit": "Modifier",
+            "view": "Voir"
+        },
+        "empty": {
+            "title": "Aucune expérience pour l'instant",
+            "text": "Créez votre première expérience et commencez à partager votre expertise avec les voyageurs.",
+            "cta": "Créer une expérience"
+        },
+        "error": {
+            "load": "Échec du chargement des expériences. Veuillez réessayer."
+        },
+        "pagination": {
+            "itemLabel": "expériences"
+        },
+        "translating": "Traduction en cours…"
+    },
+    "experienceDetail": {
+        "nav": {
+            "back": "Retour"
+        },
+        "status": {
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "meta": {
+            "creator": "Créée le {{date}} par <a href=\"/profile/{{id}}\">{{name}}</a>"
+        },
+        "sections": {
+            "photos": "Photos",
+            "location": "Lieu",
+            "photoAlt": "Photo {{number}}",
+            "getDirections": "Obtenir l'itinéraire"
+        },
+        "actions": {
+            "editExperience": "Modifier l'expérience",
+            "deleteExperience": "Supprimer l'expérience",
+            "goBack": "Retour"
+        },
+        "slots": {
+            "title": "Détails du créneau",
+            "addSlot": "Ajouter un créneau",
+            "bookSlot": "Réserver l'expérience",
+            "editSlot": "Modifier le créneau",
+            "deleteSlot": "Supprimer le créneau",
+            "empty": "Aucun créneau pour l'instant.",
+            "table": {
+                "date": "Date",
+                "time": "Heure",
+                "capacity": "Capacité",
+                "remaining": "Restant",
+                "price": "Prix",
+                "status": "Statut"
+            },
+            "timeSeparator": "–",
+            "price": "{{amount}} RWF",
+            "status": {
+                "active": "Actif",
+                "inactive": "Désactivé"
+            }
+        },
+        "loading": {
+            "experience": "Chargement de l'expérience..."
+        },
+        "errors": {
+            "loadFailed": "Échec du chargement de l'expérience.",
+            "notFound": "Expérience introuvable."
+        },
+        "dialogs": {
+            "deleteExperience": {
+                "message": "Supprimer cette expérience ? Cette action est irréversible."
+            },
+            "deleteSlot": {
+                "message": "Supprimer ce créneau ? Cette action est irréversible."
+            }
+        }
+    },
+    "slotFormModal": {
+        "title": {
+            "edit": "Modifier le créneau",
+            "add": "Ajouter un créneau"
+        },
+        "fields": {
+            "date": "Date",
+            "startTime": "Heure de début",
+            "endTime": "Heure de fin",
+            "capacity": "Capacité",
+            "price": "Prix"
+        },
+        "actions": {
+            "cancel": "Annuler",
+            "saving": "Enregistrement…",
+            "saveChanges": "Enregistrer les modifications",
+            "addSlot": "Ajouter un créneau"
+        },
+        "errors": {
+            "saveFailed": "Échec de l'enregistrement du créneau. Veuillez réessayer."
+        }
+    },
+    "experienceForm": {
+        "title": {
+            "edit": "Modifier l'expérience",
+            "create": "Créer une expérience"
+        },
+        "subtitle": {
+            "edit": "Mettez à jour les détails de votre expérience existante.",
+            "create": "Partagez votre expertise avec des voyageurs du monde entier."
+        },
+        "sections": {
+            "basicInfo": "Informations de base",
+            "details": "Détails",
+            "location": "Lieu",
+            "photos": "Photos"
+        },
+        "fields": {
+            "title": {
+                "label": "Titre",
+                "placeholder": "ex. : Randonnée matinale dans la forêt de Nyungwe"
+            },
+            "description": {
+                "label": "Description",
+                "placeholder": "Décrivez ce que les voyageurs vivront, ce qu'il faut apporter et pourquoi cette expérience est unique…"
+            },
+            "date": "Date",
+            "expertise": {
+                "label": "Expertise / Préférences de voyage",
+                "placeholder": "Sélectionner des catégories…"
+            },
+            "languages": {
+                "label": "Langues parlées",
+                "placeholder": "Sélectionner des langues…"
+            },
+            "paymentMethods": {
+                "label": "Moyens de paiement acceptés",
+                "placeholder": "Sélectionner des moyens de paiement…"
+            },
+            "location": "Point de rendez-vous",
+            "photos": "Photos de l'expérience (au moins 1, max 10)"
+        },
+        "actions": {
+            "cancel": "Annuler",
+            "saving": "Enregistrement…",
+            "creating": "Création en cours…",
+            "saveChanges": "Enregistrer les modifications",
+            "createExperience": "Créer une expérience"
+        },
+        "errors": {
+            "loadFailed": "Échec du chargement des données de l'expérience. Veuillez réessayer.",
+            "default": "Une erreur s'est produite. Veuillez réessayer."
+        }
+    },
+    "experienceFilter": {
+        "title": "Filtrer les expériences",
+        "categories": "Catégories",
+        "languages": "Langues parlées",
+        "paymentMethods": "Moyens de paiement",
+        "applyFilters": "Appliquer les filtres",
+        "clearFilters": "Réinitialiser les filtres",
+        "empty": "Aucune expérience ne correspond à vos filtres."
+    }
+}

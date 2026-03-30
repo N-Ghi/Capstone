@@ -1,0 +1,19 @@
+{
+  "header": {
+    "language": "Langue",
+    "login": "Se connecter",
+    "signup": "S'inscrire",
+    "becomeGuide": "Devenir guide"
+  },
+  "explore": {
+    "title": "Explorer par catégorie",
+    "clearFilter": "✕ Effacer le filtre"
+  },
+  "experiences": {
+    "title": "Expériences à la une",
+    "empty": "Aucune expérience trouvée."
+  },
+  "brand": {
+    "tagline": "Mille expériences"
+  }
+}

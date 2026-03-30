@@ -1,0 +1,66 @@
+{
+  "booking": {
+    "guests": "Nombre de participants",
+    "saving": "Réservation…",
+    "saved": "Réservé !",
+    "confirm": "Confirmer la réservation",
+    "errorSave": "Échec de la réservation."
+  },
+  "bookingList": {
+    "empty": {
+      "title": "Aucune réservation pour l'instant",
+      "text": "Les expériences réservées apparaîtront ici.",
+      "textGuide": "Les réservations confirmées pour vos expériences apparaîtront ici."
+    },
+    "status": {
+      "confirmed": "Confirmée",
+      "pending": "En attente",
+      "cancelled": "Annulée",
+      "completed": "Terminée",
+      "expired": "Expirée"
+    },
+    "filter": {
+      "all": "Toutes"
+    },
+    "card": {
+      "view": "Voir",
+      "guest": "Participant",
+      "guests": "Participants"
+    },
+    "pagination": {
+      "itemLabel": "réservations"
+    },
+    "error": {
+      "load": "Échec du chargement des réservations."
+    },
+    "page": {
+      "subtitle_loading": "Chargement de vos réservations...",
+      "title": "Réservations",
+      "subtitle_one": "{{count}} réservation",
+      "subtitle_other": "{{count}} réservations",
+      "subtitle_filtered_one": "{{count}} réservation",
+      "subtitle_filtered_other": "{{count}} réservations"
+    }
+  },
+  "bookingDetails": {
+    "back": "Retour",
+    "loading": "Chargement...",
+    "traveler": "Voyageur",
+    "notFound": "Réservation introuvable",
+    "date": "Date",
+    "time": "Heure",
+    "location": "Lieu",
+    "guests": "Participants",
+    "pricePerGuest": "Par participant",
+    "totalPrice": "Total",
+    "currency": "RWF",
+    "payNow": "Payer maintenant",
+    "close": "Fermer",
+    "cancel": "Annuler la réservation",
+    "confirmCancel": "Êtes-vous sûr de vouloir annuler cette réservation ?",
+    "error": {
+      "load": "Échec du chargement des détails de la réservation.",
+      "noPayment": "Paiement introuvable."
+    }
+  }
+}

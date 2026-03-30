@@ -1,0 +1,13 @@
+{
+    "paymentForm": {
+        "title": "Informations de paiement",
+        "methodLabel": "Moyen de paiement",
+        "providerLabel": "Opérateur mobile",
+        "submitButton": "Payer maintenant",
+        "selectMethod": "Sélectionner un moyen...",
+        "selectProvider": "Sélectionner un opérateur...",
+        "cardNumber": "Numéro de carte",
+        "phoneNumber": "Numéro de téléphone",
+        "processing": "Traitement en cours…"
+    }
+}
