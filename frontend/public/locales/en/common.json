@@ -39,5 +39,30 @@
         "experiencePlaceholder": "Search experiences...",
         "noItemsFound": "No {{label}}s found matching \"{{query}}\".",
         "results": "Search results: {{label}}"
+    },
+    "pageTitles": {
+        "touristDashboard": "Dashboard",
+        "guideDashboard": "Guide Dashboard",
+        "adminDashboard": "Admin Dashboard",
+        "TouristRegister": "Tourist Registration",
+        "GuideRegister": "Guide Registration",
+        "welcome": "Home Page",
+        "login": "Login",
+        "signup": "Sign Up",
+        "resendEmail": "Resend Confirmation Email",
+        "verifyEmail": "Verify Your Email",
+        "verifyEmailNotice": "Verify Email Notice",
+        "profile": "Profile",
+        "bookingList": "My Bookings",
+        "experienceDetail": "Experience Details",
+        "commonProfile": " Common Profile",
+        "payouts": "Payouts",
+        "payoutDetails": "Payout Details",
+        "experienceForm": "Experience Management",
+        "experienceList": "Experience List",
+        "bookingDetails": "Booking Details",
+        "allUsers": "All Users",
+        "eula": "End User License Agreement",
+        "welcomeDescription": "Discover and book unforgettable experiences with Urugendo. Explore our curated selection of unique activities, handpicked for you. Whether you're seeking adventure, culture, or relaxation, find your perfect experience today."
     }
 }

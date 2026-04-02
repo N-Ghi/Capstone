@@ -8,6 +8,8 @@ import type { Booking } from '../@types/booking.types';
 import styles from './BookingListPage.module.css';
 import { BackIcon, ErrorIcon } from '../components/common/Icons';
 import { useAuth } from '../context/AuthContext';
+import { Helmet } from 'react-helmet-async';
+
 
 
 const ITEMS_PER_PAGE = 15;
@@ -70,6 +72,9 @@ const BookingListPage: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{`${t('pageTitles.bookingList', { ns: 'common' })}`}</title>
+      </Helmet>
       <HeaderComponent />
       <div className={styles.page}>
         <div className={styles.container}>

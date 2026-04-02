@@ -5,7 +5,7 @@ import { ArrowLeftFromLine, Compass, MapPin } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import styles from './RegisterForm.module.css';
 import logo from '../../assets/logo.png';
-import { getApiErrorMessage } from '../../utils/errorUtils';
+import { getApiError } from '../../utils/errorUtils';
 
 interface RegisterFormProps { role: 'Tourist' | 'Guide'; }
 
@@ -14,21 +14,32 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ role }) => {
   const navigate = useNavigate();
   const { register } = useAuth();
 
-  const [username,         setUsername]         = React.useState('');
-  const [email,            setEmail]            = React.useState('');
-  const [firstName,        setFirstName]        = React.useState('');
-  const [lastName,         setLastName]         = React.useState('');
-  const [password,         setPassword]         = React.useState('');
-  const [confirm_password, setConfirmPassword]  = React.useState('');
-  const [loading,          setLoading]          = React.useState(false);
-  const [error,            setError]            = React.useState<string | null>(null);
+  const [username,         setUsername]        = React.useState('');
+  const [email,            setEmail]           = React.useState('');
+  const [firstName,        setFirstName]       = React.useState('');
+  const [lastName,         setLastName]        = React.useState('');
+  const [password,         setPassword]        = React.useState('');
+  const [confirm_password, setConfirmPassword] = React.useState('');
+  const [loading,          setLoading]         = React.useState(false);
+  const [error,            setError]           = React.useState<string | null>(null);
+  const [fieldErrors,      setFieldErrors]     = React.useState<Record<string, string>>({});
 
   const goBack = () => navigate(-1);
+
+  const clearField = (key: string) =>
+    setFieldErrors(prev => ({ ...prev, [key]: '' }));
 
   const handleRegister = async (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
     setError(null);
+    setFieldErrors({});
+
+    if (password !== confirm_password) {
+      setFieldErrors({ confirm_password: t('register.error.passwordMismatch') });
+      setLoading(false);
+      return;
+    }
 
     try {
       await register({
@@ -43,11 +54,21 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ role }) => {
       navigate('/verify-email-notice');
     } catch (err: unknown) {
       console.error('Registration failed:', err);
-      setError(getApiErrorMessage(err, t('register.error.default')));
+      const parsed = getApiError(err, t('register.error.default'));
+      if (parsed.kind === 'field') {
+        setFieldErrors(parsed.fields);
+      } else {
+        setError(parsed.message);
+      }
     } finally {
       setLoading(false);
     }
   };
+
+  const fieldError = (key: string) =>
+    fieldErrors[key]
+      ? <span className={styles.fieldError}>{fieldErrors[key]}</span>
+      : null;
 
   return (
     <div className={styles.wrapper}>
@@ -84,7 +105,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ role }) => {
             </div>
           </div>
 
-          {error && <div className={styles.errorAlert}>{error}</div>}
+          {error && <div className={styles.errorAlert} role="alert">{error}</div>}
 
           <form onSubmit={handleRegister}>
 
@@ -93,77 +114,83 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ role }) => {
               <div className={styles.formGroup}>
                 <label className={styles.formLabel}>{t('register.firstName')}</label>
                 <input
-                  className={styles.formControl}
+                  className={`${styles.formControl} ${fieldErrors.first_name ? styles.inputError : ''}`}
                   type="text"
                   placeholder={t('register.firstNamePlaceholder')}
                   value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={(e) => { setFirstName(e.target.value); clearField('first_name'); }}
                   required
                 />
+                {fieldError('first_name')}
               </div>
               <div className={styles.formGroup}>
                 <label className={styles.formLabel}>{t('register.lastName')}</label>
                 <input
-                  className={styles.formControl}
+                  className={`${styles.formControl} ${fieldErrors.last_name ? styles.inputError : ''}`}
                   type="text"
                   placeholder={t('register.lastNamePlaceholder')}
                   value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={(e) => { setLastName(e.target.value); clearField('last_name'); }}
                   required
                 />
+                {fieldError('last_name')}
               </div>
             </div>
 
             <div className={styles.formGroup}>
               <label className={styles.formLabel}>{t('register.username')}</label>
               <input
-                className={styles.formControl}
+                className={`${styles.formControl} ${fieldErrors.username ? styles.inputError : ''}`}
                 type="text"
                 placeholder={t('register.usernamePlaceholder')}
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => { setUsername(e.target.value); clearField('username'); }}
                 required
                 autoComplete="username"
               />
+              {fieldError('username')}
             </div>
 
             <div className={styles.formGroup}>
               <label className={styles.formLabel}>{t('register.email')}</label>
               <input
-                className={styles.formControl}
+                className={`${styles.formControl} ${fieldErrors.email ? styles.inputError : ''}`}
                 type="email"
                 placeholder={t('register.emailPlaceholder')}
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => { setEmail(e.target.value); clearField('email'); }}
                 required
                 autoComplete="email"
               />
+              {fieldError('email')}
             </div>
 
             <div className={styles.formGroup}>
               <label className={styles.formLabel}>{t('register.password')}</label>
               <input
-                className={styles.formControl}
+                className={`${styles.formControl} ${fieldErrors.password ? styles.inputError : ''}`}
                 type="password"
                 placeholder={t('register.passwordPlaceholder')}
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => { setPassword(e.target.value); clearField('password'); clearField('confirm_password'); }}
                 required
                 autoComplete="new-password"
               />
+              {fieldError('password')}
             </div>
 
             <div className={styles.formGroup}>
               <label className={styles.formLabel}>{t('register.confirmPassword')}</label>
               <input
-                className={styles.formControl}
+                className={`${styles.formControl} ${fieldErrors.confirm_password ? styles.inputError : ''}`}
                 type="password"
                 placeholder={t('register.confirmPasswordPlaceholder')}
                 value={confirm_password}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e) => { setConfirmPassword(e.target.value); clearField('confirm_password'); }}
                 required
                 autoComplete="new-password"
               />
+              {fieldError('confirm_password')}
             </div>
 
             <button type="submit" className={styles.submitBtn} disabled={loading}>

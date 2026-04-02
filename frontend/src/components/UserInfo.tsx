@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import type { User } from '../@types/auth.types';
 import styles from './UserInfo.module.css';
 import { uploadProfilePicture } from '../services/pictureService';
-import { getApiErrorMessage } from '../utils/errorUtils';
+import { getApiErrorString } from '../utils/errorUtils';
 
 interface Props {
   user: User;
@@ -25,7 +25,6 @@ const UserInfoForm: React.FC<Props> = ({ user, onSave }) => {
   const [error,     setError]     = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  // Sync if parent user changes
   useEffect(() => {
     setUsername(user.username);
     setFirstName(user.first_name);
@@ -64,7 +63,7 @@ const UserInfoForm: React.FC<Props> = ({ user, onSave }) => {
       setSaved(true);
       setTimeout(() => setSaved(false), 2500);
     } catch (err: unknown) {
-      setError(getApiErrorMessage(err, t('userInfo.errorSave')));
+      setError(getApiErrorString(err, t('userInfo.errorSave')));
     } finally {
       setSaving(false);
     }
@@ -120,7 +119,7 @@ const UserInfoForm: React.FC<Props> = ({ user, onSave }) => {
             id="uif-username"
             className={styles.input}
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => { setUsername(e.target.value); setError(null); }}
             autoComplete="username"
             required
           />
@@ -133,7 +132,7 @@ const UserInfoForm: React.FC<Props> = ({ user, onSave }) => {
             type="email"
             className={styles.input}
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => { setEmail(e.target.value); setError(null); }}
             autoComplete="email"
             required
           />
@@ -162,7 +161,7 @@ const UserInfoForm: React.FC<Props> = ({ user, onSave }) => {
         </div>
       </div>
 
-      {error && <p className={styles.error}>{error}</p>}
+      {error && <p className={styles.error} role="alert">{error}</p>}
 
       <div className={styles.actions}>
         <button type="submit" className={styles.saveBtn} disabled={saving}>

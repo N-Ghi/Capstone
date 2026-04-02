@@ -1,9 +1,9 @@
 import ProtectedRoute from "./ProtectedRoute";
 import { Roles } from "../@types/auth.types";
 
-import AdminDashboardPage from "../components/dashboards/Admin";
-import GuideDashboardPage from "../components/dashboards/Guide";
-import TouristDashboardPage from "../components/dashboards/Tourist";
+import AdminDashboardPage from "../pages/Dashboards/Admin";
+import GuideDashboardPage from "../pages/Dashboards/Guide";
+import TouristDashboardPage from "../pages/Dashboards/Tourist";
 import ExperienceFormPage from "../pages/ExperienceFormPage";
 import ExperienceListPage from "../pages/ExperienceListPage";
 import ExperienceDetailPage from "../pages/ExperienceDetail";

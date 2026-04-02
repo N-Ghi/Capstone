@@ -39,5 +39,30 @@
         "experiencePlaceholder": "Shaka igitemberwa...",
         "noItemsFound": "Igishakishwa gihuye na \"{{query}}\" cy'{{label}} nti kibonetse.",
         "results": "Ibisubizo: {{label}}"
+    },
+    "pageTitles": {
+        "touristDashboard": "Ahabanza",
+        "guideDashboard": "Ahabanza h'Abayobozi",
+        "adminDashboard": "Ahabanza h'Abayobozi Bakuru",
+        "TouristRegister": "Kwiyandikisha nk'Umugenzi",
+        "GuideRegister": "Kwiyandikisha nk'Umuyobozi",
+        "welcome": "Urugendo | Ingendo Igihumbi",
+        "login": "Kwinjira",
+        "signup": "Kwiyandikisha",
+        "resendEmail": "Kwakira Ubutumwa Bwemeza",
+        "verifyEmail": "Emeza Konti Yawe",
+        "verifyEmailNotice": "Wakiriye Ubutumwa Bwemeza",
+        "profile": "Imyirindoro",
+        "bookingList": "Ibiteganyijwe",
+        "experienceDetail": "Ubutembere Bwose",
+        "commonProfile": "Imyirindoro Rusange",
+        "payouts": "Ibizishyurwa",
+        "payoutDetails": "Amakuru Y'ibizishyurwa",
+        "experienceForm": "Gucunga Ibitemberwa",
+        "experienceList": "Ibitemberwa Byose",
+        "bookingDetails": "Amakuru Y'ibiteganyijwe",
+        "allUsers": "Abantu Bose",
+        "eula": "Amasezerano Y'umukoresha wa nyuma",
+        "welcomeDescription": "Cukumbura kandi ufate umwanya ku ibitemberwa bitazibagirana hamwe na Urugendo. Shakisha mu bikorwa byihariye, byatoranijwe ku buryo bw'umwihariko. Niba ushaka ibijyanye umuco cyangwa kuruhuka, shaka igitemberwa cyawe cyiza uyu munsi."
     }
 }

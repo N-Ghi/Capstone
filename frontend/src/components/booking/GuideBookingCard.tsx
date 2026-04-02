@@ -19,7 +19,7 @@ const formatDate = (iso: string) =>
 
 const GuideBookingCard: React.FC<GuideBookingCardProps> = ({ booking }) => {
   const { t } = useTranslation('booking');
-  const { experience_title, booking_date, guests, total_price } = booking;
+  const { booking_date, guests, total_price } = booking;
 
   const bookingArray = useMemo(
     () => (booking ? [booking] : []),
@@ -32,7 +32,6 @@ const GuideBookingCard: React.FC<GuideBookingCardProps> = ({ booking }) => {
   );
   
   const translatedBooking = translatedBookings[0] ?? booking;
-  console.log("Experience title: ", experience_title);
 
   const experienceTitle = translatedBooking?.experience_title ?? booking?.experience_title;
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Container } from 'react-bootstrap';
 import { Globe, Menu, X, MapPin, ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -26,14 +27,12 @@ const WelcomePage: React.FC = () => {
 
   const activeLang = languages.find((l) => l.code === i18n.language) ?? languages[0] ?? null;
 
-  // Scroll listener
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close lang dropdown on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (langRef.current && !langRef.current.contains(e.target as Node))
@@ -43,7 +42,6 @@ const WelcomePage: React.FC = () => {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  // Languages only — experiences are owned by ExperienceFilterGrid
   useEffect(() => {
     getLanguages()
       .then((res) => setLanguages(res.results ?? res))
@@ -61,6 +59,11 @@ const WelcomePage: React.FC = () => {
 
   return (
     <main className={styles.wrapper}>
+
+      <Helmet>
+        <title>{`${t('pageTitles.welcome', { ns: 'common' })}`}</title>
+        <meta name="description" content={t('pageTitles.welcomeDescription', { ns: 'common', defaultValue: '' })} />
+      </Helmet>
 
       {/* Header */}
       <header className={`${styles.header} ${scrolled ? styles.headerScrolled : ''}`}>

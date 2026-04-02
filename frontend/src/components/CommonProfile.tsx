@@ -59,7 +59,6 @@ const CommonProfileComponent: React.FC = () => {
       setLoadingProfile(true);
       try {
         const data = await getProfileById(id);
-        console.log('Raw profile data:', data);
         if (!cancelled && 'payout_provider' in data) setGuideProfile(data as GuideProfile);
       } catch (err: unknown) {
         console.error(err);

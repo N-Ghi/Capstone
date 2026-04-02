@@ -23,6 +23,9 @@ i18n
     },
     ns: ['translation', 'auth', 'dashboards', 'experience', 'profile', 'common', 'booking', 'payment', 'review', 'eula'],
     defaultNS: 'translation',
+    react: {
+      useSuspense: true,
+    },
   });
 
 export default i18n;

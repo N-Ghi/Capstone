@@ -39,5 +39,30 @@
         "experiencePlaceholder": "Rechercher des expériences...",
         "noItemsFound": "Aucun(e) {{label}} trouvé(e) correspondant à « {{query}} ».",
         "results": "Résultats de recherche : {{label}}"
+    },
+    "pageTitles": {
+        "touristDashboard": "Page Du Tableau De Bord",
+        "guideDashboard": "Page Du Tableau De Bord Pour le Guide",
+        "adminDashboard": "Page Du Tableau De Bord Pour l'Admin",
+        "TouristRegister": "Enregistrement du Tourist",
+        "GuideRegister": "Enregistrement du Guide",
+        "welcome": "Page D'Accueil",
+        "login": "Se Connecter",
+        "signup": "S'Inscrire",
+        "resendEmail": "Renvoyer l'Email de Confirmation",
+        "verifyEmail": "Vérifier votre Email",
+        "verifyEmailNotice": "Avis de Vérification de Email",
+        "profile": "Profil",
+        "bookingList": "Mes Réservations",
+        "experienceDetail": "Détails de l'Expérience",
+        "commonProfile": " Profil Commun",
+        "payouts": "Paiements",
+        "payoutDetails": "Détails du Paiement",
+        "experienceForm": "Gestion des Expériences",
+        "experienceList": "Liste des Expériences",
+        "bookingDetails": "Détails de la Réservation",
+        "allUsers": "Tous les Utilisateurs",
+        "eula": "Accord de Licence pour l'Utilisateur Final",
+        "welcomeDescription": "Découvrez et réservez des expériences inoubliables avec Urugendo. Explorez notre sélection soigneusement curatée d'activités uniques, choisies pour vous. Que vous recherchiez l'aventure, la culture ou le détente, trouvez votre expérience parfaite dès aujourd'hui."
     }
 }

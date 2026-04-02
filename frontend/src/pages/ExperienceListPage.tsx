@@ -9,6 +9,7 @@ import { useTranslatedData } from '../hooks/useTranslatedData';
 import type { ExperienceListItem } from '../@types/experience.types';
 import styles from './ExperienceListPage.module.css';
 import { BackIcon, AddIcon, ErrorIcon } from '../components/common/Icons';
+import { Helmet } from 'react-helmet-async';
 
 
 const ITEMS_PER_PAGE = 15;
@@ -79,6 +80,9 @@ const ExperienceListPage: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{`${t('pageTitles.experienceList', { ns: 'common' })}`}</title>
+      </Helmet>
       <HeaderComponent />
       <div className={styles.page}>
         <div className={styles.container}>

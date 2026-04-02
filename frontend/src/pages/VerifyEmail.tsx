@@ -5,6 +5,7 @@ import { verifyEmail } from "../services/authService";
 import { MailCheck, XCircle, Loader, Compass } from "lucide-react";
 import styles from "./VerifyEmail.module.css";
 import logo from "../assets/logo.png";
+import { Helmet } from 'react-helmet-async';
 
 const VerifyEmail: React.FC = () => {
   const { t } = useTranslation('auth');
@@ -52,65 +53,70 @@ const VerifyEmail: React.FC = () => {
   const current = stateConfig[status];
 
   return (
-    <div className={styles.wrapper}>
+    <>
+      <Helmet>
+        <title>{`${t('pageTitles.verifyEmail', { ns: 'common' })}`}</title>
+      </Helmet>
+      <div className={styles.wrapper}>
+        {/* Left panel */}
+        <div className={styles.panel}>
+          <a className={styles.panelBrand} onClick={() => navigate("/")}>
+            <img src={logo} alt="Urugendo" className={styles.panelLogo} />
+            <span className={styles.panelBrandName}>Urugendo</span>
+          </a>
 
-      {/* Left panel */}
-      <div className={styles.panel}>
-        <a className={styles.panelBrand} onClick={() => navigate("/")}>
-          <img src={logo} alt="Urugendo" className={styles.panelLogo} />
-          <span className={styles.panelBrandName}>Urugendo</span>
-        </a>
-
-        <div className={styles.panelBadge}>
-          <Compass size={42} className={styles.panelBadgeIcon} strokeWidth={1} />
-        </div>
-
-        <div className={styles.panelContent}>
-          <p className={styles.panelQuote}>
-            {t('verifyEmail.panel.quote')} <span>{t('verifyEmail.panel.quoteHighlight')}</span>.
-          </p>
-          <span className={styles.panelSub}>{t('verifyEmail.panel.panelSub')}</span>
-        </div>
-      </div>
-
-      {/* Right panel */}
-      <div className={styles.formPanel}>
-        <div className={`${styles.formBox} ${styles[status]}`}>
-
-          <div className={`${styles.iconWrapper} ${status === "error" ? styles.iconError : ""}`}>
-            {current.icon}
+          <div className={styles.panelBadge}>
+            <Compass size={42} className={styles.panelBadgeIcon} strokeWidth={1} />
           </div>
 
-          <h2 className={styles.title}>{current.title}</h2>
-          <p className={styles.body}>{current.body}</p>
-          {current.hint && <p className={styles.hint}>{current.hint}</p>}
+          <div className={styles.panelContent}>
+            <p className={styles.panelQuote}>
+              {t('verifyEmail.panel.quote')} <span>{t('verifyEmail.panel.quoteHighlight')}</span>.
+            </p>
+            <span className={styles.panelSub}>{t('verifyEmail.panel.panelSub')}</span>
+          </div>
+        </div>
 
-          {status === "success" && (
-            <button className={styles.primaryBtn} onClick={() => navigate("/login")}>
-              {t('verifyEmail.success.goToLogin')}
-            </button>
-          )}
+        {/* Right panel */}
+        <div className={styles.formPanel}>
+          <div className={`${styles.formBox} ${styles[status]}`}>
 
-          {status === "error" && (
-            <>
-              <button className={styles.primaryBtn} onClick={() => navigate("/resend-email")}>
-                {t('verifyEmail.error.resend')}
-              </button>
-              <button className={styles.ghostBtn} onClick={() => navigate("/")}>
-                {t('verifyEmail.error.backToHome')}
-              </button>
-            </>
-          )}
-
-          {status === "loading" && (
-            <div className={styles.loadingBar}>
-              <div className={styles.loadingFill} />
+            <div className={`${styles.iconWrapper} ${status === "error" ? styles.iconError : ""}`}>
+              {current.icon}
             </div>
-          )}
 
+            <h2 className={styles.title}>{current.title}</h2>
+            <p className={styles.body}>{current.body}</p>
+            {current.hint && <p className={styles.hint}>{current.hint}</p>}
+
+            {status === "success" && (
+              <button className={styles.primaryBtn} onClick={() => navigate("/login")}>
+                {t('verifyEmail.success.goToLogin')}
+              </button>
+            )}
+
+            {status === "error" && (
+              <>
+                <button className={styles.primaryBtn} onClick={() => navigate("/resend-email")}>
+                  {t('verifyEmail.error.resend')}
+                </button>
+                <button className={styles.ghostBtn} onClick={() => navigate("/")}>
+                  {t('verifyEmail.error.backToHome')}
+                </button>
+              </>
+            )}
+
+            {status === "loading" && (
+              <div className={styles.loadingBar}>
+                <div className={styles.loadingFill} />
+              </div>
+            )}
+
+          </div>
         </div>
       </div>
-    </div>
+    </>
+    
   );
 };
 

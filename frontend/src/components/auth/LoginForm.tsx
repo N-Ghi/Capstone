@@ -7,7 +7,7 @@ import styles from './LoginForm.module.css';
 import logo from '../../assets/logo.png';
 import { Roles } from '../../@types/auth.types';
 import { useLocation } from 'react-router-dom';
-import { getApiErrorMessage } from '../../utils/errorUtils';
+import { getApiErrorString } from '../../utils/errorUtils';
 
 interface LocationState {
   message?: string;
@@ -36,20 +36,19 @@ const LoginForm: React.FC = () => {
     setError(null);
 
     try {
-      const user = await login({identifier, password});
+      const user = await login({ identifier, password });
 
-      // Redirect back to the original page if there was one else go to role-based dashboard
       if (from) {
         navigate(from, { replace: true });
         return;
       }
 
-      if (user.role === Roles.Admin) navigate("/admin");
-      else if (user.role === Roles.Guide) navigate("/guide");
-      else navigate("/tourist");
+      if (user.role === Roles.Admin) navigate('/admin');
+      else if (user.role === Roles.Guide) navigate('/guide');
+      else navigate('/tourist');
     } catch (err: unknown) {
       console.error('Login failed:', err);
-      setError(getApiErrorMessage(err, t('login.error.default')));
+      setError(getApiErrorString(err, t('login.error.default')));
     } finally {
       setLoading(false);
     }
@@ -71,7 +70,7 @@ const LoginForm: React.FC = () => {
 
         <div className={styles.panelContent}>
           <p className={styles.panelQuote}>
-           {t('login.panel.quote')} <span>{t('login.panel.quoteHighlight')}</span>.
+            {t('login.panel.quote')} <span>{t('login.panel.quoteHighlight')}</span>.
           </p>
           <span className={styles.panelSub}>{t('login.panel.welcome')}</span>
         </div>
@@ -86,7 +85,7 @@ const LoginForm: React.FC = () => {
           </div>
 
           {(error || redirectMessage) && (
-            <div className={styles.errorAlert}>
+            <div className={styles.errorAlert} role="alert">
               {error || redirectMessage}
             </div>
           )}
@@ -99,7 +98,7 @@ const LoginForm: React.FC = () => {
                 type="text"
                 placeholder={t('login.emailPlaceholder')}
                 value={identifier}
-                onChange={(e) => setIdentifier(e.target.value)}
+                onChange={(e) => { setIdentifier(e.target.value); setError(null); }}
                 required
                 autoComplete="username"
               />
@@ -112,7 +111,7 @@ const LoginForm: React.FC = () => {
                 type="password"
                 placeholder={t('login.passwordPlaceholder')}
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => { setPassword(e.target.value); setError(null); }}
                 required
                 autoComplete="current-password"
               />

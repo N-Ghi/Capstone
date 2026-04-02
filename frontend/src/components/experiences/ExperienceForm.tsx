@@ -49,7 +49,6 @@ const ExperienceForm: React.FC = () => {
           getTravelPreferences(),
         ]);
         setLanguageOptions(langs);
-        console.log("Languages: ", langs )
         setPaymentOptions(payments);
         setExpertiseOptions(prefs);
       } finally {

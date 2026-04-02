@@ -5,7 +5,7 @@ import { Mail, ArrowLeftFromLine, Compass } from 'lucide-react';
 import { resendVerificationEmail } from '../../services/authService';
 import styles from './ResendEmail.module.css';
 import logo from '../../assets/logo.png';
-import { getApiErrorMessage } from '../../utils/errorUtils';
+import { getApiErrorString } from '../../utils/errorUtils';
 
 const ResendEmail: React.FC = () => {
   const { t } = useTranslation('auth');
@@ -28,7 +28,7 @@ const ResendEmail: React.FC = () => {
       setSuccess(true);
     } catch (err: unknown) {
       console.error('Resend verification email failed:', err);
-      setError(getApiErrorMessage(err, t('resendVerification.error.default')));
+      setError(getApiErrorString(err, t('resendVerification.error.default')));
     } finally {
       setLoading(false);
     }
@@ -61,7 +61,6 @@ const ResendEmail: React.FC = () => {
         <div className={styles.formBox}>
 
           {success ? (
-            /* Success state */
             <div className={styles.successBox}>
               <div className={styles.successIcon}>
                 <Mail size={28} color="#fff" strokeWidth={1.8} />
@@ -80,7 +79,6 @@ const ResendEmail: React.FC = () => {
               </button>
             </div>
           ) : (
-            /* Form state */
             <>
               <div className={styles.formHeader}>
                 <div className={styles.iconWrapper}>
@@ -92,7 +90,11 @@ const ResendEmail: React.FC = () => {
                 </p>
               </div>
 
-              {error && <div className={styles.errorAlert}>{error}</div>}
+              {error && (
+                <div className={styles.errorAlert} role="alert">
+                  {error}
+                </div>
+              )}
 
               <form onSubmit={handleResend}>
                 <div className={styles.formGroup}>
@@ -102,7 +104,7 @@ const ResendEmail: React.FC = () => {
                     type="email"
                     placeholder={t('resendVerification.form.emailPlaceholder')}
                     value={identifier}
-                    onChange={(e) => setIdentifier(e.target.value)}
+                    onChange={(e) => { setIdentifier(e.target.value); setError(null); }}
                     required
                     autoComplete="email"
                   />

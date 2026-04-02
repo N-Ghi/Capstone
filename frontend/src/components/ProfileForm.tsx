@@ -7,8 +7,7 @@ import { getLanguages, getPaymentMethods, getTravelPreferences, getMobileProvide
 import { Roles, type Role } from '../@types/auth.types';
 import type { TouristProfile, GuideProfile, AnyProfile, UpdateTouristProfileData, UpdateGuideProfileData, } from '../@types/profile.types';
 import styles from './ProfileForm.module.css';
-import { getApiErrorMessage } from '../utils/errorUtils';
-import axios from 'axios';
+import { getApiError } from '../utils/errorUtils';
 
 interface Props {
   role: Role;
@@ -19,22 +18,22 @@ interface Props {
 const ProfileForm: React.FC<Props> = ({ role, profile, onSave }) => {
   const { t } = useTranslation('profile');
 
-  const [languageOptions,   setLanguageOptions]   = useState<SelectOption[]>([]);
-  const [paymentOptions,    setPaymentOptions]    = useState<SelectOption[]>([]);
-  const [payoutOptions,    setPayoutOptions]    = useState<SelectOption[]>([]);
-  
-  const [optionsLoading,    setOptionsLoading]    = useState(true);
+  const [languageOptions, setLanguageOptions] = useState<SelectOption[]>([]);
+  const [paymentOptions,  setPaymentOptions]  = useState<SelectOption[]>([]);
+  const [payoutOptions,   setPayoutOptions]   = useState<SelectOption[]>([]);
+  const [optionsLoading,  setOptionsLoading]  = useState(true);
 
-  const [phone_number,           setNumber]           = useState('');
-  const [bio,            setBio]            = useState('');
-  const [languages,      setLanguages]      = useState<string[]>([]);
-  const [payoutProvider, setPayoutProvider] = useState<string | null>(null);
-  const [paymentMethods, setPaymentMethods] = useState<string[]>([]);
-  const [preferences,    setPreferences]    = useState<string[]>([]);
+  const [phone_number,   setNumber]          = useState('');
+  const [bio,            setBio]             = useState('');
+  const [languages,      setLanguages]       = useState<string[]>([]);
+  const [payoutProvider, setPayoutProvider]  = useState<string | null>(null);
+  const [paymentMethods, setPaymentMethods]  = useState<string[]>([]);
+  const [preferences,    setPreferences]     = useState<string[]>([]);
 
-  const [saving, setSaving] = useState(false);
-  const [saved,  setSaved]  = useState(false);
-  const [error,  setError]  = useState<string | null>(null);
+  const [saving,       setSaving]      = useState(false);
+  const [saved,        setSaved]       = useState(false);
+  const [error,        setError]       = useState<string | null>(null);
+  const [fieldErrors,  setFieldErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     (async () => {
@@ -47,15 +46,15 @@ const ProfileForm: React.FC<Props> = ({ role, profile, onSave }) => {
         ]);
         setLanguageOptions(langs ?? []);
         setPaymentOptions(payments ?? []);
-        setPreferences(prefs ?? [])
-        setPayoutOptions(mobile ?? [])
+        setPreferences(prefs ?? []);
+        setPayoutOptions(mobile ?? []);
 
         if (profile) {
           if (role === Roles.Tourist) {
             const p = profile as TouristProfile;
             setLanguages(p.languages ?? []);
             setPaymentMethods(p.payment_methods ?? []);
-            setPreferences(p.travel_preferences ?? [])
+            setPreferences(p.travel_preferences ?? []);
           }
           if (role === Roles.Guide) {
             const p = profile as GuideProfile;
@@ -77,6 +76,8 @@ const ProfileForm: React.FC<Props> = ({ role, profile, onSave }) => {
     e.preventDefault();
     setSaving(true);
     setError(null);
+    setFieldErrors({});
+
     try {
       if (role === Roles.Tourist) {
         await onSave({
@@ -95,23 +96,22 @@ const ProfileForm: React.FC<Props> = ({ role, profile, onSave }) => {
       setSaved(true);
       setTimeout(() => setSaved(false), 2500);
     } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        const detail = err.response?.data;
-        if (detail && typeof detail === 'object') {
-          const messages = Object.entries(detail as Record<string, unknown>)
-            .map(([field, msgs]) =>
-              `${field}: ${Array.isArray(msgs) ? msgs.join(', ') : String(msgs)}`
-            )
-            .join(' | ');
-          setError(messages);
-          return;
-        }
+      const parsed = getApiError(err, t('profileForm.errorSave'));
+      if (parsed.kind === 'field') {
+        setFieldErrors(parsed.fields);
+      } else {
+        setError(parsed.message);
       }
-      setError(getApiErrorMessage(err, t('profileForm.errorSave')));
     } finally {
       setSaving(false);
     }
   };
+
+  const fieldError = (key: string) =>
+    fieldErrors[key]
+      ? <span className={styles.fieldError}>{fieldErrors[key]}</span>
+      : null;
+
   const BIO_MAX = 1000;
   const bioOver = bio.length > BIO_MAX;
 
@@ -129,35 +129,40 @@ const ProfileForm: React.FC<Props> = ({ role, profile, onSave }) => {
             </label>
             <textarea
               id="pf-bio"
-              className={`${styles.input} ${styles.textarea}`}
+              className={`${styles.input} ${styles.textarea} ${fieldErrors.bio ? styles.inputError : ''}`}
               value={bio}
-              onChange={(e) => setBio(e.target.value)}
+              onChange={(e) => { setBio(e.target.value); setFieldErrors(p => ({ ...p, bio: '' })); }}
               placeholder={t('profileForm.bioPlaceholder')}
               rows={5}
               maxLength={BIO_MAX}
             />
+            {fieldError('bio')}
           </div>
+
           <MultiSelect
             label={t('profileForm.payoutProvider')}
             options={payoutOptions}
-           selected={payoutProvider ? [payoutProvider] : []}
-            onChange={(selected) => setPayoutProvider(selected[0] ?? null)}
+            selected={payoutProvider ? [payoutProvider] : []}
+            onChange={(selected) => { setPayoutProvider(selected[0] ?? null); setFieldErrors(p => ({ ...p, payout_provider: '' })); }}
             placeholder={t('profileForm.payoutProviderPlaceholder')}
             loading={optionsLoading}
             disabled={optionsLoading}
           />
+          {fieldError('payout_provider')}
+
           <div className={styles.field}>
             <label className={styles.label} htmlFor="pf-phone_number">
               {t('profileForm.displayName')}
             </label>
             <input
               id="pf-phone_number"
-              className={styles.input}
+              className={`${styles.input} ${fieldErrors.phone_number ? styles.inputError : ''}`}
               value={phone_number}
-              onChange={(e) => setNumber(e.target.value)}
+              onChange={(e) => { setNumber(e.target.value); setFieldErrors(p => ({ ...p, phone_number: '' })); }}
               placeholder={t('profileForm.displayNamePlaceholder')}
               required
             />
+            {fieldError('phone_number')}
           </div>
         </>
       )}
@@ -166,27 +171,31 @@ const ProfileForm: React.FC<Props> = ({ role, profile, onSave }) => {
         label={t('profileForm.languages')}
         options={languageOptions}
         selected={languages}
-        onChange={setLanguages}
+        onChange={(selected) => { setLanguages(selected); setFieldErrors(p => ({ ...p, languages: '' })); }}
         placeholder={role === Roles.Guide
           ? t('profileForm.languagesPlaceholderGuide')
           : t('profileForm.languagesPlaceholderTourist')}
         loading={optionsLoading}
         disabled={optionsLoading}
       />
+      {fieldError('languages')}
 
       {role === Roles.Tourist && (
-        <MultiSelect
-          label={t('profileForm.paymentMethods')}
-          options={paymentOptions}
-          selected={paymentMethods}
-          onChange={setPaymentMethods}
-          placeholder={t('profileForm.paymentMethodsPlaceholder')}
-          loading={optionsLoading}
-          disabled={optionsLoading}
-        />
+        <>
+          <MultiSelect
+            label={t('profileForm.paymentMethods')}
+            options={paymentOptions}
+            selected={paymentMethods}
+            onChange={(selected) => { setPaymentMethods(selected); setFieldErrors(p => ({ ...p, payment_methods: '' })); }}
+            placeholder={t('profileForm.paymentMethodsPlaceholder')}
+            loading={optionsLoading}
+            disabled={optionsLoading}
+          />
+          {fieldError('payment_methods')}
+        </>
       )}
 
-      {error && <p className={styles.error}>{error}</p>}
+      {error && <p className={styles.error} role="alert">{error}</p>}
 
       <div className={styles.actions}>
         <button

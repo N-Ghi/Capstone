@@ -154,7 +154,7 @@ const ProfileComponent: React.FC = () => {
       }
       setProfileExists(true);
     } else {
-      updated = await updatePartialProfile(profile.id, data);
+      updated = await updatePartialProfile(userId, data);
     }
 
     setProfile(updated);

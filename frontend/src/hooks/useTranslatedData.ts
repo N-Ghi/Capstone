@@ -11,66 +11,75 @@ export function useTranslatedData<T extends object>(
   const [translated, setTranslated] = useState<T[]>([]);
   const [translating, setTranslating] = useState(false);
   const runIdRef = useRef(0);
-  // Track the last input we processed so we don't re-run for the same data
   const lastRunKey = useRef<string>('');
 
+  // Single stable serialization — use this as the real dep for the effect
   const itemsKey = useMemo(() => JSON.stringify(items), [items]);
-  const stableItems = useMemo(() => items, [itemsKey]);
+
+  // Stable callback ref so getSourceLang never triggers re-runs
+  const getSourceLangRef = useRef(getSourceLang);
+  useEffect(() => {
+    getSourceLangRef.current = getSourceLang;
+  });
 
   useEffect(() => {
-    if (!stableItems.length) {
+    if (!items.length) {
       setTranslated([]);
       return;
     }
 
     const runKey = `${itemsKey}:${i18n.language}`;
-    if (lastRunKey.current === runKey) return; // already processed this exact input
+    if (lastRunKey.current === runKey) return;
     lastRunKey.current = runKey;
 
     const runId = ++runIdRef.current;
+    // Snapshot items at the time this effect fires
+    const snapshot = items;
 
     const run = async () => {
       setTranslating(true);
       try {
-        const sampleText = stableItems
+        const sampleText = snapshot
           .flatMap((item) => fields.map((f) => item[f] as string))
           .find((v) => v?.trim());
 
-        const sourceLang = getSourceLang
-          ? getSourceLang(stableItems[0])
+        const sourceLang = getSourceLangRef.current
+          ? getSourceLangRef.current(snapshot[0])
           : await detectLanguage(sampleText ?? '');
 
         if (runId !== runIdRef.current) return;
 
         if (sourceLang === i18n.language) {
-          setTranslated(stableItems);
+          setTranslated(snapshot);
           return;
         }
 
-        const translatedItems = stableItems.map((item) => ({ ...item }));
+        let translatedItems = snapshot.map((item) => ({ ...item }));
 
         for (const field of fields) {
-          const texts   = stableItems.map((item) => (item[field] as string) ?? '');
+          const texts = snapshot.map((item) => (item[field] as string) ?? '');
           const results = await translateBatch(texts, i18n.language, sourceLang);
 
           if (runId !== runIdRef.current) return;
 
-          results.forEach((text, i) => {
-            translatedItems[i] = { ...translatedItems[i], [field]: text };
-          });
+          translatedItems = translatedItems.map((item, i) => ({
+            ...item,
+            [field]: results[i],
+          }));
         }
 
         setTranslated(translatedItems);
       } catch (err) {
         console.error('Translation failed, falling back to originals:', err);
-        if (runId === runIdRef.current) setTranslated(stableItems);
+        if (runId === runIdRef.current) setTranslated(snapshot);
       } finally {
         if (runId === runIdRef.current) setTranslating(false);
       }
     };
 
     run();
-  }, [stableItems, i18n.language, getSourceLang]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [itemsKey, i18n.language]);
 
   return { translated, translating };
 }
