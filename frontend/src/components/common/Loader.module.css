@@ -1,0 +1,72 @@
+.loader-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+}
+
+/* Spinning ring made of three staggered arcs */
+.loader-ring {
+    position: absolute;
+    inset: 0;
+    animation: loader-rotate 1.4s linear infinite;
+}
+
+.loader-ring__arc {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 3px solid transparent;
+}
+
+.loader-ring__arc:nth-child(1) {
+    border-top-color: #627F67;
+    animation: loader-arc-fade 1.4s ease-in-out infinite;
+    animation-delay: 0s;
+}
+
+.loader-ring__arc:nth-child(2) {
+    border-top-color: #506957;
+    animation: loader-arc-fade 1.4s ease-in-out infinite;
+    animation-delay: -0.46s;
+    transform: rotate(120deg);
+}
+
+.loader-ring__arc:nth-child(3) {
+    border-top-color: #6c8f76;
+    animation: loader-arc-fade 1.4s ease-in-out infinite;
+    animation-delay: -0.92s;
+    transform: rotate(240deg);
+}
+
+/* Icon sits centred, pulses gently */
+.loader-icon-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #739f7f;
+    animation: loader-icon-pulse 1.4s ease-in-out infinite;
+}
+
+.loader-icon-wrap svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Keyframes */
+@keyframes loader-rotate {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes loader-arc-fade {
+    0%, 100% { opacity: 0.25; }
+    50%       { opacity: 1; }
+}
+
+@keyframes loader-icon-pulse {
+    0%, 100% { opacity: 0.6; transform: scale(0.92); }
+    50%       { opacity: 1;   transform: scale(1); }
+}

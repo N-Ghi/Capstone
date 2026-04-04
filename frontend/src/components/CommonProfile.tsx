@@ -17,6 +17,7 @@ import type { GuideProfile } from '../@types/profile.types';
 import type { ExperienceListItem } from '../@types/experience.types';
 
 import styles from './CommonProfile.module.css';
+import Loader from './common/Loader';
 
 const CommonProfileComponent: React.FC = () => {
   const { t } = useTranslation('profile');
@@ -161,7 +162,7 @@ const CommonProfileComponent: React.FC = () => {
           {/* Right: bio + tags */}
           <div className={styles.profileRight}>
             {loadingProfile ? (
-              <LoaderIcon className={styles.spin} />
+              <Loader />
             ) : profileError ? (
               <p className={styles.error}>{profileError}</p>
             ) : guideProfile ? (

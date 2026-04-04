@@ -14,6 +14,7 @@ import { Roles, type Role } from '../@types/auth.types';
 import type { User } from '../@types/auth.types';
 import type { AnyProfile, UpdateTouristProfileData, UpdateGuideProfileData } from '../@types/profile.types';
 import styles from './Profile.module.css';
+import Loader from './common/Loader';
 
 const ProfileComponent: React.FC = () => {
   const { t } = useTranslation('profile');
@@ -194,7 +195,8 @@ const ProfileComponent: React.FC = () => {
 
           {loadingUser ? (
             <div className={styles.loading}>
-              <LoaderIcon size={24} className={styles.spin} />
+              {/* <LoaderIcon size={24} className={styles.spin} /> */}
+              <Loader />
             </div>
           ) : userError ? (
             <p className={styles.error}>{userError}</p>
@@ -282,7 +284,7 @@ const ProfileComponent: React.FC = () => {
 
             {loadingProfile ? (
               <div className={styles.loading}>
-                <LoaderIcon size={24} className={styles.spin} />
+                <Loader/>
               </div>
             ) : profileError ? (
               <p className={styles.error}>{profileError}</p>
