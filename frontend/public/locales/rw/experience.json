@@ -107,8 +107,16 @@
         "addSlot": "Kongera igihe"
         },
         "errors": {
-        "saveFailed": "Kwemeza igihe biranze. Gerageza mukanya."
+        "saveFailed": "Kwemeza igihe biranze. Gerageza mukanya.",
+          "dateRequired": "Itariki yo gutangira irakenewe.",
+          "endDateBeforeStart": "Itariki yo gusoza ntago yaza imbere y'itariki yo gutangira.",
+          "startTimeRequired": "Isaha yo gutangira irakenewe.",
+          "endTimeRequired": "Isaha yo gusoza irakenewe.",
+          "endTimeBeforeStart": "Isaha yo gusoza ntago yaza mbere y'isaha yo gutangira.",
+          "capacityMin": "Ubushobozi bugomba kuba 1 cyangwa hejuru.",
+          "negativePrice": "Amafaranga agomba kuba ari hejuru ya 0."
         }
+        
     },
     "experienceForm": {
         "title": {
@@ -134,7 +142,8 @@
             "label": "Amakuru arambuye",
             "placeholder": "Nwino wige kubyina amaraba hamwe nanjye! Hamwe natwe uziga intambwe z'ibanze, uburyo bwo kuguma mu murongo, n'ibindi byinshi."
         },
-        "date": "Itariki",
+        "date": "Itariki yo Gutangira",
+        "end_date": "Itariki yo Gusoza",
         "expertise": {
             "label": "Ubwoko bw'igitemberwa",
             "placeholder": "Hitamo ubwoko…"

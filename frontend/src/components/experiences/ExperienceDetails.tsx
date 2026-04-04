@@ -350,7 +350,11 @@ const ExperienceDetailComponent: React.FC = () => {
                     <tbody>
                       {slots.map((slot) => (
                         <tr key={slot.id}>
-                          <td>{fmt(slot.date)}</td>
+                          <td className={styles.timeCell}>
+                            {fmt(slot.date)}
+                            <span className={styles.timeSep}>{t('experienceDetail.slots.timeSeparator')}</span>
+                            {fmt(slot.end_date)}
+                          </td>
                           <td className={styles.timeCell}>
                             {fmtTime(slot.start_time)}
                             <span className={styles.timeSep}>{t('experienceDetail.slots.timeSeparator')}</span>

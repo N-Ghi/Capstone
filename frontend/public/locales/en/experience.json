@@ -94,7 +94,8 @@
         "add": "Add Slot"
         },
         "fields": {
-        "date": "Date",
+        "date": "Start Date",
+        "end_date": "End Date",
         "startTime": "Start Time",
         "endTime": "End Time",
         "capacity": "Capacity",
@@ -107,7 +108,14 @@
         "addSlot": "Add Slot"
         },
         "errors": {
-        "saveFailed": "Failed to save slot. Please try again."
+          "saveFailed": "Failed to save slot. Please try again.",
+          "dateRequired": "Start date is required.",
+          "endDateBeforeStart": "End date cannot be before start date.",
+          "startTimeRequired": "Start time is required.",
+          "endTimeRequired": "End time is required.",
+          "endTimeBeforeStart": "End time must be after start time.",
+          "capacityMin": "Capacity must be at least 1.",
+          "negativePrice": "Price cannot be negative."
         }
     },
     "experienceForm": {

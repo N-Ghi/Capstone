@@ -22,10 +22,17 @@ class PaymentViewSet(viewsets.ModelViewSet):
         payment = get_object_or_404(Payment, id=pk)
 
         if payment.booking.traveler != request.user:
-            return Response(
-                {"detail": "Not authorized to pay for this booking."},
-                status=status.HTTP_403_FORBIDDEN
-            )
+            return Response({"detail": "Not authorized."}, status=403)
+
+        # Idempotency guard
+        if payment.payment_status.code == "COMPLETED":
+            booking = payment.booking
+            return Response({
+                "payment": PaymentSerializer(payment).data,
+                "payment_status": payment.payment_status.code,
+                "booking_status": booking.status,
+                "transaction_id": payment.provider_payment_id,
+            }, status=status.HTTP_200_OK)
 
         method_id = request.data.get("method_id")
         provider_id = request.data.get("provider_id")

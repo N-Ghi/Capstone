@@ -107,7 +107,14 @@
             "addSlot": "Ajouter un créneau"
         },
         "errors": {
-            "saveFailed": "Échec de l'enregistrement du créneau. Veuillez réessayer."
+          "saveFailed": "Echec de l'enregistrement du créneau. Veuillez réessayer.",
+          "dateRequired": "Date de début est requise.",
+          "endDateBeforeStart": "Date de fin ne peut pas être avant la date de début.",
+          "startTimeRequired": "Heure de début est requise.",
+          "endTimeRequired": "Heure de fin est requise.",
+          "endTimeBeforeStart": "Heure de fin doit être après l'heure de début.",
+          "capacityMin": "Capacité doit être au moins 1.",
+          "negativePrice": "Le prix ne peut pas être négatif."
         }
     },
     "experienceForm": {
@@ -134,7 +141,8 @@
                 "label": "Description",
                 "placeholder": "Décrivez ce que les voyageurs vivront, ce qu'il faut apporter et pourquoi cette expérience est unique…"
             },
-            "date": "Date",
+            "date": "Date de début",
+            "end_date": "Date de fin",
             "expertise": {
                 "label": "Expertise / Préférences de voyage",
                 "placeholder": "Sélectionner des catégories…"

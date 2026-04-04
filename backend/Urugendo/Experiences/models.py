@@ -50,6 +50,7 @@ class ExperienceSlot(models.Model):
     experience = models.ForeignKey( Experience, on_delete=models.CASCADE, related_name="slots" )
 
     date = models.DateField()
+    end_date = models.DateField()
     start_time = models.TimeField(default="09:00:00")
     end_time = models.TimeField(default="12:00:00")
 

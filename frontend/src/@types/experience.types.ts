@@ -20,6 +20,7 @@ export interface CreateExperienceData {
 
 export interface ExperirnceSlotData {
   date: string;
+  end_date: string;
   capacity: number;
   price: number;
   start_time: string;
@@ -29,6 +30,7 @@ export interface ExperirnceSlotData {
 export interface Slot {
   id: string;
   date: string;
+  end_date: string;
   start_time: string;
   end_time: string;
   capacity: number;
